@@ -8,8 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		1487DBB4C2B7EF941D33894D /* Pods_OurSpace.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BB3F3D2EBE6E02B52E53CD2 /* Pods_OurSpace.framework */; };
+		5C6E5A5821FCBB4B0045C88D /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6E5A5721FCBB4B0045C88D /* StartViewController.swift */; };
+		5C6E5A5A21FCC29B0045C88D /* ProvideObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6E5A5921FCC29B0045C88D /* ProvideObject.swift */; };
+		5C6E5A6221FCD4710045C88D /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6E5A6121FCD4710045C88D /* Extensions.swift */; };
+		5C6E5A6721FCEABD0045C88D /* CreateRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6E5A6621FCEABD0045C88D /* CreateRoomViewController.swift */; };
+		5C6E5A6921FCFB340045C88D /* CustomNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6E5A6821FCFB340045C88D /* CustomNavigationView.swift */; };
+		5C6E5A6D21FD69860045C88D /* CreateRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6E5A6C21FD69860045C88D /* CreateRoomViewModel.swift */; };
+		5C6E5A6F21FD6A920045C88D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5C6E5A6E21FD6A920045C88D /* GoogleService-Info.plist */; };
 		5CC72D4B21FB0B3E0077E723 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC72D4A21FB0B3E0077E723 /* AppDelegate.swift */; };
-		5CC72D4D21FB0B3E0077E723 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC72D4C21FB0B3E0077E723 /* ViewController.swift */; };
 		5CC72D5021FB0B3E0077E723 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CC72D4E21FB0B3E0077E723 /* Main.storyboard */; };
 		5CC72D5221FB0B3E0077E723 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5CC72D5121FB0B3E0077E723 /* Assets.xcassets */; };
 		5CC72D5521FB0B3E0077E723 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CC72D5321FB0B3E0077E723 /* LaunchScreen.storyboard */; };
@@ -17,9 +23,15 @@
 
 /* Begin PBXFileReference section */
 		1BB3F3D2EBE6E02B52E53CD2 /* Pods_OurSpace.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OurSpace.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C6E5A5721FCBB4B0045C88D /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
+		5C6E5A5921FCC29B0045C88D /* ProvideObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvideObject.swift; sourceTree = "<group>"; };
+		5C6E5A6121FCD4710045C88D /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		5C6E5A6621FCEABD0045C88D /* CreateRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomViewController.swift; sourceTree = "<group>"; };
+		5C6E5A6821FCFB340045C88D /* CustomNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationView.swift; sourceTree = "<group>"; };
+		5C6E5A6C21FD69860045C88D /* CreateRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomViewModel.swift; sourceTree = "<group>"; };
+		5C6E5A6E21FD6A920045C88D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5CC72D4721FB0B3E0077E723 /* OurSpace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OurSpace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CC72D4A21FB0B3E0077E723 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5CC72D4C21FB0B3E0077E723 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		5CC72D4F21FB0B3E0077E723 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5CC72D5121FB0B3E0077E723 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5CC72D5421FB0B3E0077E723 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -40,6 +52,55 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5C6E5A5F21FCD4370045C88D /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				5C6E5A6121FCD4710045C88D /* Extensions.swift */,
+				5C6E5A6821FCFB340045C88D /* CustomNavigationView.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		5C6E5A6021FCD4450045C88D /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				5CC72D4A21FB0B3E0077E723 /* AppDelegate.swift */,
+				5C6E5A5921FCC29B0045C88D /* ProvideObject.swift */,
+				5C6E5A6421FCE3C40045C88D /* Start */,
+				5C6E5A6521FCEA8A0045C88D /* CreateRoom */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		5C6E5A6321FCE35B0045C88D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5CC72D4E21FB0B3E0077E723 /* Main.storyboard */,
+				5CC72D5121FB0B3E0077E723 /* Assets.xcassets */,
+				5CC72D5321FB0B3E0077E723 /* LaunchScreen.storyboard */,
+				5CC72D5621FB0B3E0077E723 /* Info.plist */,
+				5C6E5A6E21FD6A920045C88D /* GoogleService-Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		5C6E5A6421FCE3C40045C88D /* Start */ = {
+			isa = PBXGroup;
+			children = (
+				5C6E5A5721FCBB4B0045C88D /* StartViewController.swift */,
+			);
+			path = Start;
+			sourceTree = "<group>";
+		};
+		5C6E5A6521FCEA8A0045C88D /* CreateRoom */ = {
+			isa = PBXGroup;
+			children = (
+				5C6E5A6621FCEABD0045C88D /* CreateRoomViewController.swift */,
+				5C6E5A6C21FD69860045C88D /* CreateRoomViewModel.swift */,
+			);
+			path = CreateRoom;
+			sourceTree = "<group>";
+		};
 		5CC72D3E21FB0B3E0077E723 = {
 			isa = PBXGroup;
 			children = (
@@ -61,12 +122,9 @@
 		5CC72D4921FB0B3E0077E723 /* OurSpace */ = {
 			isa = PBXGroup;
 			children = (
-				5CC72D4A21FB0B3E0077E723 /* AppDelegate.swift */,
-				5CC72D4C21FB0B3E0077E723 /* ViewController.swift */,
-				5CC72D4E21FB0B3E0077E723 /* Main.storyboard */,
-				5CC72D5121FB0B3E0077E723 /* Assets.xcassets */,
-				5CC72D5321FB0B3E0077E723 /* LaunchScreen.storyboard */,
-				5CC72D5621FB0B3E0077E723 /* Info.plist */,
+				5C6E5A6021FCD4450045C88D /* Sources */,
+				5C6E5A5F21FCD4370045C88D /* Utils */,
+				5C6E5A6321FCE35B0045C88D /* Resources */,
 			);
 			path = OurSpace;
 			sourceTree = "<group>";
@@ -150,6 +208,7 @@
 			files = (
 				5CC72D5521FB0B3E0077E723 /* LaunchScreen.storyboard in Resources */,
 				5CC72D5221FB0B3E0077E723 /* Assets.xcassets in Resources */,
+				5C6E5A6F21FD6A920045C88D /* GoogleService-Info.plist in Resources */,
 				5CC72D5021FB0B3E0077E723 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -167,9 +226,11 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-OurSpace/Pods-OurSpace-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
+				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/ReactorKit/ReactorKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
@@ -177,6 +238,7 @@
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -184,9 +246,11 @@
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactorKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
@@ -194,6 +258,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -230,8 +295,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5CC72D4D21FB0B3E0077E723 /* ViewController.swift in Sources */,
+				5C6E5A6D21FD69860045C88D /* CreateRoomViewModel.swift in Sources */,
+				5C6E5A6721FCEABD0045C88D /* CreateRoomViewController.swift in Sources */,
 				5CC72D4B21FB0B3E0077E723 /* AppDelegate.swift in Sources */,
+				5C6E5A6921FCFB340045C88D /* CustomNavigationView.swift in Sources */,
+				5C6E5A5A21FCC29B0045C88D /* ProvideObject.swift in Sources */,
+				5C6E5A5821FCBB4B0045C88D /* StartViewController.swift in Sources */,
+				5C6E5A6221FCD4710045C88D /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,7 +450,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CNMQE42DQF;
-				INFOPLIST_FILE = OurSpace/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/OurSpace/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -400,7 +470,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CNMQE42DQF;
-				INFOPLIST_FILE = OurSpace/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/OurSpace/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

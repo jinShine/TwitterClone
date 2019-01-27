@@ -14,6 +14,9 @@ pod 'RxCocoa', '~> 4.0'
 # Firebase
 pod 'Firebase/Core'
 pod 'Firebase/Messaging'
+pod 'Firebase/Auth'
+pod 'Firebase/Database'
+pod 'Firebase/Storage'
 
 # Network
 pod 'Moya', '~> 12.0'
@@ -23,6 +26,7 @@ pod 'Kingfisher', '~> 5.0'
 
 # UI
 pod 'SnapKit', '~> 4.0.0'
+pod 'NVActivityIndicatorView'
 
 # GA
 pod 'GoogleAnalytics'
