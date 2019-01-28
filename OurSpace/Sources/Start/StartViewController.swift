@@ -48,8 +48,9 @@ class StartViewController: UIViewController {
         let button = UIButton()
         button.setTitle("개설하기", for: UIControl.State.normal)
         button.setTitleColor(UIColor.black, for: UIControl.State.normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
         button.backgroundColor = .white
+        button.layer.cornerRadius = 5
         return button
     }()
     
@@ -57,8 +58,9 @@ class StartViewController: UIViewController {
         let button = UIButton()
         button.setTitle("로그인하기", for: UIControl.State.normal)
         button.setTitleColor(UIColor.black, for: UIControl.State.normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
         button.backgroundColor = .white
+        button.layer.cornerRadius = 5
         return button
     }()
     

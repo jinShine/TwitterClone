@@ -8,6 +8,15 @@
 
 import UIKit
 
+var hasTopNotch: Bool {
+    if #available(iOS 11.0,  *) {
+        return UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0 > 20
+    }
+    
+    return false
+}
+
+///MARK:- UIColor
 extension UIColor {
     
     static func rgb(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) -> UIColor {
@@ -21,12 +30,4 @@ extension UIColor {
     static func mainAlphaColor() -> UIColor {
         return UIColor(red: 35/255, green: 102/255, blue: 255/255, alpha: 0.3)
     }
-}
-
-var hasTopNotch: Bool {
-    if #available(iOS 11.0,  *) {
-        return UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0 > 20
-    }
-    
-    return false
 }

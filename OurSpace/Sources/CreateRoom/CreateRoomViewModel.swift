@@ -19,12 +19,10 @@ final class CreateRoomViewModel: Reactor {
 
     enum Mutation {
         case isSpaceNameCheck(Bool)
-        case setLoading(Bool)
     }
 
     struct State {
         var isSpaceName: Bool = false
-        var isLoading: Bool = false
     }
     
     var initialState: CreateRoomViewModel.State = State()
@@ -34,9 +32,7 @@ final class CreateRoomViewModel: Reactor {
         switch action {
         case .validSpaceName(let name):
             return Observable.concat([
-                Observable.just(Mutation.setLoading(true)),
-                self.validSpaceName(spaceName: name).map { Mutation.isSpaceNameCheck($0) },
-                Observable.just(Mutation.setLoading(false))
+                self.validSpaceName(name).map { Mutation.isSpaceNameCheck($0) }
             ])
         }
     }
@@ -47,33 +43,33 @@ final class CreateRoomViewModel: Reactor {
         switch mutation {
         case .isSpaceNameCheck(let isValue):
             state.isSpaceName = isValue
-        case .setLoading(let isLoading):
-            state.isLoading = isLoading
+            return state
         }
-        return state
     }
     
-    private func validSpaceName(spaceName: String) -> Observable<Bool> {
+    // Method
+    private func validSpaceName(_ name: String) -> Observable<Bool> {
         return Observable<Bool>.create({ (observer) -> Disposable in
             
             Database.database().reference().child("spaceNames").observeSingleEvent(of: DataEventType.value) { (snapshot) in
                 
                 guard let value = snapshot.value as? [String : Any] else { return observer.onNext(false) }
-                guard let finedSpaceName = value[spaceName] as? String else { return observer.onNext(false) }
+                guard let finedSpaceName = value[name] as? String else { return observer.onNext(false) }
                 
                 print("******************************************************")
                 print(" <validSpaceName> \n\t", finedSpaceName)
                 print("******************************************************")
                 
                 for (_, element) in value.enumerated() {
-                    if element.key == spaceName {
-                        return observer.onNext(false)
+                    if element.key == name {
+                        observer.onNext(true)
+                        return
                     }
-                    observer.onNext(true)
                 }
-                observer.onCompleted()
+
             }
             
+            observer.onNext(false)
             return Disposables.create()
         })
     }

@@ -10,7 +10,7 @@
 		1487DBB4C2B7EF941D33894D /* Pods_OurSpace.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BB3F3D2EBE6E02B52E53CD2 /* Pods_OurSpace.framework */; };
 		5C6E5A5821FCBB4B0045C88D /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6E5A5721FCBB4B0045C88D /* StartViewController.swift */; };
 		5C6E5A5A21FCC29B0045C88D /* ProvideObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6E5A5921FCC29B0045C88D /* ProvideObject.swift */; };
-		5C6E5A6221FCD4710045C88D /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6E5A6121FCD4710045C88D /* Extensions.swift */; };
+		5C6E5A6221FCD4710045C88D /* CommonExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6E5A6121FCD4710045C88D /* CommonExtensions.swift */; };
 		5C6E5A6721FCEABD0045C88D /* CreateRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6E5A6621FCEABD0045C88D /* CreateRoomViewController.swift */; };
 		5C6E5A6921FCFB340045C88D /* CustomNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6E5A6821FCFB340045C88D /* CustomNavigationView.swift */; };
 		5C6E5A6D21FD69860045C88D /* CreateRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6E5A6C21FD69860045C88D /* CreateRoomViewModel.swift */; };
@@ -19,13 +19,15 @@
 		5CC72D5021FB0B3E0077E723 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CC72D4E21FB0B3E0077E723 /* Main.storyboard */; };
 		5CC72D5221FB0B3E0077E723 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5CC72D5121FB0B3E0077E723 /* Assets.xcassets */; };
 		5CC72D5521FB0B3E0077E723 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CC72D5321FB0B3E0077E723 /* LaunchScreen.storyboard */; };
+		5CC72D5D21FEDCE90077E723 /* CommonReactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC72D5C21FEDCE90077E723 /* CommonReactive.swift */; };
+		5CC72D5F21FEE4E20077E723 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC72D5E21FEE4E20077E723 /* App.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1BB3F3D2EBE6E02B52E53CD2 /* Pods_OurSpace.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OurSpace.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C6E5A5721FCBB4B0045C88D /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		5C6E5A5921FCC29B0045C88D /* ProvideObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvideObject.swift; sourceTree = "<group>"; };
-		5C6E5A6121FCD4710045C88D /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		5C6E5A6121FCD4710045C88D /* CommonExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonExtensions.swift; sourceTree = "<group>"; };
 		5C6E5A6621FCEABD0045C88D /* CreateRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomViewController.swift; sourceTree = "<group>"; };
 		5C6E5A6821FCFB340045C88D /* CustomNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationView.swift; sourceTree = "<group>"; };
 		5C6E5A6C21FD69860045C88D /* CreateRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomViewModel.swift; sourceTree = "<group>"; };
@@ -36,6 +38,8 @@
 		5CC72D5121FB0B3E0077E723 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5CC72D5421FB0B3E0077E723 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5CC72D5621FB0B3E0077E723 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5CC72D5C21FEDCE90077E723 /* CommonReactive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonReactive.swift; sourceTree = "<group>"; };
+		5CC72D5E21FEE4E20077E723 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		643E56349549ABC10EB2CDE2 /* Pods-OurSpace.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OurSpace.release.xcconfig"; path = "Pods/Target Support Files/Pods-OurSpace/Pods-OurSpace.release.xcconfig"; sourceTree = "<group>"; };
 		C5390C06192EE080D8435BDA /* Pods-OurSpace.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OurSpace.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OurSpace/Pods-OurSpace.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -55,8 +59,10 @@
 		5C6E5A5F21FCD4370045C88D /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				5C6E5A6121FCD4710045C88D /* Extensions.swift */,
+				5C6E5A6121FCD4710045C88D /* CommonExtensions.swift */,
+				5CC72D5C21FEDCE90077E723 /* CommonReactive.swift */,
 				5C6E5A6821FCFB340045C88D /* CustomNavigationView.swift */,
+				5CC72D5E21FEE4E20077E723 /* App.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -66,6 +72,7 @@
 			children = (
 				5CC72D4A21FB0B3E0077E723 /* AppDelegate.swift */,
 				5C6E5A5921FCC29B0045C88D /* ProvideObject.swift */,
+				5C6E5A5F21FCD4370045C88D /* Utils */,
 				5C6E5A6421FCE3C40045C88D /* Start */,
 				5C6E5A6521FCEA8A0045C88D /* CreateRoom */,
 			);
@@ -123,7 +130,6 @@
 			isa = PBXGroup;
 			children = (
 				5C6E5A6021FCD4450045C88D /* Sources */,
-				5C6E5A5F21FCD4370045C88D /* Utils */,
 				5C6E5A6321FCE35B0045C88D /* Resources */,
 			);
 			path = OurSpace;
@@ -295,13 +301,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5CC72D5F21FEE4E20077E723 /* App.swift in Sources */,
 				5C6E5A6D21FD69860045C88D /* CreateRoomViewModel.swift in Sources */,
 				5C6E5A6721FCEABD0045C88D /* CreateRoomViewController.swift in Sources */,
 				5CC72D4B21FB0B3E0077E723 /* AppDelegate.swift in Sources */,
+				5CC72D5D21FEDCE90077E723 /* CommonReactive.swift in Sources */,
 				5C6E5A6921FCFB340045C88D /* CustomNavigationView.swift in Sources */,
 				5C6E5A5A21FCC29B0045C88D /* ProvideObject.swift in Sources */,
 				5C6E5A5821FCBB4B0045C88D /* StartViewController.swift in Sources */,
-				5C6E5A6221FCD4710045C88D /* Extensions.swift in Sources */,
+				5C6E5A6221FCD4710045C88D /* CommonExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

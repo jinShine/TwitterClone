@@ -220,6 +220,10 @@ final class CreateRoomViewController: UIViewController, View {
         createButton.rx.tap
             .map { self.spaceNameTextField.text ?? "" }
             .filter { $0.count >= 2 && $0.count <= 15 }
+            .do(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.indicator.startAnimating()
+            })
             .map { Reactor.Action.validSpaceName($0) }
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
@@ -228,51 +232,26 @@ final class CreateRoomViewController: UIViewController, View {
         // State
         reactor.state
             .map { $0.isSpaceName }
+            .distinctUntilChanged()
             .subscribe(onNext: { [weak self] result in
+                guard let self = self else { return }
+                
+                print("Result:::::::::::", result)
                 if result {
-//                    self?.indicator.startAnimating()
-                    print("dd")
+                    self.rx.showOkAlert(title: "알림", message: "이미 존재하는 공간입니다.")
+                        .subscribe(onNext: { _ in self.indicator.stopAnimating() })
+                        .disposed(by: self.disposeBag)
+                    self.indicator.stopAnimating()
                 } else {
-                    print("호호")
-//                    self?.indicator.startAnimating()
-//                    let alertController = UIAlertController(title: "알림", message: "이미 존재하는 공간입니다.", preferredStyle: UIAlertController.Style.alert)
-//                    let okAction = UIAlertAction(title: "확인", style: UIAlertAction.Style.default, handler: nil)
-//                    alertController.addAction(okAction)
-//                    self?.present(alertController, animated: true, completion: {
-//                        self?.indicator.stopAnimating()
-//                    })
+                    // 저장 && 다음화면 이동 로직
+                    print("존재하지 않은 공간명")
+                    
+                    
+                    
+                    self.indicator.stopAnimating()
                 }
-            }, onCompleted: {
-                self.indicator.stopAnimating()
             })
             .disposed(by: self.disposeBag)
-//
-//        reactor.state
-//            .map { $0.isLoading }
-//            .subscribe(onNext: { [weak self] isAnimating in
-//                isAnimating ? self?.indicator.startAnimating() : self?.indicator.stopAnimating()
-//            })
-//            .disposed(by: self.disposeBag)
-//
-//
-        
-
-//        spaceNameTextField.rx.text.orEmpty
-//            .map { Reactor.Action.}
-
-
-
-
-
-//        reactor.state.map { $0.isSpaceName }
-//            .subscribe(onNext: { (result) in
-//                if result {
-//                    print("있음")
-//                } else {
-//                    print("없음")
-//                }
-//            })
-//            .disposed(by: self.disposeBag)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
