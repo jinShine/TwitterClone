@@ -63,13 +63,15 @@ final class CreateRoomViewModel: Reactor {
                 for (_, element) in value.enumerated() {
                     if element.key == name {
                         observer.onNext(true)
+                        observer.onCompleted()
                         return
                     }
                 }
-
+                
+                observer.onNext(false)
+                return
             }
             
-            observer.onNext(false)
             return Disposables.create()
         })
     }

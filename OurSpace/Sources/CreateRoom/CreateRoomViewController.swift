@@ -219,7 +219,16 @@ final class CreateRoomViewController: UIViewController, View {
         // Action
         createButton.rx.tap
             .map { self.spaceNameTextField.text ?? "" }
-            .filter { $0.count >= 2 && $0.count <= 15 }
+            .filter({ [weak self] str -> Bool in
+                guard let self = self else { return false }
+                guard str.count >= 2 && str.count <= 15 else {
+                    self.rx.showOkAlert(title: "알림", message: "2-15자 이내로 입력해주세요.")
+                        .subscribe(onNext: { _ in self.indicator.stopAnimating() })
+                        .disposed(by: self.disposeBag)
+                    return false
+                }
+                return true
+            })
             .do(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 self.indicator.startAnimating()
@@ -232,7 +241,6 @@ final class CreateRoomViewController: UIViewController, View {
         // State
         reactor.state
             .map { $0.isSpaceName }
-            .distinctUntilChanged()
             .subscribe(onNext: { [weak self] result in
                 guard let self = self else { return }
                 
@@ -241,17 +249,15 @@ final class CreateRoomViewController: UIViewController, View {
                     self.rx.showOkAlert(title: "알림", message: "이미 존재하는 공간입니다.")
                         .subscribe(onNext: { _ in self.indicator.stopAnimating() })
                         .disposed(by: self.disposeBag)
-                    self.indicator.stopAnimating()
                 } else {
                     // 저장 && 다음화면 이동 로직
                     print("존재하지 않은 공간명")
                     
-                    
-                    
-                    self.indicator.stopAnimating()
                 }
+                self.indicator.stopAnimating()
             })
             .disposed(by: self.disposeBag)
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -259,26 +265,18 @@ final class CreateRoomViewController: UIViewController, View {
     }
     
     func keyboardWillShow(notification: Notification) {
-        print("notification",notification)
-        
         let notiInfo = notification.userInfo! as Dictionary
         let keyboardFrame = notiInfo[UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
         let keyboardHeight = keyboardFrame.size.height / 2
-        
         self.scrollView.contentInset.bottom = keyboardHeight
-
         UIView.animate(withDuration: notiInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as! TimeInterval) {
             self.view.layoutIfNeeded()
         }
     }
     
     func keyboardWillHide(notification: Notification) {
-        print("notification",notification)
-        
         let notiInfo = notification.userInfo! as Dictionary
-        
         self.scrollView.contentInset.bottom = 0
-        
         UIView.animate(withDuration: notiInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as! TimeInterval) {
             self.view.layoutIfNeeded()
         }
