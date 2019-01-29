@@ -100,9 +100,13 @@ class StartViewController: UIViewController {
         print("DEINIT: StartViewController")
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         configureUI()
         bind()
     }

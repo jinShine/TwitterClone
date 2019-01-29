@@ -8,12 +8,26 @@
 
 import UIKit
 
+///Notch Check
 var hasTopNotch: Bool {
     if #available(iOS 11.0,  *) {
         return UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0 > 20
     }
     
     return false
+}
+
+///Email 정규식
+func validateEmail(_ email: String) -> Bool {
+    let emailRegEx = "^.+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2}[A-Za-z]*$"
+    let predicate = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+    return predicate.evaluate(with: email)
+}
+
+func validatePassword(password: String) -> Bool {
+    let passwordRegEx = "^(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9])(?=.*[0-9]).{8,50}$"
+    let predicate = NSPredicate(format:"SELF MATCHES %@", passwordRegEx)
+    return predicate.evaluate(with: password)
 }
 
 ///MARK:- UIColor
@@ -29,5 +43,20 @@ extension UIColor {
     
     static func mainAlphaColor() -> UIColor {
         return UIColor(red: 35/255, green: 102/255, blue: 255/255, alpha: 0.3)
+    }
+}
+
+extension UITextField {
+    
+    func setLeftPaddingPoints(_ amount: CGFloat){
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: self.frame.size.height))
+        self.leftView = paddingView
+        self.leftViewMode = .always
+    }
+    
+    func setRightPaddingPoints(_ amount:CGFloat) {
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: self.frame.size.height))
+        self.rightView = paddingView
+        self.rightViewMode = .always
     }
 }

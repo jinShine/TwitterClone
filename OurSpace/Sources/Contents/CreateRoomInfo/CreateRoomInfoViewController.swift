@@ -41,23 +41,28 @@ final class CreateRoomInfoViewController: UIViewController, View {
         let tf = UITextField()
         tf.placeholder = "이메일을 입력해주세요."
         tf.borderStyle = .roundedRect
+        tf.rightViewMode = .always
         tf.font = UIFont.systemFont(ofSize: 15)
+        tf.keyboardType = .emailAddress
         return tf
     }()
 
     let idTextField: UITextField = {
         let tf = UITextField()
-        tf.placeholder = "아이디"
+        tf.placeholder = "아이디 (20자 이내)"
         tf.borderStyle = .roundedRect
+        tf.rightViewMode = .always
         tf.font = UIFont.systemFont(ofSize: 15)
         return tf
     }()
 
     let pwTextField: UITextField = {
         let tf = UITextField()
-        tf.placeholder = "숫자 혹은 특수문자 포함 8자 이상"
+        tf.placeholder = "비밀번호(숫자 혹은 특수문자 포함 8자 이상)"
         tf.borderStyle = .roundedRect
+        tf.rightViewMode = .always
         tf.font = UIFont.systemFont(ofSize: 15)
+        tf.isSecureTextEntry = true
         return tf
     }()
 
@@ -65,13 +70,48 @@ final class CreateRoomInfoViewController: UIViewController, View {
         let tf = UITextField()
         tf.placeholder = "비밀번호 확인"
         tf.borderStyle = .roundedRect
+        tf.rightViewMode = .always
         tf.font = UIFont.systemFont(ofSize: 15)
+        tf.isSecureTextEntry = true
         return tf
+    }()
+    
+    let createButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("공간 개설하기", for: UIControl.State.normal)
+        button.setTitleColor(UIColor.white, for: UIControl.State.normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
+        button.backgroundColor = UIColor.mainColor()
+        return button
     }()
     
     let indicator: NVActivityIndicatorView = {
         let indicator = NVActivityIndicatorView(frame: .zero, type: .init(NVActivityIndicatorType.ballTrianglePath), color: UIColor.mainColor(), padding: 0)
         return indicator
+    }()
+    
+    let emailPaddingView: UIView = {
+        let view = UIView()
+        view.isHidden = true
+        return view
+    }()
+    
+    let idPaddingView: UIView = {
+        let view = UIView()
+        view.isHidden = true
+        return view
+    }()
+    
+    let pwPaddingView: UIView = {
+        let view = UIView()
+        view.isHidden = true
+        return view
+    }()
+    
+    let confirmPwPaddingView: UIView = {
+        let view = UIView()
+        view.isHidden = true
+        return view
     }()
     
     
@@ -82,11 +122,13 @@ final class CreateRoomInfoViewController: UIViewController, View {
     let navi = CustomNavigationView()
     
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     // Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         configureUI()
     }
     
@@ -119,10 +161,10 @@ final class CreateRoomInfoViewController: UIViewController, View {
         
         [scrollView, indicator].forEach { view.addSubview($0) }
         [contentsView].forEach { scrollView.addSubview($0) }
-        [spaceTitleLabel, emailTextField, idTextField, pwTextField, confirmPwTextField].forEach {
+        [spaceTitleLabel, emailTextField, idTextField, pwTextField, confirmPwTextField, createButton].forEach {
             contentsView.addSubview($0)
         }
-        
+
         scrollView.snp.makeConstraints {
             $0.top.equalTo(navi.snp.bottom)
             $0.leading.trailing.bottom.equalTo(self.view)
@@ -161,9 +203,52 @@ final class CreateRoomInfoViewController: UIViewController, View {
             $0.trailing.equalToSuperview().offset(-30)
             $0.height.equalTo(45)
         }
+        createButton.snp.makeConstraints {
+            $0.top.equalTo(confirmPwTextField.snp.bottom).offset(10)
+            $0.leading.equalToSuperview().offset(30)
+            $0.trailing.equalToSuperview().offset(-30)
+            $0.height.equalTo(45)
+        }
+        
+        indicator.snp.makeConstraints {
+            $0.center.equalToSuperview()
+            $0.size.equalTo(50)
+        }
+        
+        setupValidCheckImage()
     }
     
+    func setupValidCheckImage() {
+        
+        emailPaddingView.frame = CGRect(x: 0, y: 0, width: 30, height: 20)
+        let emailCheckImg = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        emailCheckImg.image = UIImage(named:"Check_Main")
+        emailCheckImg.contentMode = .scaleAspectFit
+        emailPaddingView.addSubview(emailCheckImg)
+        
+        idPaddingView.frame = CGRect(x: 0, y: 0, width: 30, height: 20)
+        let idCheckImg = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        idCheckImg.image = UIImage(named:"Check_Main")
+        idCheckImg.contentMode = .scaleAspectFit
+        idPaddingView.addSubview(idCheckImg)
+        
+        pwPaddingView.frame = CGRect(x: 0, y: 0, width: 30, height: 20)
+        let pwCheckImg = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        pwCheckImg.image = UIImage(named:"Check_Main")
+        pwCheckImg.contentMode = .scaleAspectFit
+        pwPaddingView.addSubview(pwCheckImg)
 
+        confirmPwPaddingView.frame = CGRect(x: 0, y: 0, width: 30, height: 20)
+        let confirmPwCheckImg = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        confirmPwCheckImg.image = UIImage(named:"Check_Main")
+        confirmPwCheckImg.contentMode = .scaleAspectFit
+        confirmPwPaddingView.addSubview(confirmPwCheckImg)
+
+        emailTextField.rightView = emailPaddingView
+        idTextField.rightView = idPaddingView
+        pwTextField.rightView = pwPaddingView
+        confirmPwTextField.rightView = confirmPwPaddingView
+    }
     
 }
 
@@ -173,11 +258,49 @@ extension CreateRoomInfoViewController {
     func bind(reactor: CreateRoomInfoViewModel) {
         
         // Action
+        emailTextField.rx.text.orEmpty
+            .map { Reactor.Action.emailInfo($0) }
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
         
+        idTextField.rx.text.orEmpty
+            .map { Reactor.Action.idInfo($0) }
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
         
+        let pwObserver = pwTextField.rx.text.orEmpty
+        let confirmPwObserver = confirmPwTextField.rx.text.orEmpty
         
+        pwObserver.map { Reactor.Action.pwInfo($0) }
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
         
+        Observable.combineLatest(pwObserver, confirmPwObserver)
+            .map { Reactor.Action.confirmPwInfo(($0, $1)) }
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
+
+
         // State
+        reactor.state
+            .map { $0.isValidEmail }
+            .bind(to: emailPaddingView.rx.isHidden)
+            .disposed(by: self.disposeBag)
+        
+        reactor.state
+            .map { $0.isValidID }
+            .bind(to: idPaddingView.rx.isHidden)
+            .disposed(by: self.disposeBag)
+        
+        reactor.state
+            .map { $0.isValidPW }
+            .bind(to: pwPaddingView.rx.isHidden)
+            .disposed(by: self.disposeBag)
+        
+        reactor.state
+            .map { $0.isPwCheck }
+            .bind(to: confirmPwPaddingView.rx.isHidden)
+            .disposed(by: self.disposeBag)
         
         
     }

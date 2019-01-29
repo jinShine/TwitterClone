@@ -30,10 +30,11 @@ final class CreateRoomViewController: UIViewController, View {
     
     let spaceTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "우리들만의 공간의 이름을 입력해주세요."
+        label.text = "우리들만의 공간의 이름을 입력해주세요.\n방의 이름이 곧 주소입니다."
         label.textAlignment = .center
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 15)
+        label.numberOfLines = 0
         return label
     }()
     
@@ -48,11 +49,10 @@ final class CreateRoomViewController: UIViewController, View {
     
     let createButton: UIButton = {
         let button = UIButton()
-        button.setTitle("개설하기", for: UIControl.State.normal)
+        button.setTitle("공간 확인하기", for: UIControl.State.normal)
         button.setTitleColor(UIColor.white, for: UIControl.State.normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
         button.backgroundColor = UIColor.mainColor()
-//        button.isEnabled = false
         return button
     }()
     
@@ -66,6 +66,10 @@ final class CreateRoomViewController: UIViewController, View {
     let navi = CustomNavigationView()
     var disposeBag: DisposeBag = DisposeBag()
     
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     //Life Cycle
     override func viewDidLoad() {
@@ -219,8 +223,7 @@ extension CreateRoomViewController {
                 } else {
                     // 저장 && 다음화면 이동 로직
                     print("존재하지 않은 공간명")
-                    let createRoomInfoVC = CreateRoomInfoViewController()
-                    self.navigationController?.pushViewController(createRoomInfoVC, animated: true)
+                    self.navigationController?.pushViewController(ProvideObject.createRoomInfo.viewController, animated: true)
                 }
                 self.indicator.stopAnimating()
             })

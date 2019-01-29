@@ -12,6 +12,7 @@ import RxCocoa
 enum ProvideObject {
     case start          // StartView
     case createRoom     // CreateRoom
+    case createRoomInfo // CreateRoomInfo
 }
 
 
@@ -19,15 +20,23 @@ extension ProvideObject {
     var viewController: UIViewController {
         switch self {
         case .start:
-            let startViewController: StartViewController = StartViewController()
-            let navigationVC = UINavigationController(rootViewController: startViewController)
+            let viewController: StartViewController = StartViewController()
+            viewController.setNeedsStatusBarAppearanceUpdate()
+            let navigationVC = UINavigationController(rootViewController: viewController)
             navigationVC.setNavigationBarHidden(true, animated: false)
             return navigationVC
             
         case .createRoom:
-            let createViewController: CreateRoomViewController = CreateRoomViewController()
-            createViewController.reactor = CreateRoomViewModel()
-            return createViewController
+            let viewController: CreateRoomViewController = CreateRoomViewController()
+            viewController.setNeedsStatusBarAppearanceUpdate()
+            viewController.reactor = CreateRoomViewModel()
+            return viewController
+            
+        case .createRoomInfo:
+            let viewController: CreateRoomInfoViewController = CreateRoomInfoViewController()
+            viewController.setNeedsStatusBarAppearanceUpdate()
+            viewController.reactor = CreateRoomInfoViewModel()
+            return viewController
         }
     }
 }
