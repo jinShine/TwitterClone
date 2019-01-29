@@ -44,38 +44,7 @@ final class CreateRoomViewController: UIViewController, View {
         tf.font = UIFont.systemFont(ofSize: 15)
         return tf
     }()
-//
-//    let emailTextField: UITextField = {
-//        let tf = UITextField()
-//        tf.placeholder = "이메일을 입력해주세요."
-//        tf.borderStyle = .roundedRect
-//        tf.font = UIFont.systemFont(ofSize: 15)
-//        return tf
-//    }()
-//
-//    let idTextField: UITextField = {
-//        let tf = UITextField()
-//        tf.placeholder = "아이디"
-//        tf.borderStyle = .roundedRect
-//        tf.font = UIFont.systemFont(ofSize: 15)
-//        return tf
-//    }()
-//
-//    let pwTextField: UITextField = {
-//        let tf = UITextField()
-//        tf.placeholder = "숫자 혹은 특수문자 포함 8자 이상"
-//        tf.borderStyle = .roundedRect
-//        tf.font = UIFont.systemFont(ofSize: 15)
-//        return tf
-//    }()
-//
-//    let confirmPwTextField: UITextField = {
-//        let tf = UITextField()
-//        tf.placeholder = "비밀번호 확인"
-//        tf.borderStyle = .roundedRect
-//        tf.font = UIFont.systemFont(ofSize: 15)
-//        return tf
-//    }()
+
     
     let createButton: UIButton = {
         let button = UIButton()
@@ -142,49 +111,22 @@ final class CreateRoomViewController: UIViewController, View {
             $0.top.equalTo(navi.snp.bottom)
             $0.leading.trailing.bottom.equalTo(self.view)
         }
-        
         contentsView.snp.makeConstraints {
             $0.top.bottom.width.height.equalTo(scrollView)
             $0.leading.trailing.equalTo(self.view)
         }
-
         spaceTitleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(50)
             $0.leading.equalToSuperview().offset(30)
             $0.trailing.equalToSuperview().offset(-30)
             $0.height.equalTo(45)
         }
-        
         spaceNameTextField.snp.makeConstraints {
             $0.top.equalTo(spaceTitleLabel.snp.bottom).offset(10)
             $0.leading.equalToSuperview().offset(30)
             $0.trailing.equalToSuperview().offset(-30)
             $0.height.equalTo(45)
         }
-//        emailTextField.snp.makeConstraints {
-//            $0.top.equalTo(spaceNameTextField.snp.bottom).offset(10)
-//            $0.leading.equalToSuperview().offset(30)
-//            $0.trailing.equalToSuperview().offset(-30)
-//            $0.height.equalTo(45)
-//        }
-//        idTextField.snp.makeConstraints {
-//            $0.top.equalTo(emailTextField.snp.bottom).offset(10)
-//            $0.leading.equalToSuperview().offset(30)
-//            $0.trailing.equalToSuperview().offset(-30)
-//            $0.height.equalTo(45)
-//        }
-//        pwTextField.snp.makeConstraints {
-//            $0.top.equalTo(idTextField.snp.bottom).offset(10)
-//            $0.leading.equalToSuperview().offset(30)
-//            $0.trailing.equalToSuperview().offset(-30)
-//            $0.height.equalTo(45)
-//        }
-//        confirmPwTextField.snp.makeConstraints {
-//            $0.top.equalTo(pwTextField.snp.bottom).offset(10)
-//            $0.leading.equalToSuperview().offset(30)
-//            $0.trailing.equalToSuperview().offset(-30)
-//            $0.height.equalTo(45)
-//        }
         createButton.snp.makeConstraints {
             $0.top.equalTo(spaceNameTextField.snp.bottom).offset(10)
             $0.leading.equalToSuperview().offset(30)
@@ -199,23 +141,48 @@ final class CreateRoomViewController: UIViewController, View {
         
         
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    func keyboardWillShow(notification: Notification) {
+        let notiInfo = notification.userInfo! as Dictionary
+        let keyboardFrame = notiInfo[UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
+        let keyboardHeight = keyboardFrame.size.height / 2
+        self.scrollView.contentInset.bottom = keyboardHeight
+        UIView.animate(withDuration: notiInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as! TimeInterval) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    func keyboardWillHide(notification: Notification) {
+        let notiInfo = notification.userInfo! as Dictionary
+        self.scrollView.contentInset.bottom = 0
+        UIView.animate(withDuration: notiInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as! TimeInterval) {
+            self.view.layoutIfNeeded()
+        }
+    }
+}
 
+extension CreateRoomViewController {
+    
     func bind(reactor: CreateRoomViewModel) {
-
+        
         NotificationCenter.default.rx.notification(Notification.Name?.init(UIApplication.keyboardWillShowNotification))
             .subscribe(onNext: { [weak self] notification in
                 self?.keyboardWillShow(notification: notification)
             })
             .disposed(by: self.disposeBag)
-
+        
         NotificationCenter.default.rx.notification(Notification.Name?.init(UIApplication.keyboardWillHideNotification))
             .subscribe(onNext: { [weak self] notification in
                 self?.keyboardWillHide(notification: notification)
             })
             .disposed(by: self.disposeBag)
-
         
-
+        
+        
         // Action
         createButton.rx.tap
             .map { self.spaceNameTextField.text ?? "" }
@@ -252,33 +219,12 @@ final class CreateRoomViewController: UIViewController, View {
                 } else {
                     // 저장 && 다음화면 이동 로직
                     print("존재하지 않은 공간명")
-                    
+                    let createRoomInfoVC = CreateRoomInfoViewController()
+                    self.navigationController?.pushViewController(createRoomInfoVC, animated: true)
                 }
                 self.indicator.stopAnimating()
             })
             .disposed(by: self.disposeBag)
         
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-    }
-    
-    func keyboardWillShow(notification: Notification) {
-        let notiInfo = notification.userInfo! as Dictionary
-        let keyboardFrame = notiInfo[UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
-        let keyboardHeight = keyboardFrame.size.height / 2
-        self.scrollView.contentInset.bottom = keyboardHeight
-        UIView.animate(withDuration: notiInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as! TimeInterval) {
-            self.view.layoutIfNeeded()
-        }
-    }
-    
-    func keyboardWillHide(notification: Notification) {
-        let notiInfo = notification.userInfo! as Dictionary
-        self.scrollView.contentInset.bottom = 0
-        UIView.animate(withDuration: notiInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as! TimeInterval) {
-            self.view.layoutIfNeeded()
-        }
     }
 }

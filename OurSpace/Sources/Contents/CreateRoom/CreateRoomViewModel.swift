@@ -47,6 +47,10 @@ final class CreateRoomViewModel: Reactor {
         }
     }
     
+}
+
+extension CreateRoomViewModel {
+    
     // Method
     private func validSpaceName(_ name: String) -> Observable<Bool> {
         return Observable<Bool>.create({ (observer) -> Disposable in
@@ -75,4 +79,5 @@ final class CreateRoomViewModel: Reactor {
             return Disposables.create()
         })
     }
+    
 }

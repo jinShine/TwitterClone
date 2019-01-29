@@ -21,6 +21,8 @@
 		5CC72D5521FB0B3E0077E723 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CC72D5321FB0B3E0077E723 /* LaunchScreen.storyboard */; };
 		5CC72D5D21FEDCE90077E723 /* CommonReactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC72D5C21FEDCE90077E723 /* CommonReactive.swift */; };
 		5CC72D5F21FEE4E20077E723 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC72D5E21FEE4E20077E723 /* App.swift */; };
+		5CC72D6321FFEF9E0077E723 /* CreateRoomInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC72D6221FFEF9E0077E723 /* CreateRoomInfoViewController.swift */; };
+		5CC72D6721FFF04E0077E723 /* CreateRoomInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC72D6621FFF04E0077E723 /* CreateRoomInfoViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +42,8 @@
 		5CC72D5621FB0B3E0077E723 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5CC72D5C21FEDCE90077E723 /* CommonReactive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonReactive.swift; sourceTree = "<group>"; };
 		5CC72D5E21FEE4E20077E723 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
+		5CC72D6221FFEF9E0077E723 /* CreateRoomInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomInfoViewController.swift; sourceTree = "<group>"; };
+		5CC72D6621FFF04E0077E723 /* CreateRoomInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomInfoViewModel.swift; sourceTree = "<group>"; };
 		643E56349549ABC10EB2CDE2 /* Pods-OurSpace.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OurSpace.release.xcconfig"; path = "Pods/Target Support Files/Pods-OurSpace/Pods-OurSpace.release.xcconfig"; sourceTree = "<group>"; };
 		C5390C06192EE080D8435BDA /* Pods-OurSpace.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OurSpace.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OurSpace/Pods-OurSpace.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -73,8 +77,7 @@
 				5CC72D4A21FB0B3E0077E723 /* AppDelegate.swift */,
 				5C6E5A5921FCC29B0045C88D /* ProvideObject.swift */,
 				5C6E5A5F21FCD4370045C88D /* Utils */,
-				5C6E5A6421FCE3C40045C88D /* Start */,
-				5C6E5A6521FCEA8A0045C88D /* CreateRoom */,
+				5CC72D6021FFEF2B0077E723 /* Contents */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -133,6 +136,25 @@
 				5C6E5A6321FCE35B0045C88D /* Resources */,
 			);
 			path = OurSpace;
+			sourceTree = "<group>";
+		};
+		5CC72D6021FFEF2B0077E723 /* Contents */ = {
+			isa = PBXGroup;
+			children = (
+				5C6E5A6421FCE3C40045C88D /* Start */,
+				5C6E5A6521FCEA8A0045C88D /* CreateRoom */,
+				5CC72D6121FFEF6B0077E723 /* CreateRoomInfo */,
+			);
+			path = Contents;
+			sourceTree = "<group>";
+		};
+		5CC72D6121FFEF6B0077E723 /* CreateRoomInfo */ = {
+			isa = PBXGroup;
+			children = (
+				5CC72D6221FFEF9E0077E723 /* CreateRoomInfoViewController.swift */,
+				5CC72D6621FFF04E0077E723 /* CreateRoomInfoViewModel.swift */,
+			);
+			path = CreateRoomInfo;
 			sourceTree = "<group>";
 		};
 		8A45EFDEBCF3A2A765F8F6ED /* Pods */ = {
@@ -301,11 +323,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5CC72D6721FFF04E0077E723 /* CreateRoomInfoViewModel.swift in Sources */,
 				5CC72D5F21FEE4E20077E723 /* App.swift in Sources */,
 				5C6E5A6D21FD69860045C88D /* CreateRoomViewModel.swift in Sources */,
 				5C6E5A6721FCEABD0045C88D /* CreateRoomViewController.swift in Sources */,
 				5CC72D4B21FB0B3E0077E723 /* AppDelegate.swift in Sources */,
 				5CC72D5D21FEDCE90077E723 /* CommonReactive.swift in Sources */,
+				5CC72D6321FFEF9E0077E723 /* CreateRoomInfoViewController.swift in Sources */,
 				5C6E5A6921FCFB340045C88D /* CustomNavigationView.swift in Sources */,
 				5C6E5A5A21FCC29B0045C88D /* ProvideObject.swift in Sources */,
 				5C6E5A5821FCBB4B0045C88D /* StartViewController.swift in Sources */,
