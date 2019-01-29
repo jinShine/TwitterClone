@@ -18,7 +18,6 @@ class CustomNavigationView: UIView {
     
     let leftButton: UIButton = {
         let button = UIButton()
-        button.setTitle("sssss", for: UIControl.State.normal)
         button.contentMode = .scaleAspectFit
         return button
     }()

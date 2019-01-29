@@ -103,7 +103,7 @@ final class CreateRoomInfoViewController: UIViewController, View {
             $0.leading.trailing.equalToSuperview()
         }
         navi.backgroundColor = UIColor.mainColor()
-        navi.leftButton.setImage(UIImage(named: "Close_White"), for: UIControl.State.normal)
+        navi.leftButton.setImage(UIImage(named: "Back_White"), for: UIControl.State.normal)
         navi.leftButton.addTarget(self, action: #selector(closeAction), for: UIControl.Event.touchUpInside)
         navi.titleLabel.text = "프로필 작성"
         navi.titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
