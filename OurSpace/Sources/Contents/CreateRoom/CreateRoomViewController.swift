@@ -45,14 +45,23 @@ final class CreateRoomViewController: UIViewController, View {
         tf.font = UIFont.systemFont(ofSize: 15)
         return tf
     }()
-
+    
+    let pwTextField: UITextField = {
+        let tf = UITextField()
+        tf.placeholder = "비빌번호 (2-15자 이내)"
+        tf.borderStyle = .roundedRect
+        tf.font = UIFont.systemFont(ofSize: 15)
+        tf.isSecureTextEntry = true
+        return tf
+    }()
     
     let createButton: UIButton = {
         let button = UIButton()
         button.setTitle("공간 확인하기", for: UIControl.State.normal)
         button.setTitleColor(UIColor.white, for: UIControl.State.normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
-        button.backgroundColor = UIColor.mainColor()
+        button.backgroundColor = UIColor.mainAlphaColor()
+        button.isEnabled = false
         return button
     }()
     
@@ -107,7 +116,7 @@ final class CreateRoomViewController: UIViewController, View {
         
         [scrollView, indicator].forEach { view.addSubview($0) }
         [contentsView].forEach { scrollView.addSubview($0) }
-        [spaceTitleLabel, spaceNameTextField, createButton].forEach {
+        [spaceTitleLabel, spaceNameTextField, pwTextField, createButton].forEach {
             contentsView.addSubview($0)
         }
         
@@ -131,8 +140,14 @@ final class CreateRoomViewController: UIViewController, View {
             $0.trailing.equalToSuperview().offset(-30)
             $0.height.equalTo(45)
         }
-        createButton.snp.makeConstraints {
+        pwTextField.snp.makeConstraints {
             $0.top.equalTo(spaceNameTextField.snp.bottom).offset(10)
+            $0.leading.equalToSuperview().offset(30)
+            $0.trailing.equalToSuperview().offset(-30)
+            $0.height.equalTo(45)
+        }
+        createButton.snp.makeConstraints {
+            $0.top.equalTo(pwTextField.snp.bottom).offset(10)
             $0.leading.equalToSuperview().offset(30)
             $0.trailing.equalToSuperview().offset(-30)
             $0.height.equalTo(45)
@@ -186,20 +201,26 @@ extension CreateRoomViewController {
             .disposed(by: self.disposeBag)
         
         
+        let spaceNameOb = self.spaceNameTextField.rx.text.orEmpty
+        let pwTextOb = self.pwTextField.rx.text.orEmpty
+        Observable.combineLatest(spaceNameOb, pwTextOb)
+            .subscribe(onNext: { [weak self] (name, pw) in
+                guard let self = self else { return }
+                guard (name.count >= 2 && name.count <= 15) &&
+                    (pw.count >= 2 && pw.count <= 15) else {
+                        self.createButton.backgroundColor = UIColor.mainAlphaColor()
+                        self.createButton.isEnabled = false
+                        return
+                    }
+                self.createButton.backgroundColor = UIColor.mainColor()
+                self.createButton.isEnabled = true
+            })
+            .disposed(by: self.disposeBag)
+        
         
         // Action
         createButton.rx.tap
-            .map { self.spaceNameTextField.text ?? "" }
-            .filter({ [weak self] str -> Bool in
-                guard let self = self else { return false }
-                guard str.count >= 2 && str.count <= 15 else {
-                    self.rx.showOkAlert(title: "알림", message: "2-15자 이내로 입력해주세요.")
-                        .subscribe(onNext: { _ in self.indicator.stopAnimating() })
-                        .disposed(by: self.disposeBag)
-                    return false
-                }
-                return true
-            })
+            .map { (self.spaceNameTextField.text ?? "", self.pwTextField.text ?? "")}
             .do(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 self.indicator.startAnimating()
@@ -207,15 +228,12 @@ extension CreateRoomViewController {
             .map { Reactor.Action.validSpaceName($0) }
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
-        
-        
+
         // State
         reactor.state
             .map { $0.isSpaceName }
             .subscribe(onNext: { [weak self] result in
                 guard let self = self else { return }
-                
-                print("Result:::::::::::", result)
                 if result {
                     self.rx.showOkAlert(title: "알림", message: "이미 존재하는 공간입니다.")
                         .subscribe(onNext: { _ in self.indicator.stopAnimating() })
@@ -223,7 +241,11 @@ extension CreateRoomViewController {
                 } else {
                     // 저장 && 다음화면 이동 로직
                     print("존재하지 않은 공간명")
-                    self.navigationController?.pushViewController(ProvideObject.createRoomInfo.viewController, animated: true)
+                   
+                    guard let vc = ProvideObject.createRoomInfo.viewController as? CreateRoomInfoViewController else { return }
+                    let createRoomModel = CreateRoom(spaceRoomName: self.spaceNameTextField.text ?? "", spaceRoomPw: self.pwTextField.text ?? "")
+                    vc.createRoomModel = createRoomModel
+                    self.navigationController?.pushViewController(vc, animated: false)
                 }
                 self.indicator.stopAnimating()
             })

@@ -23,6 +23,9 @@
 		5CC72D5F21FEE4E20077E723 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC72D5E21FEE4E20077E723 /* App.swift */; };
 		5CC72D6321FFEF9E0077E723 /* CreateRoomInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC72D6221FFEF9E0077E723 /* CreateRoomInfoViewController.swift */; };
 		5CC72D6721FFF04E0077E723 /* CreateRoomInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC72D6621FFF04E0077E723 /* CreateRoomInfoViewModel.swift */; };
+		5CC72D6A220180D20077E723 /* CreateRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC72D69220180D20077E723 /* CreateRoom.swift */; };
+		5CC72D6C2201816A0077E723 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC72D6B2201816A0077E723 /* User.swift */; };
+		5CC72D6E220186A00077E723 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC72D6D220186A00077E723 /* Error.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +47,9 @@
 		5CC72D5E21FEE4E20077E723 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		5CC72D6221FFEF9E0077E723 /* CreateRoomInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomInfoViewController.swift; sourceTree = "<group>"; };
 		5CC72D6621FFF04E0077E723 /* CreateRoomInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomInfoViewModel.swift; sourceTree = "<group>"; };
+		5CC72D69220180D20077E723 /* CreateRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoom.swift; sourceTree = "<group>"; };
+		5CC72D6B2201816A0077E723 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		5CC72D6D220186A00077E723 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		643E56349549ABC10EB2CDE2 /* Pods-OurSpace.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OurSpace.release.xcconfig"; path = "Pods/Target Support Files/Pods-OurSpace/Pods-OurSpace.release.xcconfig"; sourceTree = "<group>"; };
 		C5390C06192EE080D8435BDA /* Pods-OurSpace.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OurSpace.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OurSpace/Pods-OurSpace.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -141,6 +147,8 @@
 		5CC72D6021FFEF2B0077E723 /* Contents */ = {
 			isa = PBXGroup;
 			children = (
+				5CC72D6F220186A90077E723 /* Error */,
+				5CC72D68220180BB0077E723 /* Model */,
 				5C6E5A6421FCE3C40045C88D /* Start */,
 				5C6E5A6521FCEA8A0045C88D /* CreateRoom */,
 				5CC72D6121FFEF6B0077E723 /* CreateRoomInfo */,
@@ -155,6 +163,23 @@
 				5CC72D6621FFF04E0077E723 /* CreateRoomInfoViewModel.swift */,
 			);
 			path = CreateRoomInfo;
+			sourceTree = "<group>";
+		};
+		5CC72D68220180BB0077E723 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5CC72D69220180D20077E723 /* CreateRoom.swift */,
+				5CC72D6B2201816A0077E723 /* User.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		5CC72D6F220186A90077E723 /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				5CC72D6D220186A00077E723 /* Error.swift */,
+			);
+			path = Error;
 			sourceTree = "<group>";
 		};
 		8A45EFDEBCF3A2A765F8F6ED /* Pods */ = {
@@ -323,6 +348,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5CC72D6C2201816A0077E723 /* User.swift in Sources */,
 				5CC72D6721FFF04E0077E723 /* CreateRoomInfoViewModel.swift in Sources */,
 				5CC72D5F21FEE4E20077E723 /* App.swift in Sources */,
 				5C6E5A6D21FD69860045C88D /* CreateRoomViewModel.swift in Sources */,
@@ -331,8 +357,10 @@
 				5CC72D5D21FEDCE90077E723 /* CommonReactive.swift in Sources */,
 				5CC72D6321FFEF9E0077E723 /* CreateRoomInfoViewController.swift in Sources */,
 				5C6E5A6921FCFB340045C88D /* CustomNavigationView.swift in Sources */,
+				5CC72D6A220180D20077E723 /* CreateRoom.swift in Sources */,
 				5C6E5A5A21FCC29B0045C88D /* ProvideObject.swift in Sources */,
 				5C6E5A5821FCBB4B0045C88D /* StartViewController.swift in Sources */,
+				5CC72D6E220186A00077E723 /* Error.swift in Sources */,
 				5C6E5A6221FCD4710045C88D /* CommonExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

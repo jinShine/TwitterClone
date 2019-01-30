@@ -14,7 +14,7 @@ import RxSwift
 final class CreateRoomViewModel: Reactor {
     
     enum Action {
-        case validSpaceName(String)
+        case validSpaceName((String, String))
     }
 
     enum Mutation {
@@ -30,7 +30,7 @@ final class CreateRoomViewModel: Reactor {
     // Action -> Mutation
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-        case .validSpaceName(let name):
+        case .validSpaceName(let name, _):
             return Observable.concat([
                 self.validSpaceName(name).map { Mutation.isSpaceNameCheck($0) }
             ])

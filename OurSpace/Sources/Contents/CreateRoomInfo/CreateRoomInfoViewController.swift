@@ -81,7 +81,8 @@ final class CreateRoomInfoViewController: UIViewController, View {
         button.setTitle("공간 개설하기", for: UIControl.State.normal)
         button.setTitleColor(UIColor.white, for: UIControl.State.normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
-        button.backgroundColor = UIColor.mainColor()
+        button.backgroundColor = UIColor.mainAlphaColor()
+        button.isEnabled = false
         return button
     }()
     
@@ -119,6 +120,7 @@ final class CreateRoomInfoViewController: UIViewController, View {
     // Property
     
     var disposeBag: DisposeBag = DisposeBag()
+    var createRoomModel: CreateRoom?
     let navi = CustomNavigationView()
     
     
@@ -257,19 +259,23 @@ extension CreateRoomInfoViewController {
     // Reactor
     func bind(reactor: CreateRoomInfoViewModel) {
         
+        let emailObserver = emailTextField.rx.text.orEmpty
+        let idObserver = idTextField.rx.text.orEmpty
+        let pwObserver = pwTextField.rx.text.orEmpty
+        let confirmPwObserver = confirmPwTextField.rx.text.orEmpty
+        
         // Action
-        emailTextField.rx.text.orEmpty
+        emailObserver
             .map { Reactor.Action.emailInfo($0) }
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
         
-        idTextField.rx.text.orEmpty
+        idObserver
             .map { Reactor.Action.idInfo($0) }
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
         
-        let pwObserver = pwTextField.rx.text.orEmpty
-        let confirmPwObserver = confirmPwTextField.rx.text.orEmpty
+
         
         pwObserver.map { Reactor.Action.pwInfo($0) }
             .bind(to: reactor.action)
@@ -279,7 +285,22 @@ extension CreateRoomInfoViewController {
             .map { Reactor.Action.confirmPwInfo(($0, $1)) }
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
-
+        
+        createButton.rx.tap
+            .do(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.indicator.startAnimating()
+            })
+            .map { [weak self] _ -> (CreateRoom, User) in
+                let user = User(email: self?.emailTextField.text ?? "",
+                                id: self?.idTextField.text ?? "",
+                                pw: self?.pwTextField.text ?? "")
+                return (self?.createRoomModel ?? CreateRoom(), user)
+            }
+            .map { Reactor.Action.createRoomInfo(($0, $1))}
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
+        
 
         // State
         reactor.state
@@ -302,6 +323,47 @@ extension CreateRoomInfoViewController {
             .bind(to: confirmPwPaddingView.rx.isHidden)
             .disposed(by: self.disposeBag)
         
+        reactor.state
+            .map { $0.isCreateRoom }
+            .subscribe(onNext: { result in
+                print(result)
+            })
+            .disposed(by: self.disposeBag)
         
+                
+        reactor.state
+            .map { $0.errorMessage }
+            .do(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.indicator.stopAnimating()
+            })
+            .distinctUntilChanged()
+            .filter({ errorMessage -> Bool in
+                if errorMessage.count > 0 {
+                    self.rx.showOkAlert(title: "에러", message: errorMessage)
+                        .subscribe(onNext: { _ in self.indicator.stopAnimating() })
+                        .disposed(by: self.disposeBag)
+                    return true
+                }
+                return false
+            })
+            .subscribe(onNext: { [weak self] errorMessage in
+                guard let self = self else { return }
+                self.rx.showOkAlert(title: "에러", message: errorMessage).subscribe().disposed(by: self.disposeBag)
+            })
+            .disposed(by: self.disposeBag)
+        
+        reactor.resultOks
+            .subscribe(onNext: { [weak self] (email, id, pw, confirmPw) in
+                if email && id && pw && confirmPw {
+                    self?.createButton.backgroundColor = UIColor.mainColor()
+                    self?.createButton.isEnabled = true
+                }
+                else {
+                    self?.createButton.backgroundColor = UIColor.mainAlphaColor()
+                    self?.createButton.isEnabled = false
+                }
+            })
+            .disposed(by: self.disposeBag)
     }
 }
