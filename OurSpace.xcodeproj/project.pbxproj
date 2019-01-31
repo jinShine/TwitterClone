@@ -26,6 +26,10 @@
 		5CC72D6A220180D20077E723 /* CreateRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC72D69220180D20077E723 /* CreateRoom.swift */; };
 		5CC72D6C2201816A0077E723 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC72D6B2201816A0077E723 /* User.swift */; };
 		5CC72D6E220186A00077E723 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC72D6D220186A00077E723 /* Error.swift */; };
+		5CC72D72220293600077E723 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC72D71220293600077E723 /* FeedViewController.swift */; };
+		5CC72D742202936D0077E723 /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC72D732202936D0077E723 /* FeedViewModel.swift */; };
+		5CC72D7922029BED0077E723 /* Feed.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CC72D7822029BED0077E723 /* Feed.xib */; };
+		5CC72D7B2202C59D0077E723 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC72D7A2202C59D0077E723 /* FeedCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +54,10 @@
 		5CC72D69220180D20077E723 /* CreateRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoom.swift; sourceTree = "<group>"; };
 		5CC72D6B2201816A0077E723 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		5CC72D6D220186A00077E723 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		5CC72D71220293600077E723 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
+		5CC72D732202936D0077E723 /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
+		5CC72D7822029BED0077E723 /* Feed.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Feed.xib; sourceTree = "<group>"; };
+		5CC72D7A2202C59D0077E723 /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		643E56349549ABC10EB2CDE2 /* Pods-OurSpace.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OurSpace.release.xcconfig"; path = "Pods/Target Support Files/Pods-OurSpace/Pods-OurSpace.release.xcconfig"; sourceTree = "<group>"; };
 		C5390C06192EE080D8435BDA /* Pods-OurSpace.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OurSpace.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OurSpace/Pods-OurSpace.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -152,6 +160,7 @@
 				5C6E5A6421FCE3C40045C88D /* Start */,
 				5C6E5A6521FCEA8A0045C88D /* CreateRoom */,
 				5CC72D6121FFEF6B0077E723 /* CreateRoomInfo */,
+				5CC72D70220293300077E723 /* Feed */,
 			);
 			path = Contents;
 			sourceTree = "<group>";
@@ -180,6 +189,25 @@
 				5CC72D6D220186A00077E723 /* Error.swift */,
 			);
 			path = Error;
+			sourceTree = "<group>";
+		};
+		5CC72D70220293300077E723 /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				5CC72D7522029BC10077E723 /* FeedCell */,
+				5CC72D71220293600077E723 /* FeedViewController.swift */,
+				5CC72D732202936D0077E723 /* FeedViewModel.swift */,
+			);
+			path = Feed;
+			sourceTree = "<group>";
+		};
+		5CC72D7522029BC10077E723 /* FeedCell */ = {
+			isa = PBXGroup;
+			children = (
+				5CC72D7822029BED0077E723 /* Feed.xib */,
+				5CC72D7A2202C59D0077E723 /* FeedCell.swift */,
+			);
+			path = FeedCell;
 			sourceTree = "<group>";
 		};
 		8A45EFDEBCF3A2A765F8F6ED /* Pods */ = {
@@ -260,6 +288,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5CC72D5521FB0B3E0077E723 /* LaunchScreen.storyboard in Resources */,
+				5CC72D7922029BED0077E723 /* Feed.xib in Resources */,
 				5CC72D5221FB0B3E0077E723 /* Assets.xcassets in Resources */,
 				5C6E5A6F21FD6A920045C88D /* GoogleService-Info.plist in Resources */,
 				5CC72D5021FB0B3E0077E723 /* Main.storyboard in Resources */,
@@ -350,17 +379,20 @@
 			files = (
 				5CC72D6C2201816A0077E723 /* User.swift in Sources */,
 				5CC72D6721FFF04E0077E723 /* CreateRoomInfoViewModel.swift in Sources */,
+				5CC72D7B2202C59D0077E723 /* FeedCell.swift in Sources */,
 				5CC72D5F21FEE4E20077E723 /* App.swift in Sources */,
 				5C6E5A6D21FD69860045C88D /* CreateRoomViewModel.swift in Sources */,
 				5C6E5A6721FCEABD0045C88D /* CreateRoomViewController.swift in Sources */,
 				5CC72D4B21FB0B3E0077E723 /* AppDelegate.swift in Sources */,
 				5CC72D5D21FEDCE90077E723 /* CommonReactive.swift in Sources */,
+				5CC72D72220293600077E723 /* FeedViewController.swift in Sources */,
 				5CC72D6321FFEF9E0077E723 /* CreateRoomInfoViewController.swift in Sources */,
 				5C6E5A6921FCFB340045C88D /* CustomNavigationView.swift in Sources */,
 				5CC72D6A220180D20077E723 /* CreateRoom.swift in Sources */,
 				5C6E5A5A21FCC29B0045C88D /* ProvideObject.swift in Sources */,
 				5C6E5A5821FCBB4B0045C88D /* StartViewController.swift in Sources */,
 				5CC72D6E220186A00077E723 /* Error.swift in Sources */,
+				5CC72D742202936D0077E723 /* FeedViewModel.swift in Sources */,
 				5C6E5A6221FCD4710045C88D /* CommonExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -13,6 +13,7 @@ enum ProvideObject {
     case start          // StartView
     case createRoom     // CreateRoom
     case createRoomInfo // CreateRoomInfo
+    case feed           // Feed
 }
 
 
@@ -36,6 +37,11 @@ extension ProvideObject {
             let viewController: CreateRoomInfoViewController = CreateRoomInfoViewController()
             viewController.setNeedsStatusBarAppearanceUpdate()
             viewController.reactor = CreateRoomInfoViewModel()
+            return viewController
+            
+        case .feed:
+            let viewController: FeedViewController = FeedViewController()
+            viewController.reactor = FeedViewModel()
             return viewController
         }
     }
