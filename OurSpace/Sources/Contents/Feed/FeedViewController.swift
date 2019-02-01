@@ -18,11 +18,12 @@ final class FeedViewController: UIViewController, View {
     
     
     // UI
-    let collectionView: UICollectionView = {
-        let cv = UICollectionView()
-        cv.scrollIndicatorInsets.top = cv.contentInset.top
-        return cv
-    }()
+//    let collectionView: UICollectionView = {
+//        let cv = UICollectionView()
+//        cv.scrollIndicatorInsets.top = cv.contentInset.top
+////        cv.register(UINib(nibName: "Feed", bundle: nil), forCellWithReuseIdentifier: String(describing: FeedCell.self))
+//        return cv
+//    }()
     
     let indicator: NVActivityIndicatorView = {
         let indicator = NVActivityIndicatorView(frame: .zero, type: .init(NVActivityIndicatorType.ballTrianglePath), color: UIColor.mainColor(), padding: 0)
@@ -37,7 +38,13 @@ final class FeedViewController: UIViewController, View {
     
     
     
+    init() {
+        super.init(nibName: nil, bundle: nil)
+    }
     
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // Life Cycle
     override func viewDidLoad() {

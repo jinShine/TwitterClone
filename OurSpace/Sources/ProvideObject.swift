@@ -13,7 +13,12 @@ enum ProvideObject {
     case start          // StartView
     case createRoom     // CreateRoom
     case createRoomInfo // CreateRoomInfo
-    case feed           // Feed
+    
+    case main           // mainTabbar
+    case feed           // FeedVC
+    case addPhoto       // addPhoto
+    case userProfile    // userProfile
+    
 }
 
 
@@ -39,9 +44,38 @@ extension ProvideObject {
             viewController.reactor = CreateRoomInfoViewModel()
             return viewController
             
+        case .main:
+            let tabBarController: MainTabBarController = MainTabBarController()
+            tabBarController.viewControllers = [
+                ProvideObject.feed.viewController,
+                ProvideObject.feed.viewController,
+                ProvideObject.addPhoto.viewController,
+                ProvideObject.userProfile.viewController,
+                ProvideObject.userProfile.viewController
+            ]
+            return tabBarController
+            
         case .feed:
             let viewController: FeedViewController = FeedViewController()
             viewController.reactor = FeedViewModel()
+            viewController.tabBarItem.image = UIImage(named: "Home")?.withRenderingMode(.alwaysOriginal)
+            viewController.tabBarItem.selectedImage = UIImage(named: "Home_Selected")?.withRenderingMode(UIImage.RenderingMode.alwaysOriginal)
+            return viewController
+            
+        case .addPhoto:
+            let viewController: AddPostViewController = AddPostViewController()
+            viewController.reactor = AddPostViewModel()
+            viewController.setNeedsStatusBarAppearanceUpdate()
+            viewController.tabBarItem.image = UIImage(named: "Post_Selected")?.withRenderingMode(UIImage.RenderingMode.alwaysOriginal)
+            viewController.tabBarItem.selectedImage = UIImage(named: "Post_Selected")?.withRenderingMode(UIImage.RenderingMode.alwaysOriginal)
+            
+            return viewController
+            
+        case .userProfile:
+            let viewController: UserProfileViewController = UserProfileViewController()
+            viewController.reactor = UserProfileViewModel()
+            viewController.tabBarItem.image = UIImage(named: "Profile")?.withRenderingMode(.alwaysOriginal)
+            viewController.tabBarItem.selectedImage = UIImage(named: "Profile_Selected")?.withRenderingMode(UIImage.RenderingMode.alwaysOriginal)
             return viewController
         }
     }

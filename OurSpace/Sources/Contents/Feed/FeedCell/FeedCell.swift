@@ -14,7 +14,7 @@ class FeedCell: UICollectionViewCell {
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var postDate: UILabel!
     @IBOutlet weak var optionsButton: UIButton!
-    @IBOutlet weak var photoImageView: UIImageView!
+    @IBOutlet weak var photoCollectionView: UICollectionView!
     @IBOutlet weak var captionLabel: UILabel!
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var commentButton: UIButton!

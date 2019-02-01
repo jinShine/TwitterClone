@@ -66,7 +66,6 @@ final class CreateRoomInfoViewModel: Reactor {
         case .pwInfo(let pw):
             return self.validCheckPW(pw).map { Mutation.validCheckPWResult($0) }
         case .confirmPwInfo(let pw, let confirmPw):
-            print("::::::",pw, confirmPw)
             guard confirmPw.count > 0 else { return Observable.just(Mutation.validCheckPWs(true))}
             guard (pw == confirmPw) && validatePassword(password: confirmPw) else { return Observable.just(Mutation.validCheckPWs(true))}
             
