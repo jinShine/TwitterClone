@@ -27,7 +27,6 @@ final class AddPostViewController: UIViewController, View {
         let tv = UITextView()
         tv.text = "Test"
         tv.font = UIFont.systemFont(ofSize: 15)
-        
         return tv
     }()
     
@@ -43,7 +42,6 @@ final class AddPostViewController: UIViewController, View {
         return button
     }()
     
-    
     let indicator: NVActivityIndicatorView = {
         let indicator = NVActivityIndicatorView(frame: .zero, type: .init(NVActivityIndicatorType.ballTrianglePath), color: UIColor.mainColor(), padding: 0)
         return indicator
@@ -54,6 +52,7 @@ final class AddPostViewController: UIViewController, View {
     
     var disposeBag: DisposeBag = DisposeBag()
     let navi = CustomNavigationView()
+    var containerBottomConstant: Constraint?
     
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -69,18 +68,24 @@ final class AddPostViewController: UIViewController, View {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        contentTextView.becomeFirstResponder()
+        self.contentTextView.becomeFirstResponder()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.contentTextView.resignFirstResponder()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
     }
     
     // Setup Method
     private func setupNavigation() {
         view.addSubview(navi)
         navi.snp.makeConstraints {
-            if hasTopNotch {
-                $0.height.equalTo(88)
-            } else {
-                $0.height.equalTo(64)
-            }
+            if hasTopNotch { $0.height.equalTo(88) }
+            else { $0.height.equalTo(64) }
             $0.top.equalToSuperview()
             $0.leading.trailing.equalToSuperview()
         }
@@ -97,7 +102,6 @@ final class AddPostViewController: UIViewController, View {
     }
     
     private func configureUI() {
-        
         setupNavigation()
         
         [containerView, indicator].forEach {
@@ -106,29 +110,27 @@ final class AddPostViewController: UIViewController, View {
         [contentTextView, optionView].forEach {
             containerView.addSubview($0)
         }
-        [photoButton].forEach {
-            optionView.addSubview($0)
-        }
+        [photoButton].forEach { optionView.addSubview($0) }
         
         containerView.snp.makeConstraints {
-            guard let tabbarHeight = tabBarController?.tabBar.frame.height else { return }
             $0.top.equalTo(navi.snp.bottom)
             $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalTo(-tabbarHeight)
+            self.containerBottomConstant = $0.bottom.equalToSuperview().constraint
         }
-
+        
         contentTextView.snp.makeConstraints {
             $0.top.leading.equalToSuperview().offset(8)
             $0.trailing.equalToSuperview().offset(-8)
             $0.bottom.equalTo(optionView.snp.top)
         }
-        
+
         optionView.snp.makeConstraints {
             $0.leading.trailing.bottom.equalToSuperview()
             $0.height.equalTo(40)
         }
+
         photoButton.snp.makeConstraints {
-            $0.size.equalTo(50)
+            $0.size.equalTo(35)
             $0.centerY.equalTo(optionView)
             $0.trailing.equalToSuperview().offset(-8)
         }
@@ -144,16 +146,12 @@ final class AddPostViewController: UIViewController, View {
         let keyboardFrame = notiInfo[UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
         let keyboardHeight = keyboardFrame.size.height
         
-        containerView.snp.updateConstraints {
-            $0.bottom.equalTo(-keyboardHeight)
-        }
+        self.containerBottomConstant?.update(offset: -keyboardHeight)
     }
     
     @objc private func closeAction() {
-        print("dd")
         dismiss(animated: true, completion: nil)
     }
-    
 }
 
 extension AddPostViewController {
@@ -166,6 +164,13 @@ extension AddPostViewController {
                 self?.keyboardWillShow(notification: notification)
             })
             .disposed(by: self.disposeBag)
+        
+        photoButton.rx.tap
+            .subscribe({ [weak self] _ in
+                self?.navigationController?.pushViewController(ProvideObject.photoSelector.viewController, animated: true)
+            })
+            .disposed(by: self.disposeBag)
+        
         
         // Action
         

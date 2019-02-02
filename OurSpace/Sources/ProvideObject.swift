@@ -18,6 +18,7 @@ enum ProvideObject {
     case feed           // FeedVC
     case addPhoto       // addPhoto
     case userProfile    // userProfile
+    case photoSelector  // PhotoSelector
     
 }
 
@@ -45,7 +46,7 @@ extension ProvideObject {
             return viewController
             
         case .main:
-            let tabBarController: MainTabBarController = MainTabBarController()
+            let tabBarController = MainTabBarController()
             tabBarController.viewControllers = [
                 ProvideObject.feed.viewController,
                 ProvideObject.feed.viewController,
@@ -76,6 +77,11 @@ extension ProvideObject {
             viewController.reactor = UserProfileViewModel()
             viewController.tabBarItem.image = UIImage(named: "Profile")?.withRenderingMode(.alwaysOriginal)
             viewController.tabBarItem.selectedImage = UIImage(named: "Profile_Selected")?.withRenderingMode(UIImage.RenderingMode.alwaysOriginal)
+            return viewController
+            
+        case .photoSelector:
+            let viewController: PhtoSelectorViewController = PhtoSelectorViewController()
+            viewController.reactor = PhotoSelectorViewModel()
             return viewController
         }
     }

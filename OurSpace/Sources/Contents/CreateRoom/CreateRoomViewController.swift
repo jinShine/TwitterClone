@@ -72,8 +72,9 @@ final class CreateRoomViewController: UIViewController, View {
 
     
     //Property
-    let navi = CustomNavigationView()
     var disposeBag: DisposeBag = DisposeBag()
+    let navi = CustomNavigationView()
+    
     
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -86,6 +87,11 @@ final class CreateRoomViewController: UIViewController, View {
 
         configureUI()
         
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
     }
     
     @objc private func closeAction() {

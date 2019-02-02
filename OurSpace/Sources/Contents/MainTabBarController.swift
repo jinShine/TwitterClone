@@ -21,7 +21,7 @@ class MainTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        delegate = self
+        delegate = self
         configure()
         
     }
@@ -34,16 +34,18 @@ class MainTabBarController: UITabBarController {
 
 }
 
-//extension MainTabBarController: UITabBarControllerDelegate {
-//    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-//
-//        let index = viewControllers?.index(of: viewController)
-//        if index == 2 {
-//            guard let vc = ProvideObject.addPhoto.viewController as? AddPostViewController else { return false }
-//            let naviController = UINavigationController(rootViewController: vc)
-//            present(naviController, animated: true, completion: nil)
-//            return false
-//        }
-//        return true
-//    }
-//}
+extension MainTabBarController: UITabBarControllerDelegate {
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+
+        let index = viewControllers?.index(of: viewController)
+        if index == 2 {
+            
+            let naviController = UINavigationController(rootViewController: ProvideObject.addPhoto.viewController)
+            naviController.setNavigationBarHidden(true, animated: false)
+            self.present(naviController, animated: true, completion: nil)
+            
+            return false
+        }
+        return true
+    }
+}

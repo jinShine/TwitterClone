@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		1487DBB4C2B7EF941D33894D /* Pods_OurSpace.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BB3F3D2EBE6E02B52E53CD2 /* Pods_OurSpace.framework */; };
+		5C0D1F282205986B0034E68B /* PhotoSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0D1F272205986B0034E68B /* PhotoSelectorViewController.swift */; };
+		5C0D1F2A220598A60034E68B /* PhotoSelectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0D1F29220598A60034E68B /* PhotoSelectorViewModel.swift */; };
+		5C0D1F2C2205A2A70034E68B /* PhotoSelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0D1F2B2205A2A70034E68B /* PhotoSelectorCell.swift */; };
 		5C6E5A5821FCBB4B0045C88D /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6E5A5721FCBB4B0045C88D /* StartViewController.swift */; };
 		5C6E5A5A21FCC29B0045C88D /* ProvideObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6E5A5921FCC29B0045C88D /* ProvideObject.swift */; };
 		5C6E5A6221FCD4710045C88D /* CommonExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6E5A6121FCD4710045C88D /* CommonExtensions.swift */; };
@@ -39,6 +42,9 @@
 
 /* Begin PBXFileReference section */
 		1BB3F3D2EBE6E02B52E53CD2 /* Pods_OurSpace.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OurSpace.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C0D1F272205986B0034E68B /* PhotoSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelectorViewController.swift; sourceTree = "<group>"; };
+		5C0D1F29220598A60034E68B /* PhotoSelectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelectorViewModel.swift; sourceTree = "<group>"; };
+		5C0D1F2B2205A2A70034E68B /* PhotoSelectorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelectorCell.swift; sourceTree = "<group>"; };
 		5C6E5A5721FCBB4B0045C88D /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		5C6E5A5921FCC29B0045C88D /* ProvideObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvideObject.swift; sourceTree = "<group>"; };
 		5C6E5A6121FCD4710045C88D /* CommonExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonExtensions.swift; sourceTree = "<group>"; };
@@ -84,6 +90,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5C0D1F26220598420034E68B /* PhotoSelector */ = {
+			isa = PBXGroup;
+			children = (
+				5C0D1F272205986B0034E68B /* PhotoSelectorViewController.swift */,
+				5C0D1F29220598A60034E68B /* PhotoSelectorViewModel.swift */,
+				5C0D1F2B2205A2A70034E68B /* PhotoSelectorCell.swift */,
+			);
+			path = PhotoSelector;
+			sourceTree = "<group>";
+		};
 		5C6E5A5F21FCD4370045C88D /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -226,6 +242,7 @@
 		5CC72D7E2203EBD60077E723 /* AddPost */ = {
 			isa = PBXGroup;
 			children = (
+				5C0D1F26220598420034E68B /* PhotoSelector */,
 				5CC72D802203EC310077E723 /* AddPostViewController.swift */,
 				5CC72D822203EC610077E723 /* AddPostViewModel.swift */,
 			);
@@ -410,6 +427,7 @@
 			files = (
 				5CC72D6C2201816A0077E723 /* User.swift in Sources */,
 				5CC72D6721FFF04E0077E723 /* CreateRoomInfoViewModel.swift in Sources */,
+				5C0D1F282205986B0034E68B /* PhotoSelectorViewController.swift in Sources */,
 				5CC72D7D2203E25F0077E723 /* MainTabBarController.swift in Sources */,
 				5CC72D812203EC310077E723 /* AddPostViewController.swift in Sources */,
 				5CC72D7B2202C59D0077E723 /* FeedCell.swift in Sources */,
@@ -426,9 +444,11 @@
 				5C6E5A5A21FCC29B0045C88D /* ProvideObject.swift in Sources */,
 				5C6E5A5821FCBB4B0045C88D /* StartViewController.swift in Sources */,
 				5CC72D872203EDF70077E723 /* UserProfileViewController.swift in Sources */,
+				5C0D1F2C2205A2A70034E68B /* PhotoSelectorCell.swift in Sources */,
 				5CC72D832203EC610077E723 /* AddPostViewModel.swift in Sources */,
 				5CC72D6E220186A00077E723 /* Error.swift in Sources */,
 				5CC72D742202936D0077E723 /* FeedViewModel.swift in Sources */,
+				5C0D1F2A220598A60034E68B /* PhotoSelectorViewModel.swift in Sources */,
 				5C6E5A6221FCD4710045C88D /* CommonExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
