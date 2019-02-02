@@ -36,7 +36,9 @@ final class PhotoSelectorViewModel: Reactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .photoInfo(let images):
-            return Observable.just(images).map { Mutation.photoImage($0)}
+            return Observable.concat([
+                    Observable.just(images).map { Mutation.photoImage($0)}
+                ])
         }
     }
     
@@ -48,7 +50,6 @@ final class PhotoSelectorViewModel: Reactor {
             state.images = images
             return state
         }
-        
     }
 }
 

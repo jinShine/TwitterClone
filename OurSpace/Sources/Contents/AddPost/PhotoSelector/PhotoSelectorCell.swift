@@ -19,11 +19,47 @@ class PhotoSelectorCell: UICollectionViewCell {
         return iv
     }()
     
+    let checkView: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 28 / 2
+        view.layer.masksToBounds = true
+        view.layer.borderWidth = 2.0
+        view.layer.borderColor = UIColor.white.cgColor
+        view.backgroundColor = UIColor.clear
+        return view
+    }()
+    
+    let checkImage: UIImageView = {
+        let check = UIImageView()
+        check.backgroundColor = UIColor.white
+        check.image = UIImage(named: "Check_Main")
+        check.layer.cornerRadius = 28 / 2
+        check.layer.masksToBounds = true
+        check.isHidden = true
+        return check
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        addSubview(photoImageView)
+        [photoImageView].forEach {
+            addSubview($0)
+        }
+        [checkView].forEach {
+            photoImageView.addSubview($0)
+        }
+        [checkImage].forEach {
+            checkView.addSubview($0)
+        }
         photoImageView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        checkView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(8)
+            $0.trailing.equalToSuperview().offset(-8)
+            $0.size.equalTo(28)
+        }
+        checkImage.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
         
