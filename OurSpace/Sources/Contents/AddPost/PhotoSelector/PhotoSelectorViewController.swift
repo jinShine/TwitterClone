@@ -47,9 +47,11 @@ final class PhtoSelectorViewController: UIViewController, View {
     var assets: [PHAsset] = []
     var selectedItem: (item: [Int], count: Int) = ([],1)
     var refreshResult = false
-    let navi = CustomNavigationView()
+    let navi = SJNavigationView()
     var disposeBag: DisposeBag = DisposeBag()
     
+    
+    private let imagePickerController = UIImagePickerController()
     
     
     
@@ -60,9 +62,14 @@ final class PhtoSelectorViewController: UIViewController, View {
         configureUI()
         
         //fetch
-        fetchPhoto { [weak self] images in
-            self?.datasource.accept(images)
-        }
+//        fetchPhoto { [weak self] images in
+//            self?.datasource.accept(images)
+//        }
+        
+        let type = UIImagePickerController.SourceType.photoLibrary
+        guard UIImagePickerController.isSourceTypeAvailable(type) else { return }
+        imagePickerController.sourceType = type
+        present(imagePickerController, animated: true, completion: nil)
         
     }
     
@@ -96,9 +103,10 @@ final class PhtoSelectorViewController: UIViewController, View {
         }
         navi.backgroundColor = UIColor.mainColor()
         
-        navi.leftButton.setImage(UIImage(named: "Close_White"), for: UIControl.State.normal)
-        navi.leftButton.addTarget(self, action: #selector(closeAction), for: UIControl.Event.touchUpInside)
-        navi.rightButton.setTitle("Post", for: UIControl.State.normal)
+        navi.lLeftButton.setImage(UIImage(named: "Back_White"), for: UIControl.State.normal)
+        navi.lLeftButton.addTarget(self, action: #selector(closeAction), for: UIControl.Event.touchUpInside)
+        navi.rRightButton.setTitle("Post", for: UIControl.State.normal)
+        navi.rRightButton.addTarget(self, action: #selector(doneAction), for: UIControl.Event.touchUpInside)
         navi.titleLabel.textColor = UIColor.white
         
         navi.titleLabel.text = "카메라롤"
@@ -107,11 +115,21 @@ final class PhtoSelectorViewController: UIViewController, View {
     }
     
     @objc private func closeAction() {
-        dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc private func doneAction() {
+        
+        guard let addPhotoVC = ProvideObject.addPhoto.viewController as? AddPostViewController else { return }
+        print((selectedItem.item, self.assets))
+        
+        
+        self.navigationController?.popViewController(animated: true)
     }
     
     private func assetsFetchOptions() -> PHFetchOptions {
         let fetchOptions = PHFetchOptions()
+        fetchOptions.fetchLimit = 50
         let sortDescriptor = NSSortDescriptor(key: "creationDate", ascending: false)
         fetchOptions.sortDescriptors = [sortDescriptor]
         return fetchOptions
@@ -121,7 +139,7 @@ final class PhtoSelectorViewController: UIViewController, View {
         
         let allPhotos = PHAsset.fetchAssets(with: PHAssetMediaType.image, options: self.assetsFetchOptions())
         
-        DispatchQueue.global(qos: .background).async {
+        DispatchQueue.global(qos: .userInteractive).async {
             allPhotos.enumerateObjects { [weak self] (asset, count, stop) in
                 
                 let imageManager = PHImageManager.default()
@@ -174,17 +192,11 @@ extension PhtoSelectorViewController {
             }
             .disposed(by: self.disposeBag)
         
+        
+        
         // View
         
         collectionView.rx.itemSelected.asObservable()
-//            .filter({ _ -> Bool in
-//                guard self.selectedItem.count <= 4 else {
-//                    self.rx.showOkAlert(title: "알림", message: "4개까지 이미지를 선택할 수 있습니다.")
-//                        .subscribe().disposed(by: self.disposeBag)
-//                    return false
-//                }
-//                return true
-//            })
             .subscribe(onNext: { [weak self] indexPath in
                 print(indexPath)
                 guard let self = self else { return }
@@ -223,12 +235,14 @@ extension PhtoSelectorViewController {
                 cell.checkImage.isHidden = false
                 self.selectedItem.count += 1
                 self.selectedItem.item.append(indexPath.item)
+                
             })
             .disposed(by: self.disposeBag)
         
     }
+    
+    
 }
-
 
 extension PhtoSelectorViewController: UICollectionViewDelegateFlowLayout {
     

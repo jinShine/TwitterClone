@@ -121,7 +121,7 @@ final class CreateRoomInfoViewController: UIViewController, View {
     
     var disposeBag: DisposeBag = DisposeBag()
     var createRoomModel: CreateRoom?
-    let navi = CustomNavigationView()
+    let navi = SJNavigationView(lLeftImage: "Back_White", c_Title: "프로필 작성")
     
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -146,12 +146,7 @@ final class CreateRoomInfoViewController: UIViewController, View {
             $0.top.equalToSuperview()
             $0.leading.trailing.equalToSuperview()
         }
-        navi.backgroundColor = UIColor.mainColor()
-        navi.leftButton.setImage(UIImage(named: "Back_White"), for: UIControl.State.normal)
-        navi.leftButton.addTarget(self, action: #selector(closeAction), for: UIControl.Event.touchUpInside)
-        navi.titleLabel.text = "프로필 작성"
-        navi.titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
-        navi.titleLabel.textColor = UIColor.white
+        navi.lLeftButton.addTarget(self, action: #selector(closeAction), for: UIControl.Event.touchUpInside)
     }
     
     @objc private func closeAction() {
@@ -275,7 +270,6 @@ extension CreateRoomInfoViewController {
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
         
-
         
         pwObserver.map { Reactor.Action.pwInfo($0) }
             .bind(to: reactor.action)

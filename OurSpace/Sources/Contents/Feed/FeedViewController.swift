@@ -33,7 +33,7 @@ final class FeedViewController: UIViewController, View {
     
     
     // Property
-    let navi = CustomNavigationView()
+    let navi = SJNavigationView(lLeftImage: "Back_White", c_Title: "공간 이름")
     var disposeBag: DisposeBag = DisposeBag()
     
     
@@ -68,12 +68,8 @@ final class FeedViewController: UIViewController, View {
             $0.top.equalToSuperview()
             $0.leading.trailing.equalToSuperview()
         }
-        navi.backgroundColor = UIColor.mainColor()
-        navi.leftButton.setImage(UIImage(named: "Back_White"), for: UIControl.State.normal)
 //        navi.leftButton.addTarget(self, action: #selector(closeAction), for: UIControl.Event.touchUpInside)
-        navi.titleLabel.text = "공간 이름" //TODO:- 공간 이름 넣기
-        navi.titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
-        navi.titleLabel.textColor = UIColor.white
+
     }
     
     
