@@ -286,9 +286,11 @@ extension CreateRoomInfoViewController {
                 self.indicator.startAnimating()
             })
             .map { [weak self] _ -> (CreateRoom, User) in
-                let user = User(email: self?.emailTextField.text ?? "",
-                                id: self?.idTextField.text ?? "",
-                                pw: self?.pwTextField.text ?? "")
+                let userDic = ["email": self?.emailTextField.text ?? "",
+                               "id": self?.idTextField.text ?? "",
+                               "pw": self?.pwTextField.text ?? "",
+                               "rooms" : self?.createRoomModel?.spaceRoomName ?? ""] as [String : Any]
+                let user = User(uid: nil, dictionary: userDic as [String : Any])
                 return (self?.createRoomModel ?? CreateRoom(), user)
             }
             .map { Reactor.Action.createRoomInfo(($0, $1))}
@@ -319,8 +321,11 @@ extension CreateRoomInfoViewController {
         
         reactor.state
             .map { $0.isCreateRoom }
-            .subscribe(onNext: { result in
-                print(result)
+            .subscribe(onNext: { (result, createModelValue) in
+                if result {
+                    let naviVC = UINavigationController(rootViewController: ProvideObject.main(createModelValue).viewController )
+                    App.delegate.window?.rootViewController = naviVC
+                }
             })
             .disposed(by: self.disposeBag)
         

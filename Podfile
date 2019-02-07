@@ -22,7 +22,7 @@ pod 'Firebase/Storage'
 pod 'Moya', '~> 12.0'
 
 # Image
-pod 'Kingfisher', '~> 5.0'
+pod 'Kingfisher', '~> 4.0'
 
 # UI
 pod 'SnapKit', '~> 4.0.0'

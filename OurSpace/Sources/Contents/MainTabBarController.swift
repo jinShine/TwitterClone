@@ -39,7 +39,7 @@ extension MainTabBarController: UITabBarControllerDelegate {
 
         let index = viewControllers?.index(of: viewController)
         if index == 2 {
-            
+
             let naviController = UINavigationController(rootViewController: ProvideObject.addPhoto.viewController)
             naviController.setNavigationBarHidden(true, animated: false)
             self.present(naviController, animated: true, completion: nil)

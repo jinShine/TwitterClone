@@ -9,13 +9,22 @@
 import Foundation
 
 struct User {
+    
     var email: String = ""
     var id: String = ""
     var pw: String = ""
+    var uid: String = ""
+//    var username: String = ""
+    var profileImageUrl: String = ""
+    var rooms: [String]
     
-    init(email: String, id: String, pw: String) {
-        self.email = email
-        self.id = id
-        self.pw = pw
+    init(uid: String? = "", dictionary: [String: Any]? = ["":""]) {
+        self.uid = uid ?? ""
+        self.email = dictionary?["email"] as? String ?? ""
+        self.id = dictionary?["id"] as? String ?? ""
+        self.pw = dictionary?["pw"] as? String ?? ""
+//        self.username = dictionary?["username"] as? String ?? ""
+        self.profileImageUrl = dictionary?["profileImageUrl"] as? String ?? ""
+        self.rooms = dictionary?["rooms"] as? [String] ?? []
     }
 }

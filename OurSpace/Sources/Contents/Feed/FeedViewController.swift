@@ -13,17 +13,23 @@ import RxSwift
 import RxCocoa
 import SnapKit
 import NVActivityIndicatorView
+//import Kingfisher
 
 final class FeedViewController: UIViewController, View {
     
     
     // UI
-//    let collectionView: UICollectionView = {
-//        let cv = UICollectionView()
-//        cv.scrollIndicatorInsets.top = cv.contentInset.top
-////        cv.register(UINib(nibName: "Feed", bundle: nil), forCellWithReuseIdentifier: String(describing: FeedCell.self))
-//        return cv
-//    }()
+    lazy var collectionView: UICollectionView = {
+        let flowlayout = UICollectionViewFlowLayout()
+        flowlayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowlayout)
+        collectionView.backgroundView = UIImageView.init(image: UIImage(named: "EmptyFeedBackground")?.withRenderingMode(UIImage.RenderingMode.alwaysOriginal))
+        collectionView.backgroundView?.isHidden = true
+        collectionView.backgroundColor = UIColor.rgb(red: 230, green: 230, blue: 230, alpha: 1)
+        collectionView.delegate = self
+        collectionView.register(UINib(nibName: "FeedCell", bundle: nil), forCellWithReuseIdentifier: "FeedCell")
+        return collectionView
+    }()
     
     let indicator: NVActivityIndicatorView = {
         let indicator = NVActivityIndicatorView(frame: .zero, type: .init(NVActivityIndicatorType.ballTrianglePath), color: UIColor.mainColor(), padding: 0)
@@ -33,28 +39,36 @@ final class FeedViewController: UIViewController, View {
     
     
     // Property
-    let navi = SJNavigationView(lLeftImage: "Back_White", c_Title: "공간 이름")
+    let navi = SJNavigationView(lLeftImage: "Back_White", c_Title: "우리들의 공간")
     var disposeBag: DisposeBag = DisposeBag()
+    var createRoomModel: CreateRoom?
     
     
-    
-    init() {
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     // Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureUI()
+
     }
+
     
     private func configureUI() {
         setupNavigation()
+        
+        [collectionView, indicator].forEach {
+            view.addSubview($0)
+        }
+        collectionView.snp.makeConstraints {
+            $0.top.equalTo(navi.snp.bottom)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
+
+        indicator.snp.makeConstraints {
+            $0.center.equalToSuperview()
+            $0.size.equalTo(50)
+        }
     }
     
     private func setupNavigation() {
@@ -68,13 +82,10 @@ final class FeedViewController: UIViewController, View {
             $0.top.equalToSuperview()
             $0.leading.trailing.equalToSuperview()
         }
-//        navi.leftButton.addTarget(self, action: #selector(closeAction), for: UIControl.Event.touchUpInside)
-
+        navi.backgroundColor = UIColor.white
+        navi.titleLabel.textColor = .black
+        
     }
-    
-    
-    
-    
 }
 
 extension FeedViewController {
@@ -83,12 +94,60 @@ extension FeedViewController {
     func bind(reactor: FeedViewModel) {
         
         // Action
+        self.rx.viewDidLoad
+            .filter { self.createRoomModel != nil }
+            .map { Reactor.Action.fetchPosts(self.createRoomModel ?? CreateRoom()) }
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
+        
+        self.rx.viewDidLoad
+            .flatMap { NotificationCenter.default.rx.notification(Notification.Name.init("UpdateFeed")) }
+            .flatMap { _ in Observable<Void>.just(()) }
+            .filter { self.createRoomModel != nil }
+            .map { reactor.posts.removeAll() }
+            .map { Reactor.Action.fetchPosts(self.createRoomModel ?? CreateRoom()) }
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
         
         
         
         
         // State
-        
-        
+        reactor.state
+            .map({ (state) -> [Post] in
+                guard let post = state.fetchPostsResult else { return [Post(user: User(), dictionary: [:])] }
+                return post
+            })
+            .filter({ post -> Bool in
+                guard post.count > 0 && post.first?.caption.count ?? 0  > 0 else {
+                    self.collectionView.backgroundView?.isHidden = false
+                    return false
+                }
+                self.collectionView.backgroundView?.isHidden = true
+                return true
+            })
+            .bind(to: collectionView.rx.items(cellIdentifier: "FeedCell", cellType: FeedCell.self)) { (indexPath, item, cell) in
+                
+                cell.photoCollectionView.dataSource = nil
+                cell.pagesControl.numberOfPages = item.imageUrl.count
+                cell.configureCell(post: item)
+            }
+            .disposed(by: self.disposeBag)
+    }
+    
+}
+
+extension FeedViewController: UICollectionViewDelegateFlowLayout {
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 10, left: 0, bottom: 1, right: 0)
     }
 }

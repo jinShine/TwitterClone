@@ -26,7 +26,7 @@ final class CreateRoomInfoViewModel: Reactor {
         case validCheckIDResult(Bool)
         case validCheckPWResult(Bool)
         case validCheckPWs(Bool)
-        case createRoomResult(Bool)
+        case createRoomResult((Bool, CreateRoom))
         case activationButton(Bool)
         case setErrorMessage(String)
     }
@@ -37,7 +37,7 @@ final class CreateRoomInfoViewModel: Reactor {
         var isValidID: Bool = false
         var isValidPW: Bool = false
         var isPwCheck: Bool = false
-        var isCreateRoom: Bool = false
+        var isCreateRoom: (Bool, CreateRoom) = (false, CreateRoom())
         var errorMessage: String = ""
         var activationState: Bool = false
     }
@@ -71,9 +71,9 @@ final class CreateRoomInfoViewModel: Reactor {
             
             return Observable.just(Mutation.validCheckPWs(false))
         case .createRoomInfo((let createRoom, let user)):
-
+            
                 let signAndCreate = self.signupAndCreateRoom(createRoom, user)
-                    .map { Mutation.createRoomResult($0)}
+                    .map { Mutation.createRoomResult(($0.0, $0.1)) }
                     .catchError({ error -> Observable<CreateRoomInfoViewModel.Mutation> in
                         guard let error = error as? AuthError else { return .empty() }
                         return Observable<Mutation>.just(.setErrorMessage(error.description))
@@ -108,8 +108,8 @@ final class CreateRoomInfoViewModel: Reactor {
             state.isPwCheck = result
             return state
             
-        case .createRoomResult(let result):
-            state.isCreateRoom = result
+        case .createRoomResult((let result, let createRoom)):
+            state.isCreateRoom = (result, createRoom)
             return state
             
         case .setErrorMessage(let errorMessage):
@@ -150,10 +150,10 @@ extension CreateRoomInfoViewModel {
         })
     }
     
-    private func signupAndCreateRoom(_ createRoomModel: CreateRoom, _ userModel: User ) -> Observable<Bool> {
-        return Observable<Bool>.create({ (observer) -> Disposable in
+    private func signupAndCreateRoom(_ createRoomModel: CreateRoom, _ userModel: User ) -> Observable<(Bool, CreateRoom)> {
+        return Observable<(Bool, CreateRoom)>.create({ (observer) -> Disposable in
             
-            Auth.auth().createUser(withEmail: userModel.email, password: userModel.pw, completion: { (user, error) in
+            Auth.auth().createUser(withEmail: userModel.email ?? "", password: userModel.pw ?? "", completion: { (user, error) in
                 if let error = (error as NSError?) {
                     print("******************************************************")
                     print(" <Create User Error> \n\t", error)
@@ -209,17 +209,9 @@ extension CreateRoomInfoViewModel {
                         print("******************************************************")
                         
                         
-                        observer.onNext(true)
+                        observer.onNext((true, createRoomModel))
                         observer.onCompleted()
                     })
-                    
-                    
-                    
-                    // 리스트 화면 보여주는 로직 넣기
-//                    guard let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarController else { return }
-//                    mainTabBarController.setupViewController()
-//                    self.dismiss(animated: true, completion: nil)
-                    
                 })
                 
                 

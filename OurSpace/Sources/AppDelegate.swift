@@ -17,18 +17,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
+        
         self.window = {
             let window = UIWindow(frame: UIScreen.main.bounds)
             window.makeKeyAndVisible()
             window.backgroundColor = .white
-            window.rootViewController = ProvideObject.main.viewController
+            
+            
+//            if Auth.auth().currentUser == nil {
+                window.rootViewController = ProvideObject.start.viewController
+//            } else {
+//                let naviVC = UINavigationController(rootViewController: ProvideObject.main(CreateRoom()).viewController)
+//                window.rootViewController = naviVC
+//            }
             return window
         }()
         
-        ///Firebase
-        FirebaseApp.configure()
+        
+       
         
         return true
+    }
+    
+    override init() {
+        ///Firebase
+        FirebaseApp.configure()
+        Database.database().isPersistenceEnabled = true
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

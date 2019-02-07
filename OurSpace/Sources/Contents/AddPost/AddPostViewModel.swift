@@ -30,6 +30,7 @@ final class AddPostViewModel: Reactor {
     }
     
     let initialState: State = State()
+    static let updateFeedNotificationName = NSNotification.Name(rawValue: "UpdateFeed")
     
     init() { }
     
@@ -127,7 +128,7 @@ extension AddPostViewModel {
         
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
-        let userPostRef = Database.database().reference().child("posts").child(uid)
+        let userPostRef = Database.database().reference().child("posts").child(<#T##pathString: String##String#>).child(uid)
         let ref = userPostRef.childByAutoId()
         
 
@@ -146,8 +147,7 @@ extension AddPostViewModel {
             print(" <데이터베이스에 이미지 저장 성공> \n\t")
             print("******************************************************")
             
-//            self.dismiss(animated: true, completion: nil)
-//            NotificationCenter.default.post(name: SharePhotoController.updateFeedNotificationName, object: nil)
+            NotificationCenter.default.post(name: AddPostViewModel.updateFeedNotificationName, object: nil)
         }
     }
 }

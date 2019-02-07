@@ -228,6 +228,8 @@ extension AddPostViewController {
         
         let caption = contentTextView.rx.text.orEmpty
         navi.rRightButton.rx.tap.asObservable()
+            .do(onNext: { [weak self] _ in self?.indicator.startAnimating() })
+            .throttle(7.0, scheduler: MainScheduler.instance)
             .flatMap { _ -> Observable<(String, [UIImage])> in
                 return Observable.combineLatest(caption, self.imagesSubject).take(1)
             }.map { Reactor.Action.handleShare($0, $1)}
@@ -248,9 +250,8 @@ extension AddPostViewController {
             .subscribe(onNext: { [weak self] result in
                 if result {
                     self?.dismiss(animated: true, completion: nil)
-                } else {
-                    print("취소")
                 }
+                self?.indicator.stopAnimating()
             })
             .disposed(by: self.disposeBag)
         
@@ -273,22 +274,16 @@ extension AddPostViewController {
 }
 extension AddPostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
-        print("Picker:", picker)
-        print("Info:", info)
-        
+
         guard let originalImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         self.images.append(originalImage)
-        print("imagesCount", self.images)
         self.imagesSubject.accept(self.images)
-        
         
         picker.dismiss(animated: true, completion: nil)
     }
     
     //취소 했을때
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        print("can")
         picker.dismiss(animated: true, completion: nil)
     }
 }

@@ -55,7 +55,7 @@ extension CreateRoomViewModel {
     private func validSpaceName(_ name: String) -> Observable<Bool> {
         return Observable<Bool>.create({ (observer) -> Disposable in
             
-            Database.database().reference().child("spaceNames").observeSingleEvent(of: DataEventType.value) { (snapshot) in
+            Database.database().reference().child("rooms").observeSingleEvent(of: DataEventType.value) { (snapshot) in
                 
                 guard let value = snapshot.value as? [String : Any] else { return observer.onNext(false) }
                 guard let finedSpaceName = value[name] as? String else { return observer.onNext(false) }

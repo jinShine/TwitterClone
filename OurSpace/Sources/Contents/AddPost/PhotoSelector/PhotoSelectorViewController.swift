@@ -50,7 +50,6 @@ final class PhtoSelectorViewController: UIViewController, View {
     let navi = SJNavigationView()
     var disposeBag: DisposeBag = DisposeBag()
     
-    
     private let imagePickerController = UIImagePickerController()
     
     

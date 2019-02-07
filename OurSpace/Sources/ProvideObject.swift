@@ -10,15 +10,15 @@ import RxSwift
 import RxCocoa
 
 enum ProvideObject {
-    case start          // StartView
-    case createRoom     // CreateRoom
-    case createRoomInfo // CreateRoomInfo
+    case start              // StartView
+    case createRoom         // CreateRoom
+    case createRoomInfo     // CreateRoomInfo
     
-    case main           // mainTabbar
-    case feed           // FeedVC
-    case addPhoto       // addPhoto
-    case userProfile    // userProfile
-    case photoSelector  // PhotoSelector
+    case main(CreateRoom?)   // mainTabbar
+    case feed               // FeedVC
+    case addPhoto           // addPhoto
+    case userProfile        // userProfile
+    case photoSelector      // PhotoSelector
     
 }
 
@@ -45,7 +45,7 @@ extension ProvideObject {
             viewController.reactor = CreateRoomInfoViewModel()
             return viewController
             
-        case .main:
+        case .main(let createRoomModel):
             let tabBarController = MainTabBarController()
             tabBarController.viewControllers = [
                 ProvideObject.feed.viewController,
@@ -54,6 +54,8 @@ extension ProvideObject {
                 ProvideObject.userProfile.viewController,
                 ProvideObject.userProfile.viewController
             ]
+            guard let feedVC = tabBarController.viewControllers?.first as? FeedViewController else { return UITabBarController() }
+            feedVC.createRoomModel = createRoomModel
             return tabBarController
             
         case .feed:
