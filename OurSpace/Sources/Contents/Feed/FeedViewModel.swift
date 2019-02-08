@@ -15,6 +15,7 @@ final class FeedViewModel: Reactor {
     // Action is an user interaction
     enum Action {
         case fetchPosts
+//        case likeSelected(FeedCell, Int)
     }
     
     // Mutate is a state manipulator which is not exposed to a view
@@ -39,6 +40,10 @@ final class FeedViewModel: Reactor {
             return Observable.concat([
                 self.fetchPosts().map { Mutation.setFetchPosts($0) }
             ])
+            
+//        case .likeSelected(let cell, let indexPathItem):
+//            self.likeHandle(cell: cell, indexPathItem: indexPathItem)
+            
         }
     }
     
@@ -68,25 +73,38 @@ extension FeedViewModel {
                     guard let currentRoom = App.userDefault.object(forKey: CURRENT_ROOM) as? String else { return }
                     let databaseRef = Database.database().reference().child("posts").child(currentRoom).child(user.uid)
                     databaseRef.observeSingleEvent(of: DataEventType.value, with: { snapshot in
-                        
+
                         var comparedCount = 0
-                        
                         guard let postValue = snapshot.value as? [String:Any] else { return }
                         postValue.forEach({ (key, value) in
                 
                             guard let dictionary = value as? [String: Any] else { return }
+                            var post = Post(user: user, dictionary: dictionary)
+                            post.id = key
                             
-                            let post = Post(user: user, dictionary: dictionary)
-                            self.posts.append(post)
-                            self.posts.sort(by: { (post1, post2) -> Bool in
-                                return post1.creationDate.compare(post2.creationDate) == .orderedDescending
+                            guard let uid = Auth.auth().currentUser?.uid else { return }
+                            Database.database().reference().child("likes").child(key).child(uid).observeSingleEvent(of: DataEventType.value, with: { (snapshot) in
+                                
+                                guard let likeValue = snapshot.value as? Int else { return }
+
+                                if likeValue == 1 {
+                                    post.hasLiked = true
+                                } else {
+                                    post.hasLiked = false
+                                }
+                            
+                                self.posts.append(post)
+                                self.posts.sort(by: { (post1, post2) -> Bool in
+                                    return post1.creationDate.compare(post2.creationDate) == .orderedDescending
+                                })
+                                
+                                comparedCount += 1
+                                if postValue.count == comparedCount {
+                                    print("", self.posts)
+                                    observer.onNext(self.posts)
+                                }
                             })
-                            
-                            comparedCount += 1
-                            
-                            if postValue.count == comparedCount {
-                                observer.onNext(self.posts)
-                            }
+
                         })
                     }) { (error) in
                         print("******************************************************")
@@ -101,6 +119,27 @@ extension FeedViewModel {
             }
             
             return Disposables.create()
+        })
+    }
+    
+    func likeHandle(cell: FeedCell, indexPathItem: Int) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        var post = self.posts[indexPathItem]
+        
+        let value = [uid: post.hasLiked == true ? 0 : 1]
+        Database.database().reference().child("likes").child(post.id ?? "").updateChildValues(value , withCompletionBlock: { (error, _) in
+            if let error = error {
+                print("Error", error)
+                return
+            }
+
+            post.hasLiked == true ? cell.likeButton.setImage(UIImage(named: "Emoji_Heart"), for: .normal) : cell.likeButton.setImage(UIImage(named: "Emoji_Normal"), for: .normal)
+            
+            post.hasLiked = !post.hasLiked
+            self.posts[indexPathItem] = post
+            
+            print("success like")
         })
     }
 }

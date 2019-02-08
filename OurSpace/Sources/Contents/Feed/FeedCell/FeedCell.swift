@@ -14,7 +14,9 @@ import RxCocoa
 class FeedCell: UICollectionViewCell {
     
     // Constant
-//    stuct Constan
+    struct Constant {
+        
+    }
 
     @IBOutlet weak var userImageView: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!
@@ -35,6 +37,8 @@ class FeedCell: UICollectionViewCell {
         // Initialization code
         
         setupUI()
+        
+        
         
     }
     
@@ -88,6 +92,12 @@ class FeedCell: UICollectionViewCell {
         attributedText.append(NSAttributedString(string: "", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14), NSAttributedString.Key.foregroundColor : UIColor.gray]))
         
         return attributedText
+    }
+    
+    
+    private func bind() {
+        
+        
     }
 }
 

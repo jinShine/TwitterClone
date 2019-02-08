@@ -13,8 +13,7 @@ enum ProvideObject {
     case start              // StartView
     case createRoom         // CreateRoom
     case createRoomInfo     // CreateRoomInfo
-    
-    case main   // mainTabbar
+    case main               // mainTabbar
     case feed               // FeedVC
     case addPhoto           // addPhoto
     case userProfile        // userProfile

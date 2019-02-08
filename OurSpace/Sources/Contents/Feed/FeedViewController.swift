@@ -15,6 +15,8 @@ import SnapKit
 import NVActivityIndicatorView
 //import Kingfisher
 
+import Firebase
+
 final class FeedViewController: UIViewController, View {
     
     
@@ -85,7 +87,9 @@ final class FeedViewController: UIViewController, View {
         }
         navi.backgroundColor = UIColor.white
         navi.titleLabel.textColor = .black
+        
         guard let currentRoom = App.userDefault.object(forKey: CURRENT_ROOM) as? String else { return }
+        print("currentRoom",currentRoom)
         navi.titleLabel.text = currentRoom
     }
 }
@@ -131,6 +135,45 @@ extension FeedViewController {
                 cell.photoCollectionView.dataSource = nil
                 cell.pagesControl.numberOfPages = item.imageUrl.count
                 cell.configureCell(post: item)
+                
+                reactor.likeHandle(cell: cell, indexPathItem: indexPath)
+//                cell.likeButton.rx.tap.asObservable()
+//                    .map { Reactor.Action.likeSelected(cell, indexPath) }
+//                    .bind(to: reactor.action)
+//                    .disposed(by: self.disposeBag)
+                
+                //Like Button
+//                cell.likeButton.rx.tap.asObservable()
+//
+//                    .subscribe(onNext: { _ in
+//
+//                        guard let uid = Auth.auth().currentUser?.uid else { return }
+//
+//                        let value = [uid: item.hasLiked == true ? 0 : 1]
+//                        Database.database().reference().child("likes").child(item.id ?? "").updateChildValues(value , withCompletionBlock: { (error, _) in
+//                            if let error = error {
+//                                print("Error", error)
+//                                return
+//                            }
+//
+//
+//
+//                            item.hasLiked == true ? cell.likeButton.setImage(UIImage(named: "Emoji_Heart"), for: .normal) : cell.likeButton.setImage(UIImage(named: "Emoji_Normal"), for: .normal)
+//
+//                            print("success like")
+//                        })
+//
+//                    })
+//                    .disposed(by: self.disposeBag)
+//
+                //Option Button
+                cell.optionsButton.rx.tap.asObservable()
+                    .subscribe(onNext: { _ in
+                        //                print(indexPath)
+                        print(789)
+                    })
+                    .disposed(by: self.disposeBag)
+                
             }
             .disposed(by: self.disposeBag)
     }
