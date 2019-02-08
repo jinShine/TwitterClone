@@ -127,10 +127,9 @@ extension AddPostViewModel {
     fileprivate func saveToDatabaseWithImageUrl(imageUrls: [String]?, content: String) {
         
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        
-        let userPostRef = Database.database().reference().child("posts").child(<#T##pathString: String##String#>).child(uid)
+        guard let currentRoom = App.userDefault.object(forKey: CURRENT_ROOM) as? String else { return }
+        let userPostRef = Database.database().reference().child("posts").child(currentRoom).child(uid)
         let ref = userPostRef.childByAutoId()
-        
 
         let values = ["imageUrls": imageUrls ?? "", "caption": content, "creationDate": Date().timeIntervalSince1970] as [String : Any]
         

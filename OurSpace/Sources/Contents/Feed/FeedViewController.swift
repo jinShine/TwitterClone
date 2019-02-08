@@ -24,6 +24,8 @@ final class FeedViewController: UIViewController, View {
         flowlayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowlayout)
         collectionView.backgroundView = UIImageView.init(image: UIImage(named: "EmptyFeedBackground")?.withRenderingMode(UIImage.RenderingMode.alwaysOriginal))
+        collectionView.backgroundView?.contentMode = UIView.ContentMode.scaleAspectFit
+        
         collectionView.backgroundView?.isHidden = true
         collectionView.backgroundColor = UIColor.rgb(red: 230, green: 230, blue: 230, alpha: 1)
         collectionView.delegate = self
@@ -39,9 +41,8 @@ final class FeedViewController: UIViewController, View {
     
     
     // Property
-    let navi = SJNavigationView(lLeftImage: "Back_White", c_Title: "우리들의 공간")
+    var navi: SJNavigationView = SJNavigationView(lLeftImage: "Back_White")
     var disposeBag: DisposeBag = DisposeBag()
-    var createRoomModel: CreateRoom?
     
     
     
@@ -50,7 +51,6 @@ final class FeedViewController: UIViewController, View {
         super.viewDidLoad()
         
         configureUI()
-
     }
 
     
@@ -72,6 +72,7 @@ final class FeedViewController: UIViewController, View {
     }
     
     private func setupNavigation() {
+        self.navi = SJNavigationView(lLeftImage: "Back_White")
         view.addSubview(navi)
         navi.snp.makeConstraints {
             if hasTopNotch {
@@ -84,7 +85,8 @@ final class FeedViewController: UIViewController, View {
         }
         navi.backgroundColor = UIColor.white
         navi.titleLabel.textColor = .black
-        
+        guard let currentRoom = App.userDefault.object(forKey: CURRENT_ROOM) as? String else { return }
+        navi.titleLabel.text = currentRoom
     }
 }
 
@@ -95,17 +97,15 @@ extension FeedViewController {
         
         // Action
         self.rx.viewDidLoad
-            .filter { self.createRoomModel != nil }
-            .map { Reactor.Action.fetchPosts(self.createRoomModel ?? CreateRoom()) }
+            .map { Reactor.Action.fetchPosts }
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
         
         self.rx.viewDidLoad
             .flatMap { NotificationCenter.default.rx.notification(Notification.Name.init("UpdateFeed")) }
             .flatMap { _ in Observable<Void>.just(()) }
-            .filter { self.createRoomModel != nil }
             .map { reactor.posts.removeAll() }
-            .map { Reactor.Action.fetchPosts(self.createRoomModel ?? CreateRoom()) }
+            .map { Reactor.Action.fetchPosts }
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
         

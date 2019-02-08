@@ -24,12 +24,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window.backgroundColor = .white
             
             
-//            if Auth.auth().currentUser == nil {
+            if Auth.auth().currentUser == nil {
                 window.rootViewController = ProvideObject.start.viewController
-//            } else {
-//                let naviVC = UINavigationController(rootViewController: ProvideObject.main(CreateRoom()).viewController)
-//                window.rootViewController = naviVC
-//            }
+            } else {
+                let naviVC = UINavigationController(rootViewController: ProvideObject.main.viewController)
+                window.rootViewController = naviVC
+            }
             return window
         }()
         

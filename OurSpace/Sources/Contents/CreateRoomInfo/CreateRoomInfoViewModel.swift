@@ -26,7 +26,7 @@ final class CreateRoomInfoViewModel: Reactor {
         case validCheckIDResult(Bool)
         case validCheckPWResult(Bool)
         case validCheckPWs(Bool)
-        case createRoomResult((Bool, CreateRoom))
+        case createRoomResult(Bool)
         case activationButton(Bool)
         case setErrorMessage(String)
     }
@@ -37,7 +37,7 @@ final class CreateRoomInfoViewModel: Reactor {
         var isValidID: Bool = false
         var isValidPW: Bool = false
         var isPwCheck: Bool = false
-        var isCreateRoom: (Bool, CreateRoom) = (false, CreateRoom())
+        var isCreateRoom: Bool = false
         var errorMessage: String = ""
         var activationState: Bool = false
     }
@@ -73,7 +73,7 @@ final class CreateRoomInfoViewModel: Reactor {
         case .createRoomInfo((let createRoom, let user)):
             
                 let signAndCreate = self.signupAndCreateRoom(createRoom, user)
-                    .map { Mutation.createRoomResult(($0.0, $0.1)) }
+                    .map { Mutation.createRoomResult($0) }
                     .catchError({ error -> Observable<CreateRoomInfoViewModel.Mutation> in
                         guard let error = error as? AuthError else { return .empty() }
                         return Observable<Mutation>.just(.setErrorMessage(error.description))
@@ -108,8 +108,8 @@ final class CreateRoomInfoViewModel: Reactor {
             state.isPwCheck = result
             return state
             
-        case .createRoomResult((let result, let createRoom)):
-            state.isCreateRoom = (result, createRoom)
+        case .createRoomResult(let result):
+            state.isCreateRoom = result
             return state
             
         case .setErrorMessage(let errorMessage):
@@ -150,8 +150,8 @@ extension CreateRoomInfoViewModel {
         })
     }
     
-    private func signupAndCreateRoom(_ createRoomModel: CreateRoom, _ userModel: User ) -> Observable<(Bool, CreateRoom)> {
-        return Observable<(Bool, CreateRoom)>.create({ (observer) -> Disposable in
+    private func signupAndCreateRoom(_ createRoomModel: CreateRoom, _ userModel: User ) -> Observable<Bool> {
+        return Observable<Bool>.create({ (observer) -> Disposable in
             
             Auth.auth().createUser(withEmail: userModel.email ?? "", password: userModel.pw ?? "", completion: { (user, error) in
                 if let error = (error as NSError?) {
@@ -209,7 +209,7 @@ extension CreateRoomInfoViewModel {
                         print("******************************************************")
                         
                         
-                        observer.onNext((true, createRoomModel))
+                        observer.onNext(true)
                         observer.onCompleted()
                     })
                 })

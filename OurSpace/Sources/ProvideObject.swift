@@ -14,7 +14,7 @@ enum ProvideObject {
     case createRoom         // CreateRoom
     case createRoomInfo     // CreateRoomInfo
     
-    case main(CreateRoom?)   // mainTabbar
+    case main   // mainTabbar
     case feed               // FeedVC
     case addPhoto           // addPhoto
     case userProfile        // userProfile
@@ -45,7 +45,7 @@ extension ProvideObject {
             viewController.reactor = CreateRoomInfoViewModel()
             return viewController
             
-        case .main(let createRoomModel):
+        case .main:
             let tabBarController = MainTabBarController()
             tabBarController.viewControllers = [
                 ProvideObject.feed.viewController,
@@ -54,8 +54,7 @@ extension ProvideObject {
                 ProvideObject.userProfile.viewController,
                 ProvideObject.userProfile.viewController
             ]
-            guard let feedVC = tabBarController.viewControllers?.first as? FeedViewController else { return UITabBarController() }
-            feedVC.createRoomModel = createRoomModel
+            
             return tabBarController
             
         case .feed:

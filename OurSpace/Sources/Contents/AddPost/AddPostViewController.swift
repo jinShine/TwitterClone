@@ -232,7 +232,7 @@ extension AddPostViewController {
             .throttle(7.0, scheduler: MainScheduler.instance)
             .flatMap { _ -> Observable<(String, [UIImage])> in
                 return Observable.combineLatest(caption, self.imagesSubject).take(1)
-            }.map { Reactor.Action.handleShare($0, $1)}
+            }.map { Reactor.Action.handleShare($0, $1) }
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
         

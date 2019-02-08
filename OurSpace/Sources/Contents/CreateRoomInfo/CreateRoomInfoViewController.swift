@@ -275,6 +275,8 @@ extension CreateRoomInfoViewController {
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
         
+  
+        
         Observable.combineLatest(pwObserver, confirmPwObserver)
             .map { Reactor.Action.confirmPwInfo(($0, $1)) }
             .bind(to: reactor.action)
@@ -290,6 +292,7 @@ extension CreateRoomInfoViewController {
                                "id": self?.idTextField.text ?? "",
                                "pw": self?.pwTextField.text ?? "",
                                "rooms" : self?.createRoomModel?.spaceRoomName ?? ""] as [String : Any]
+                App.userDefault.set(self?.createRoomModel?.spaceRoomName, forKey: CURRENT_ROOM)
                 let user = User(uid: nil, dictionary: userDic as [String : Any])
                 return (self?.createRoomModel ?? CreateRoom(), user)
             }
@@ -321,10 +324,9 @@ extension CreateRoomInfoViewController {
         
         reactor.state
             .map { $0.isCreateRoom }
-            .subscribe(onNext: { (result, createModelValue) in
+            .subscribe(onNext: { (result) in
                 if result {
-                    let naviVC = UINavigationController(rootViewController: ProvideObject.main(createModelValue).viewController )
-                    App.delegate.window?.rootViewController = naviVC
+                    App.delegate.window?.rootViewController = ProvideObject.main.viewController
                 }
             })
             .disposed(by: self.disposeBag)

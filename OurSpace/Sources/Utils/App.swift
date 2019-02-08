@@ -12,6 +12,9 @@ import RxSwift
 struct App {
     static let delegate: AppDelegate = UIApplication.shared.delegate as! AppDelegate
     static let userDefault: UserDefaults = UserDefaults.standard
+    /*
+     CurrentRoom : 현재 방
+     */
 }
 
 

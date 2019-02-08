@@ -14,7 +14,7 @@ final class FeedViewModel: Reactor {
     
     // Action is an user interaction
     enum Action {
-        case fetchPosts(CreateRoom)
+        case fetchPosts
     }
     
     // Mutate is a state manipulator which is not exposed to a view
@@ -35,9 +35,9 @@ final class FeedViewModel: Reactor {
     // Action -> Mutation
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-        case .fetchPosts(let createRoom):
+        case .fetchPosts:
             return Observable.concat([
-                self.fetchPosts(createRoomModel: createRoom).map { Mutation.setFetchPosts($0) }
+                self.fetchPosts().map { Mutation.setFetchPosts($0) }
             ])
         }
     }
@@ -55,7 +55,7 @@ final class FeedViewModel: Reactor {
 }
 
 extension FeedViewModel {
-    private func fetchPosts(createRoomModel: CreateRoom) -> Observable<[Post]> {
+    private func fetchPosts() -> Observable<[Post]> {
         return Observable<[Post]>.create({ (observer) -> Disposable in
             
             Database.database().reference().child("users").observeSingleEvent(of: DataEventType.value, with: { (snapshot) in
@@ -65,8 +65,8 @@ extension FeedViewModel {
                     guard let userDic = value as? [String: Any] else { return }
                     let user = User(uid: key, dictionary: userDic)
                     
-                    print("CReateRoomMoasdfasdfadf", createRoomModel)
-                    let databaseRef = Database.database().reference().child("posts").child("테스트").child(user.uid)
+                    guard let currentRoom = App.userDefault.object(forKey: CURRENT_ROOM) as? String else { return }
+                    let databaseRef = Database.database().reference().child("posts").child(currentRoom).child(user.uid)
                     databaseRef.observeSingleEvent(of: DataEventType.value, with: { snapshot in
                         
                         var comparedCount = 0

@@ -42,6 +42,7 @@
 		5CC72D832203EC610077E723 /* AddPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC72D822203EC610077E723 /* AddPostViewModel.swift */; };
 		5CC72D872203EDF70077E723 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC72D862203EDF70077E723 /* UserProfileViewController.swift */; };
 		5CC72D892203EE1C0077E723 /* UserProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC72D882203EE1C0077E723 /* UserProfileViewModel.swift */; };
+		5CC72D8B220D1BD50077E723 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC72D8A220D1BD50077E723 /* Constant.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,6 +83,7 @@
 		5CC72D822203EC610077E723 /* AddPostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostViewModel.swift; sourceTree = "<group>"; };
 		5CC72D862203EDF70077E723 /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		5CC72D882203EE1C0077E723 /* UserProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewModel.swift; sourceTree = "<group>"; };
+		5CC72D8A220D1BD50077E723 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		643E56349549ABC10EB2CDE2 /* Pods-OurSpace.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OurSpace.release.xcconfig"; path = "Pods/Target Support Files/Pods-OurSpace/Pods-OurSpace.release.xcconfig"; sourceTree = "<group>"; };
 		C5390C06192EE080D8435BDA /* Pods-OurSpace.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OurSpace.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OurSpace/Pods-OurSpace.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -116,6 +118,7 @@
 				5C6E5A6821FCFB340045C88D /* SJNavigationView.swift */,
 				5CC72D5E21FEE4E20077E723 /* App.swift */,
 				5C4AB90322088FFD00EED06E /* UIViewController+Rx.swift */,
+				5CC72D8A220D1BD50077E723 /* Constant.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -454,6 +457,7 @@
 				5CC72D72220293600077E723 /* FeedViewController.swift in Sources */,
 				5CC72D6321FFEF9E0077E723 /* CreateRoomInfoViewController.swift in Sources */,
 				5C6E5A6921FCFB340045C88D /* SJNavigationView.swift in Sources */,
+				5CC72D8B220D1BD50077E723 /* Constant.swift in Sources */,
 				5CC72D6A220180D20077E723 /* CreateRoom.swift in Sources */,
 				5C6E5A5A21FCC29B0045C88D /* ProvideObject.swift in Sources */,
 				5C4AB906220A12A400EED06E /* Post.swift in Sources */,
