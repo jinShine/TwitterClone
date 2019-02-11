@@ -17,6 +17,8 @@
 		5C4AB90422088FFD00EED06E /* UIViewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4AB90322088FFD00EED06E /* UIViewController+Rx.swift */; };
 		5C4AB906220A12A400EED06E /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4AB905220A12A400EED06E /* Post.swift */; };
 		5C4AB908220B49A800EED06E /* FeedPhotosCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4AB907220B49A800EED06E /* FeedPhotosCell.swift */; };
+		5C4AB90B2210036D00EED06E /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4AB90A2210036D00EED06E /* CommentViewController.swift */; };
+		5C4AB90D221003AD00EED06E /* CommentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4AB90C221003AD00EED06E /* CommentViewModel.swift */; };
 		5C6E5A5821FCBB4B0045C88D /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6E5A5721FCBB4B0045C88D /* StartViewController.swift */; };
 		5C6E5A5A21FCC29B0045C88D /* ProvideObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6E5A5921FCC29B0045C88D /* ProvideObject.swift */; };
 		5C6E5A6221FCD4710045C88D /* CommonExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6E5A6121FCD4710045C88D /* CommonExtensions.swift */; };
@@ -56,6 +58,8 @@
 		5C4AB90322088FFD00EED06E /* UIViewController+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Rx.swift"; sourceTree = "<group>"; };
 		5C4AB905220A12A400EED06E /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		5C4AB907220B49A800EED06E /* FeedPhotosCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPhotosCell.swift; sourceTree = "<group>"; };
+		5C4AB90A2210036D00EED06E /* CommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
+		5C4AB90C221003AD00EED06E /* CommentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewModel.swift; sourceTree = "<group>"; };
 		5C6E5A5721FCBB4B0045C88D /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		5C6E5A5921FCC29B0045C88D /* ProvideObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvideObject.swift; sourceTree = "<group>"; };
 		5C6E5A6121FCD4710045C88D /* CommonExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonExtensions.swift; sourceTree = "<group>"; };
@@ -108,6 +112,15 @@
 				5C0D1F2B2205A2A70034E68B /* PhotoSelectorCell.swift */,
 			);
 			path = PhotoSelector;
+			sourceTree = "<group>";
+		};
+		5C4AB9092210033C00EED06E /* Comment */ = {
+			isa = PBXGroup;
+			children = (
+				5C4AB90A2210036D00EED06E /* CommentViewController.swift */,
+				5C4AB90C221003AD00EED06E /* CommentViewModel.swift */,
+			);
+			path = Comment;
 			sourceTree = "<group>";
 		};
 		5C6E5A5F21FCD4370045C88D /* Utils */ = {
@@ -236,9 +249,10 @@
 		5CC72D70220293300077E723 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
-				5CC72D7522029BC10077E723 /* FeedCell */,
 				5CC72D71220293600077E723 /* FeedViewController.swift */,
 				5CC72D732202936D0077E723 /* FeedViewModel.swift */,
+				5CC72D7522029BC10077E723 /* FeedCell */,
+				5C4AB9092210033C00EED06E /* Comment */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -456,12 +470,14 @@
 				5C4AB90422088FFD00EED06E /* UIViewController+Rx.swift in Sources */,
 				5CC72D72220293600077E723 /* FeedViewController.swift in Sources */,
 				5CC72D6321FFEF9E0077E723 /* CreateRoomInfoViewController.swift in Sources */,
+				5C4AB90D221003AD00EED06E /* CommentViewModel.swift in Sources */,
 				5C6E5A6921FCFB340045C88D /* SJNavigationView.swift in Sources */,
 				5CC72D8B220D1BD50077E723 /* Constant.swift in Sources */,
 				5CC72D6A220180D20077E723 /* CreateRoom.swift in Sources */,
 				5C6E5A5A21FCC29B0045C88D /* ProvideObject.swift in Sources */,
 				5C4AB906220A12A400EED06E /* Post.swift in Sources */,
 				5C6E5A5821FCBB4B0045C88D /* StartViewController.swift in Sources */,
+				5C4AB90B2210036D00EED06E /* CommentViewController.swift in Sources */,
 				5CC72D872203EDF70077E723 /* UserProfileViewController.swift in Sources */,
 				5C0D1F2C2205A2A70034E68B /* PhotoSelectorCell.swift in Sources */,
 				5CC72D832203EC610077E723 /* AddPostViewModel.swift in Sources */,

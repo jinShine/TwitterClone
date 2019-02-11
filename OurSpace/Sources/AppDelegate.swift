@@ -26,7 +26,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if Auth.auth().currentUser == nil {
                 window.rootViewController = ProvideObject.start.viewController
             } else {
-                window.rootViewController = ProvideObject.main.viewController
+                let naviVC = UINavigationController(rootViewController: ProvideObject.main.viewController)
+                naviVC.setNavigationBarHidden(true, animated: false)
+                window.rootViewController = naviVC
             }
             return window
         }()
