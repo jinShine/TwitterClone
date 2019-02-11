@@ -78,7 +78,6 @@ extension FeedViewModel {
                             guard let dictionary = value as? [String: Any] else { return }
                             var post = Post(user: user, dictionary: dictionary)
                             post.id = key
-
                                     
                             self.posts.append(post)
                             self.posts.sort(by: { (post1, post2) -> Bool in
@@ -88,7 +87,7 @@ extension FeedViewModel {
                             comparedCount += 1
                             print("compred", comparedCount)
                             if postValue.count == comparedCount {
-                                print("TTT", self.posts)
+                                print(" POST::", self.posts)
                                 observer.onNext(self.posts)
                             }
                         })

@@ -18,7 +18,7 @@ enum ProvideObject {
     case addPhoto           // addPhoto
     case userProfile        // userProfile
     case photoSelector      // PhotoSelector
-    case comment            // 댓글
+    case comment(Post)      // 댓글
     
 }
 
@@ -85,8 +85,9 @@ extension ProvideObject {
             viewController.reactor = PhotoSelectorViewModel()
             return viewController
             
-        case .comment:
+        case .comment(let post):
             let viewController: CommentViewController = CommentViewController()
+            viewController.post = post
             viewController.reactor = CommentViewModel()
             return viewController
             

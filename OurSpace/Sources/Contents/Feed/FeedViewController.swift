@@ -146,8 +146,7 @@ extension FeedViewController {
                 //Comment Button
                 cell.commentButton.rx.tap.asObservable()
                     .subscribe(onNext: { [weak self] _ in
-                        print(123)
-                        self?.navigationController?.pushViewController(ProvideObject.comment.viewController, animated: true)
+                        self?.navigationController?.pushViewController(ProvideObject.comment(item).viewController, animated: true)
                     })
                     .disposed(by: self.disposeBag)
                 

@@ -121,3 +121,16 @@ extension FontName {
         }
     }
 }
+
+extension UILabel {
+//    static func dynamicLabelHeight() -> CGFloat {
+//        var maximumLabelSize: CGSize = CGSize(width: 280, height: 9999)
+//        var expectedLabelSize: CGSize = label.sizeThatFits(maximumLabelSize)
+//        var newFrame: CGRect = self
+//
+//    }
+}
+
+extension UITextView {
+    
+}

@@ -24,15 +24,17 @@ final class CommentViewController: UIViewController, View {
     // UI
     lazy var collectionView: UICollectionView = {
         let flowlayout = UICollectionViewFlowLayout()
-        flowlayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowlayout)
-        collectionView.backgroundView = UIImageView.init(image: UIImage(named: "EmptyFeedBackground")?.withRenderingMode(UIImage.RenderingMode.alwaysOriginal))
-        collectionView.backgroundView?.contentMode = UIView.ContentMode.scaleAspectFit
         
-        collectionView.backgroundView?.isHidden = true
 //        collectionView.backgroundColor = UIColor.rgb(red: 230, green: 230, blue: 230, alpha: 1)
         collectionView.backgroundColor = .white
         collectionView.delegate = self
+        
+        collectionView.backgroundColor = .red
+        collectionView.register(CommentCell.self, forCellWithReuseIdentifier: "CommentCell")
+        
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: -50, right: 0)
+        collectionView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: -50, right: 0)
         
         return collectionView
     }()
@@ -84,15 +86,16 @@ final class CommentViewController: UIViewController, View {
     
     
     // Property
+    var post: Post?
+    
     var navi: SJNavigationView = SJNavigationView(lLeftImage: "Back_White", c_Title: "댓글")
     var disposeBag: DisposeBag = DisposeBag()
-    
     
     
     // Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         configureUI()
     }
     
@@ -107,9 +110,6 @@ final class CommentViewController: UIViewController, View {
             $0.top.equalTo(navi.snp.bottom)
             $0.leading.trailing.bottom.equalToSuperview()
         }
-        
-        
-
     }
     
     private func setupNavigation() {
@@ -139,40 +139,62 @@ extension CommentViewController {
             })
             .disposed(by: self.disposeBag)
         
-        self.submitButton.rx.tap.asObservable()
-            .subscribe(onNext: { _ in
-                print(123123)
-                
-            })
-            .disposed(by: self.disposeBag)
-        
         // Action
+        
+        self.rx.viewDidLoad
+            .map { Reactor.Action.fetchComment(self.post ?? Post()) }
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
 
         self.submitButton.rx.tap.asObservable()
-            .map { Reactor.Action.handleSubmit(self.inputTextField.text ?? "") }
+            .map { _ in Reactor.Action.handleSubmit(self.inputTextField.text ?? "", self.post ?? Post()) }
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
         
         
         // State
 
+        reactor.state
+            .map { $0.handleSubmitResult }
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self] result in
+                if result {
+                    print("success")
+                }
+            })
+            .disposed(by: self.disposeBag)
+        
+        reactor.state
+            .map { $0.fetchPostsResult }
+            .bind(to: self.collectionView.rx.items(cellIdentifier: "CommentCell", cellType: CommentCell.self)) { (indexPath, item, cell) in
+                print(item)
+                cell.comment = item
+                cell.textLabel.sizeToFit()
+            }
+            .disposed(by: self.disposeBag)
     }
     
 }
 
 extension CommentViewController: UICollectionViewDelegateFlowLayout {
     
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-//        return 10
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-//        return 0
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-//        return UIEdgeInsets(top: 10, left: 0, bottom: 1, right: 0)
-//    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        return CommentCell.cellHeight(width: view.frame.width)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
+    }
+
     
 }
 
