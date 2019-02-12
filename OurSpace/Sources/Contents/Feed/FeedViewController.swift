@@ -17,16 +17,22 @@ import NVActivityIndicatorView
 
 import Firebase
 
+var cellCache = NSCache<AnyObject, AnyObject>()
+
+
 final class FeedViewController: UIViewController, View {
     
     
     // UI
     lazy var collectionView: UICollectionView = {
         let flowlayout = UICollectionViewFlowLayout()
-        flowlayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        flowlayout.estimatedItemSize = CGSize(width: self.view.frame.width, height: 200)
+//        flowlayout.itemSize = CGSize(width: 100, height: 100)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowlayout)
         collectionView.backgroundView = UIImageView.init(image: UIImage(named: "EmptyFeedBackground")?.withRenderingMode(UIImage.RenderingMode.alwaysOriginal))
         collectionView.backgroundView?.contentMode = UIView.ContentMode.scaleAspectFit
+        
+        collectionView.collectionViewLayout.invalidateLayout()
         
         collectionView.backgroundView?.isHidden = true
         collectionView.backgroundColor = UIColor.rgb(red: 230, green: 230, blue: 230, alpha: 1)
@@ -45,7 +51,7 @@ final class FeedViewController: UIViewController, View {
     // Property
     var navi: SJNavigationView = SJNavigationView(lLeftImage: "Back_White")
     var disposeBag: DisposeBag = DisposeBag()
-    
+    var dicdic: [IndexPath: CGSize] = [:]
     
     
     // Life Cycle
@@ -154,9 +160,27 @@ extension FeedViewController {
             .disposed(by: self.disposeBag)
     }
     
+    
 }
 
 extension FeedViewController: UICollectionViewDelegateFlowLayout {
+    
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+////        return CGSize(width: 50, height: 50)
+////        guard let height = dicdic[indexPath] else { return UICollectionViewFlowLayout.automaticSize }
+//
+//
+//        NSString(string: <#T##String#>)
+//
+//
+//        return CGSize(width: 50, height: 50)
+//
+//    }
+    
+//    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+//        print("index: \(indexPath.item)",cell.frame.height)
+//        self.dicdic[indexPath] = cell.frame.size
+//    }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 10

@@ -94,17 +94,24 @@ class FeedCell: UICollectionViewCell {
         return attributedText
     }
     
-    
-    private func bind() {
-        
-        
-    }
+//    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+//        setNeedsLayout()
+//        layoutIfNeeded()
+//        
+//        let size = contentView.systemLayoutSizeFitting(layoutAttributes.size)
+//        
+//        var frame = layoutAttributes.frame
+//        frame.size.height = ceil(size.height)
+//        layoutAttributes.frame = frame
+//        
+//        return layoutAttributes
+//    }
 }
 
 extension FeedCell: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-            return CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height)
+        return CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

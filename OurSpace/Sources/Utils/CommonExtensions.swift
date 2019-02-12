@@ -122,15 +122,19 @@ extension FontName {
     }
 }
 
-extension UILabel {
-//    static func dynamicLabelHeight() -> CGFloat {
-//        var maximumLabelSize: CGSize = CGSize(width: 280, height: 9999)
-//        var expectedLabelSize: CGSize = label.sizeThatFits(maximumLabelSize)
-//        var newFrame: CGRect = self
-//
+//extension String {
+//    func height(fitWidth width: CGFloat, font: UIFont, newAttributes: [NSAttributedString.Key: Any] = [:]) -> CGFloat {
+//        let size = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
+//        
+//        var attributes: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: font]
+//        attributes.merge(dict: newAttributes)
+//        let options: NSStringDrawingOptions = [.usesLineFragmentOrigin, .usesFontLeading]
+//        let height = self.boundingRect(with: size,
+//                                       options: options,
+//                                       attributes: attributes,
+//                                       context: nil).size.height
+//        let scale = UIScreen.main.scale
+//        return ceil(height * scale) / scale
 //    }
-}
+//}
 
-extension UITextView {
-    
-}

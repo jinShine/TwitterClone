@@ -13,10 +13,10 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FeedCell" id="gTV-IL-0wX" customClass="FeedCell" customModule="OurSpace" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="335" height="456"/>
+            <rect key="frame" x="0.0" y="0.0" width="360" height="464"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="335" height="456"/>
+                <rect key="frame" x="0.0" y="0.0" width="360" height="464"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UserPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="6R6-DB-5CC">
@@ -27,25 +27,25 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UserName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GNu-4G-Oal">
-                        <rect key="frame" x="66" y="13" width="211" height="17"/>
+                        <rect key="frame" x="66" y="13" width="236" height="17"/>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R6x-pF-bHK">
-                        <rect key="frame" x="297" y="18" width="30" height="30"/>
+                        <rect key="frame" x="322" y="18" width="30" height="30"/>
                         <state key="normal" title="•••">
                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="18.01.31 2:55" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GH8-7p-6DP">
-                        <rect key="frame" x="66" y="38.5" width="211" height="14.5"/>
+                        <rect key="frame" x="66" y="38.5" width="236" height="14.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="aJP-xu-hxb">
-                        <rect key="frame" x="0.0" y="110" width="335" height="280"/>
+                        <rect key="frame" x="0.0" y="118" width="360" height="280"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="280" id="iJd-qd-3n5"/>
@@ -58,7 +58,7 @@
                         </collectionViewFlowLayout>
                     </collectionView>
                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="0TT-dZ-gtl">
-                        <rect key="frame" x="8" y="398" width="80" height="50"/>
+                        <rect key="frame" x="8" y="406" width="80" height="50"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S2J-BW-tr0">
                                 <rect key="frame" x="0.0" y="0.0" width="40" height="50"/>
@@ -76,13 +76,13 @@
                         </constraints>
                     </stackView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="김승진 Content~~~~~~" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3zE-3q-OtR">
-                        <rect key="frame" x="8" y="66" width="319" height="36"/>
+                        <rect key="frame" x="8" y="66" width="344" height="44"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="jy4-mB-yGw">
-                        <rect key="frame" x="148" y="404.5" width="39" height="37"/>
+                        <rect key="frame" x="160.5" y="412.5" width="39" height="37"/>
                         <color key="tintColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="pageIndicatorTintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="currentPageIndicatorTintColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -113,7 +113,7 @@
                 <constraint firstItem="0TT-dZ-gtl" firstAttribute="top" secondItem="aJP-xu-hxb" secondAttribute="bottom" constant="8" id="yAJ-Ba-7ai"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
-            <size key="customSize" width="335" height="456"/>
+            <size key="customSize" width="360" height="464"/>
             <connections>
                 <outlet property="captionLabel" destination="3zE-3q-OtR" id="s5V-Pb-lEr"/>
                 <outlet property="commentButton" destination="NJf-QE-8Wp" id="efE-sT-bFE"/>
@@ -126,7 +126,7 @@
                 <outlet property="userImageView" destination="6R6-DB-5CC" id="6Xi-0D-7MP"/>
                 <outlet property="userNameLabel" destination="GNu-4G-Oal" id="Byk-nZ-jE4"/>
             </connections>
-            <point key="canvasLocation" x="365.60000000000002" y="331.93403298350825"/>
+            <point key="canvasLocation" x="385.60000000000002" y="334.63268365817095"/>
         </collectionViewCell>
     </objects>
     <resources>
