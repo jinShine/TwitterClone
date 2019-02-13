@@ -76,25 +76,25 @@ extension Date {
         let unit: String
         if secondsAgo < minute {
             quotient = secondsAgo
-            unit = "second"
+            unit = "초"
         } else if secondsAgo < hour {
             quotient = secondsAgo / minute
-            unit = "min"
+            unit = "분"
         } else if secondsAgo < day {
             quotient = secondsAgo / hour
-            unit = "hour"
+            unit = "시간"
         } else if secondsAgo < week {
             quotient = secondsAgo / day
-            unit = "day"
+            unit = "일"
         } else if secondsAgo < month {
             quotient = secondsAgo / week
-            unit = "week"
+            unit = "주"
         } else {
             quotient = secondsAgo / month
-            unit = "month"
+            unit = "달"
         }
         
-        return "\(quotient) \(unit)\(quotient == 1 ? "" : "s") ago"
+        return "\(quotient)\(unit)"
         
     }
 }
@@ -122,19 +122,27 @@ extension FontName {
     }
 }
 
-//extension String {
-//    func height(fitWidth width: CGFloat, font: UIFont, newAttributes: [NSAttributedString.Key: Any] = [:]) -> CGFloat {
-//        let size = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
-//        
-//        var attributes: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: font]
-//        attributes.merge(dict: newAttributes)
-//        let options: NSStringDrawingOptions = [.usesLineFragmentOrigin, .usesFontLeading]
-//        let height = self.boundingRect(with: size,
-//                                       options: options,
-//                                       attributes: attributes,
-//                                       context: nil).size.height
-//        let scale = UIScreen.main.scale
-//        return ceil(height * scale) / scale
-//    }
-//}
+extension String {
+    func height(fitWidth width: CGFloat, font: UIFont, newAttributes: [NSAttributedString.Key: Any] = [:]) -> CGFloat {
+        let size = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
+        
+        var attributes: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: font]
+        attributes.merge(dict: newAttributes)
+        let options: NSStringDrawingOptions = [.usesLineFragmentOrigin, .usesFontLeading]
+        let height = self.boundingRect(with: size,
+                                       options: options,
+                                       attributes: attributes,
+                                       context: nil).size.height
+        let scale = UIScreen.main.scale
+        return ceil(height * scale) / scale
+    }
+}
 
+// MARK: - Dictionary
+extension Dictionary {
+    mutating func merge(dict: [Key: Value]) {
+        for (key, value) in dict {
+            updateValue(value, forKey: key)
+        }
+    }
+}

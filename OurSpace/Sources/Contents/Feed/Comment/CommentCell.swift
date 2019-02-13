@@ -8,34 +8,37 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 class CommentCell: UICollectionViewCell {
     
     private enum Constants {
-        static let defaultFont = FontName.regular(14).font
+        static let commnetFont = FontName.regular(14).font
+        static let creationTimeFont = FontName.regular(12).font
     }
     
     var comment: Comment? {
         didSet {
-            self.textLabel.text = comment?.text
-
-//            self.profileImageView
-//            let labelWidth = textLabel.frame.width
-//            let maxLabelSize = CGSize(width: labelWidth, height: CGFloat.greatestFiniteMagnitude)
-//            let actualLabelSize = textLabel.text!.boundingRect(with: maxLabelSize, options: [.usesLineFragmentOrigin], attributes: [.font: textLabel.font], context: nil)
-//            let labelHeight = actualLabelSize.height
-//            print(labelHeight)
-
+            guard let comment = comment else { return }
+            
+            // ProfileImage
+            let imageName = comment.user.profileImageUrl
+            self.profileImageView.kf.setImage(with: URL(string: imageName), placeholder: UIImage(named: "UserPlaceholder") )
+            
+            let attributedText = NSMutableAttributedString(string: comment.user.id, attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 14)])
+            attributedText.append(NSAttributedString(string: " " + comment.text, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14)]))
+            self.textLabel.attributedText = attributedText
+            
+            self.creationTimeLabel.text = comment.creationDate?.timeAgoDisplay()
+            
             
         }
     }
     
-    let textLabel: UILabel = {
-        let label = UILabel()
-        label.font = Constants.defaultFont
-        label.numberOfLines = 0
-        label.backgroundColor = .gray
-//        label.isScrollEnabled = false
+    let textLabel: UITextView = {
+        let label = UITextView()
+        label.font = Constants.commnetFont
+        label.isScrollEnabled = false
         return label
     }()
     
@@ -47,41 +50,55 @@ class CommentCell: UICollectionViewCell {
         return iv
     }()
     
+    let creationTimeLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Time"
+        label.textColor = UIColor.lightGray
+        label.font = Constants.creationTimeFont
+        return label
+    }()
+    
+    let lineSeparatorView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.rgb(red: 230, green: 230, blue: 230, alpha: 1)
+        return view
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = .yellow
-        
-//        addSubview(profileImageView)
-//
-//        profileImageView.snp.makeConstraints {
-//            $0.top.leading.equalToSuperview().offset(8)
-//            $0.size.equalTo(40)
-//
-//        }
-//        profileImageView.layer.cornerRadius = 40 / 2
-        
-        addSubview(textLabel)
+        [profileImageView, textLabel, creationTimeLabel, lineSeparatorView].forEach {
+            addSubview($0)
+        }
+
+        profileImageView.snp.makeConstraints {
+            $0.top.leading.equalToSuperview().offset(8)
+            $0.size.equalTo(40)
+        }
+        profileImageView.layer.cornerRadius = 40 / 2
+
         textLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(4)
-            $0.leading.equalToSuperview().offset(4)
-            $0.trailing.bottom.equalToSuperview().offset(-4)
+            $0.leading.equalTo(profileImageView.snp.trailing).offset(4)
+            $0.trailing.equalToSuperview().offset(-4)
         }
+        
+        creationTimeLabel.snp.makeConstraints {
+            $0.top.equalTo(textLabel.snp.bottom)
+            $0.leading.equalTo(textLabel).offset(4)
+            $0.trailing.equalTo(textLabel)
+            $0.bottom.equalToSuperview().offset(-4)
+        }
+
+        lineSeparatorView.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
+            $0.height.equalTo(0.5)
+        }
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    static func cellHeight(width: CGFloat) -> CGSize {
-        print("Constant.defaultLineHeight", Constants.defaultFont.lineHeight)
-        let height: CGFloat = Constants.defaultFont.lineHeight
-        
-//        let dd = self.textLabel.sizeThatFits(CGSize(width: 100, height: self.textLabel.frame.height))
-//        print("lllllllllllllllllllll",dd.height)
-        
-        return CGSize(width: width, height: height)
-    }
-    
     
 }

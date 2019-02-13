@@ -101,6 +101,7 @@ extension CommentViewModel {
             Database.database().reference().child("comments").child(currentRoom).observeSingleEvent(of: DataEventType.childAdded, with: { (snapshot) in
                 guard let dictionary = snapshot.value as? [String: Any] else { return }
 
+                guard post.id == snapshot.key else { return } // POST의 ID파악
                 var comparedCount = 0
                 dictionary.forEach({ (key, value) in
                     guard let commentValue = value as? [String : Any] else { return }

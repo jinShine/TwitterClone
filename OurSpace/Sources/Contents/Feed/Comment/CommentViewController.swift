@@ -25,16 +25,14 @@ final class CommentViewController: UIViewController, View {
     lazy var collectionView: UICollectionView = {
         let flowlayout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowlayout)
-        
-//        collectionView.backgroundColor = UIColor.rgb(red: 230, green: 230, blue: 230, alpha: 1)
+
         collectionView.backgroundColor = .white
         collectionView.delegate = self
-        
-        collectionView.backgroundColor = .red
+
         collectionView.register(CommentCell.self, forCellWithReuseIdentifier: "CommentCell")
-        
-        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: -50, right: 0)
-        collectionView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: -50, right: 0)
+
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0)
+        collectionView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0)
         
         return collectionView
     }()
@@ -44,14 +42,16 @@ final class CommentViewController: UIViewController, View {
         containerView.backgroundColor = .white
         containerView.frame = CGRect(x: 0, y: 0, width: 100, height: 50)
 
-        containerView.addSubview(submitButton)
+        [submitButton, inputTextField].forEach {
+            containerView.addSubview($0)
+        }
+        
         submitButton.snp.makeConstraints {
             $0.top.bottom.equalToSuperview()
             $0.trailing.equalToSuperview().offset(-12)
             $0.width.equalTo(50)
         }
 
-        containerView.addSubview(inputTextField)
         inputTextField.snp.makeConstraints {
             $0.top.bottom.equalToSuperview()
             $0.leading.equalToSuperview().offset(12)
@@ -75,6 +75,7 @@ final class CommentViewController: UIViewController, View {
         return textField
     }()
     
+    
     override var inputAccessoryView: UIView? {
         return containerView
     }
@@ -87,7 +88,7 @@ final class CommentViewController: UIViewController, View {
     
     // Property
     var post: Post?
-    
+    var comments = [Comment]()
     var navi: SJNavigationView = SJNavigationView(lLeftImage: "Back_White", c_Title: "댓글")
     var disposeBag: DisposeBag = DisposeBag()
     
@@ -109,6 +110,7 @@ final class CommentViewController: UIViewController, View {
         collectionView.snp.makeConstraints {
             $0.top.equalTo(navi.snp.bottom)
             $0.leading.trailing.bottom.equalToSuperview()
+            
         }
     }
     
@@ -166,10 +168,12 @@ extension CommentViewController {
         
         reactor.state
             .map { $0.fetchPostsResult }
+            .do(onNext: { comments in
+                self.comments = comments
+            })
             .bind(to: self.collectionView.rx.items(cellIdentifier: "CommentCell", cellType: CommentCell.self)) { (indexPath, item, cell) in
                 print(item)
                 cell.comment = item
-                cell.textLabel.sizeToFit()
             }
             .disposed(by: self.disposeBag)
     }
@@ -179,23 +183,23 @@ extension CommentViewController {
 extension CommentViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+
+        let dummyCell = CommentCell(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 50))
+        dummyCell.comment = self.comments[indexPath.item]
+        dummyCell.layoutIfNeeded()
         
-        return CommentCell.cellHeight(width: view.frame.width)
-//        return UICollectionViewFlowLayout.automaticSize
+        let targetSize = CGSize(width: view.frame.width, height: 1000)
+        let estimatedSize = dummyCell.systemLayoutSizeFitting(targetSize)
+        
+        let height = max(8 + 40 + 8, estimatedSize.height)
+        return CGSize(width: view.frame.width, height: height)
+        
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
+        return 0
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
-    }
-
     
 }
 

@@ -26,8 +26,7 @@ final class FeedViewController: UIViewController, View {
     // UI
     lazy var collectionView: UICollectionView = {
         let flowlayout = UICollectionViewFlowLayout()
-        flowlayout.estimatedItemSize = CGSize(width: self.view.frame.width, height: 200)
-//        flowlayout.itemSize = CGSize(width: 100, height: 100)
+        flowlayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowlayout)
         collectionView.backgroundView = UIImageView.init(image: UIImage(named: "EmptyFeedBackground")?.withRenderingMode(UIImage.RenderingMode.alwaysOriginal))
         collectionView.backgroundView?.contentMode = UIView.ContentMode.scaleAspectFit
