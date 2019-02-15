@@ -13,7 +13,7 @@ struct Comment {
     var user: User
     var text: String
     var uid: String
-    var creationDate: Date?
+    var creationDate: Date
     
     init(user: User, dictionary: [String: Any]) {
         self.text = dictionary["text"] as? String ?? ""
@@ -27,5 +27,6 @@ struct Comment {
         self.text = ""
         self.uid = ""
         self.user = User()
+        self.creationDate = Date()
     }
 }

@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (4.8.1)
+  - Differentiator (3.1.0)
   - Firebase/Auth (5.16.0):
     - Firebase/CoreOnly
     - FirebaseAuth (= 5.3.0)
@@ -102,6 +103,10 @@ PODS:
   - RxAtomic (4.4.0)
   - RxCocoa (4.4.0):
     - RxSwift (~> 4.0)
+  - RxDataSources (3.1.0):
+    - Differentiator (~> 3.0)
+    - RxCocoa (~> 4.0)
+    - RxSwift (~> 4.0)
   - RxSwift (4.4.0):
     - RxAtomic (~> 4.4)
   - SnapKit (4.0.1)
@@ -118,12 +123,14 @@ DEPENDENCIES:
   - NVActivityIndicatorView
   - ReactorKit
   - RxCocoa (~> 4.0)
+  - RxDataSources (~> 3.0)
   - RxSwift (~> 4.0)
   - SnapKit (~> 4.0.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
+    - Differentiator
     - Firebase
     - FirebaseAnalytics
     - FirebaseAnalyticsInterop
@@ -148,11 +155,13 @@ SPEC REPOS:
     - Result
     - RxAtomic
     - RxCocoa
+    - RxDataSources
     - RxSwift
     - SnapKit
 
 SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
+  Differentiator: be49ca3408f0ecfc761e4c7763d20c62be01b9ad
   Firebase: 749a8ff4962f9d8c79dda1966de20f6f77583d67
   FirebaseAnalytics: d35d47c03c50c73c14a7fd31463c5775843e78a9
   FirebaseAnalyticsInterop: e5f21be9af6548372e2f0815834ff909bff395a2
@@ -177,9 +186,10 @@ SPEC CHECKSUMS:
   Result: bd966fac789cc6c1563440b348ab2598cc24d5c7
   RxAtomic: eacf60db868c96bfd63320e28619fe29c179656f
   RxCocoa: df63ebf7b9a70d6b4eeea407ed5dd4efc8979749
+  RxDataSources: a843bad90c29817f5923ec8163f4af2de084ceb3
   RxSwift: 5976ecd04fc2fefd648827c23de5e11157faa973
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
 
-PODFILE CHECKSUM: de262c28e92fdf1faf08865f95b0e1600ebeccb1
+PODFILE CHECKSUM: 5ab30420d013991358f371222474924a9cef009c
 
 COCOAPODS: 1.5.3

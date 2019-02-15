@@ -10,6 +10,7 @@ target 'OurSpace' do
 pod 'ReactorKit'
 pod 'RxSwift', '~> 4.0'
 pod 'RxCocoa', '~> 4.0'
+pod 'RxDataSources', '~> 3.0'
 
 # Firebase
 pod 'Firebase/Core'
