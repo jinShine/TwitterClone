@@ -8,14 +8,10 @@
 
 import Foundation
 
+//MARK:- Auth Error
 enum AuthError: Error {
     case createError
     case registerdUser
-}
-
-enum DatabaseError: Error {
-    case saveUserError
-    case saveRoomError
 }
 
 extension AuthError: CustomStringConvertible {
@@ -29,6 +25,12 @@ extension AuthError: CustomStringConvertible {
     }
 }
 
+//MARK:- Database Error
+enum DatabaseError: Error {
+    case saveUserError
+    case saveRoomError
+}
+
 extension DatabaseError: CustomStringConvertible {
     var description: String {
         switch self {
@@ -39,3 +41,20 @@ extension DatabaseError: CustomStringConvertible {
         }
     }
 }
+
+//MARK:- CommentError
+enum CommentError: Error {
+    case unknown
+}
+
+extension CommentError: CustomStringConvertible {
+    var description: String {
+        switch self {
+        case .unknown:
+            return "unknown"
+        }
+    }
+}
+
+
+

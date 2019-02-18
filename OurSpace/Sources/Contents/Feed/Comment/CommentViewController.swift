@@ -55,22 +55,29 @@ final class CommentViewController: UIViewController, ViewType {
             $0.edges.equalToSuperview()
         }
         
-//        rx.viewWillAppear
-//            .bind(to: <#T##(ControlEvent<Bool>) -> R#>)
-        
         
     }
     
     //MARK:- -> Event Binding
     
     func setupEventBinding() {
+
+        rx.viewWillAppear
+            .bind(to: viewModel.viewWillAppear)
+            .disposed(by: self.disposeBag)
+        
         
     }
     
     //MARK:- <- Rx UI Binding
     
     func setupUIBinding() {
-        
+        viewModel.commentData
+            .drive(onNext: { data in
+                print("======")
+                print(data)
+            })
+            .disposed(by: self.disposeBag)
     }
     
     //MARK:- Action Handler

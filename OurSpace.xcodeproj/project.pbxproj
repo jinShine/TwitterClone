@@ -21,6 +21,7 @@
 		5C4AB90D221003AD00EED06E /* CommentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4AB90C221003AD00EED06E /* CommentViewModel.swift */; };
 		5C51A2EB2216C2E10029EB1C /* ViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C51A2EA2216C2E10029EB1C /* ViewType.swift */; };
 		5C51A2ED2216C2EC0029EB1C /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C51A2EC2216C2EC0029EB1C /* ViewModelType.swift */; };
+		5C51A2F0221A3F6F0029EB1C /* CommentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C51A2EF221A3F6F0029EB1C /* CommentService.swift */; };
 		5C6E5A5821FCBB4B0045C88D /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6E5A5721FCBB4B0045C88D /* StartViewController.swift */; };
 		5C6E5A5A21FCC29B0045C88D /* ProvideObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6E5A5921FCC29B0045C88D /* ProvideObject.swift */; };
 		5C6E5A6221FCD4710045C88D /* CommonExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6E5A6121FCD4710045C88D /* CommonExtensions.swift */; };
@@ -67,6 +68,7 @@
 		5C4AB90C221003AD00EED06E /* CommentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewModel.swift; sourceTree = "<group>"; };
 		5C51A2EA2216C2E10029EB1C /* ViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewType.swift; sourceTree = "<group>"; };
 		5C51A2EC2216C2EC0029EB1C /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
+		5C51A2EF221A3F6F0029EB1C /* CommentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentService.swift; sourceTree = "<group>"; };
 		5C6E5A5721FCBB4B0045C88D /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		5C6E5A5921FCC29B0045C88D /* ProvideObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvideObject.swift; sourceTree = "<group>"; };
 		5C6E5A6121FCD4710045C88D /* CommonExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonExtensions.swift; sourceTree = "<group>"; };
@@ -141,6 +143,14 @@
 				5C51A2EC2216C2EC0029EB1C /* ViewModelType.swift */,
 			);
 			path = Base;
+			sourceTree = "<group>";
+		};
+		5C51A2EE221A3EF90029EB1C /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				5C51A2EF221A3F6F0029EB1C /* CommentService.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 		5C6E5A5F21FCD4370045C88D /* Utils */ = {
@@ -231,6 +241,7 @@
 				5C51A2E72216BB4E0029EB1C /* Base */,
 				5CC72D6F220186A90077E723 /* Error */,
 				5CC72D68220180BB0077E723 /* Model */,
+				5C51A2EE221A3EF90029EB1C /* Service */,
 				5C6E5A6421FCE3C40045C88D /* Start */,
 				5C6E5A6521FCEA8A0045C88D /* CreateRoom */,
 				5CC72D6121FFEF6B0077E723 /* CreateRoomInfo */,
@@ -494,6 +505,7 @@
 				5CC72D5D21FEDCE90077E723 /* CommonReactive.swift in Sources */,
 				5C4AB90422088FFD00EED06E /* UIViewController+Rx.swift in Sources */,
 				5CC72D8E221130340077E723 /* CommentCell.swift in Sources */,
+				5C51A2F0221A3F6F0029EB1C /* CommentService.swift in Sources */,
 				5CC72D92221150EA0077E723 /* FirebaseUtil.swift in Sources */,
 				5CC72D72220293600077E723 /* FeedViewController.swift in Sources */,
 				5CC72D6321FFEF9E0077E723 /* CreateRoomInfoViewController.swift in Sources */,

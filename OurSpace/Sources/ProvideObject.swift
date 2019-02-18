@@ -86,11 +86,8 @@ extension ProvideObject {
             return viewController
             
         case .comment(let post):
-            
-            let viewModel = CommentViewModel()
+            let viewModel = CommentViewModel(post: post)
             let viewController = CommentViewController.create(with: viewModel)
-//            viewController.post = post
-//            viewController.reactor = CommentViewModel()
             return viewController
             
         }

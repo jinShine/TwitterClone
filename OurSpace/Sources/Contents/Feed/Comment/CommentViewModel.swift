@@ -35,26 +35,28 @@ final class CommentViewModel: CommentViewModelType {
     let commentData: Driver<[Comment]>
     let isNetworking: Driver<Bool>
     
+    
+    private let commentService: CommentServiceType
+    private let post: Post
+    
+    
     //MARK:- Initialize
-    init() {
+    init(commentService: CommentServiceType = CommentService(), post: Post) {
+        self.commentService = commentService
+        self.post = post
         
         let onNetworking = PublishSubject<Bool>()
         isNetworking = onNetworking.asDriver(onErrorJustReturn: false)
         
-        Observable<Void>.merge(viewWillAppear)
+        commentData = Observable<Void>.merge(viewWillAppear)
             .observeOn(ConcurrentDispatchQueueScheduler.init(qos: .default))
             .do(onNext: { _ in onNetworking.onNext(true) })
-            .flatMapLatest {_ in
-                Database.database().reference().child("comments").observeSingleEvent(of: DataEventType.childAdded, with: { snapshot in
-                    guard let dictionary = snapshot.value as? [String: Any] else { return }
-
-                    
-                    print(dictionary)
-                    return dictionary
-                }, withCancel: { error in
-                    
-                })
-            }
+            .flatMapLatest({ _ -> Observable<[Comment]> in
+                return commentService.fetchComment(post: post)
+            })
+            .asDriver(onErrorJustReturn: [])
+        
+        
 //            .flatMapLatest { _ in
 //
 //                guard let currentRomm = App.userDefault.object(forKey: CURRENT_ROOM) as? String else {
