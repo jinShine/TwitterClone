@@ -11,15 +11,22 @@ import RxCocoa
 import RxDataSources
 import Firebase
 
+typealias CommentsData = SectionModel<String, Comment>
+
 protocol CommentViewModelType: ViewModelType {
     
     // Event
     var viewWillAppear: PublishSubject<Void> { get }
+    var didTapNaviLeftBarButton: PublishSubject<Void> { get }
+    var didPullRefresh: PublishSubject<Void> { get }
+    var didTapSubmitButton: PublishSubject<String> { get }
     
     
     // UI
-    var commentData: Driver<[Comment]> { get }
+    var commentData: Driver<[CommentsData]> { get }
     var isNetworking: Driver<Bool> { get }
+    var popViewController: Driver<Bool> { get }
+    var isSubmitting: Driver<Bool> { get }
     
 }
 
@@ -28,13 +35,16 @@ final class CommentViewModel: CommentViewModelType {
     //MARK:- Properties
     //MARK: -> Event
     let viewWillAppear = PublishSubject<Void>()
-    
+    let didTapNaviLeftBarButton = PublishSubject<Void>()
+    let didPullRefresh = PublishSubject<Void>()
+    let didTapSubmitButton = PublishSubject<String>()
     
     
     //MARK: <- UI
-    let commentData: Driver<[Comment]>
+    let commentData: Driver<[CommentsData]>
     let isNetworking: Driver<Bool>
-    
+    let popViewController: Driver<Bool>
+    let isSubmitting: Driver<Bool>
     
     private let commentService: CommentServiceType
     private let post: Post
@@ -48,36 +58,44 @@ final class CommentViewModel: CommentViewModelType {
         let onNetworking = PublishSubject<Bool>()
         isNetworking = onNetworking.asDriver(onErrorJustReturn: false)
         
-        commentData = Observable<Void>.merge(viewWillAppear)
+        //fetch CommentData
+        commentData = Observable<Void>.merge([viewWillAppear, didPullRefresh])
             .observeOn(ConcurrentDispatchQueueScheduler.init(qos: .default))
             .do(onNext: { _ in onNetworking.onNext(true) })
             .flatMapLatest({ _ -> Observable<[Comment]> in
                 return commentService.fetchComment(post: post)
+                    .retry(2)
+                    .do(onNext: { _ in onNetworking.onNext(false) })
             })
+            .map { [CommentsData(model: "", items: $0)] }
             .asDriver(onErrorJustReturn: [])
+
+        //Navigation - Pop
+         popViewController = didTapNaviLeftBarButton
+            .map { _ in true }
+            .asDriver(onErrorJustReturn: true)
         
-        
-//            .flatMapLatest { _ in
-//
-//                guard let currentRomm = App.userDefault.object(forKey: CURRENT_ROOM) as? String else {
-//                    onNetworking.onNext(false)
-//                    return
-//                }
-//
-//                Database.database().reference().child("comments").observeSingleEvent(of: DataEventType.childAdded, with: { snapshot in
-//                    guard let dictionary = snapshot.value as? [String: Any] else { return }
-//
-//                    guard post.id == snapshot.key else { return } // POST의 ID파악
-//
-//                }, withCancel: { error in
-//
-//                })
-//            }
-        
-        
+        //submit comment
+        isSubmitting = didTapSubmitButton
+            .map { $0 }
+            .observeOn(ConcurrentDispatchQueueScheduler.init(qos: .default))
+            .do(onNext: { _ in onNetworking.onNext(true) })
+            .flatMapLatest { comment -> Observable<Bool> in
+                return commentService.submitComment(post: post, commentText: comment)
+                    .retry(2)
+                    .do(onNext: { _ in onNetworking.onNext(false) })
+            }
+            .asDriver(onErrorJustReturn: false)
     }
     
+    
+    
 }
+
+/*
+ ReactorKit으로 댓글 구현 소스
+ */
+
 //final class CommentViewModel: Reactor {
 //    
 //    // Action is an user interaction

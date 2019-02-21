@@ -13,26 +13,20 @@ import RxSwift
 import RxCocoa
 import SnapKit
 import NVActivityIndicatorView
-//import Kingfisher
-
+import RxDataSources
 import Firebase
-
-var cellCache = NSCache<AnyObject, AnyObject>()
-
 
 final class FeedViewController: UIViewController, View {
     
     
-    // UI
+    // UI Properties
+    
     lazy var collectionView: UICollectionView = {
         let flowlayout = UICollectionViewFlowLayout()
         flowlayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowlayout)
         collectionView.backgroundView = UIImageView.init(image: UIImage(named: "EmptyFeedBackground")?.withRenderingMode(UIImage.RenderingMode.alwaysOriginal))
         collectionView.backgroundView?.contentMode = UIView.ContentMode.scaleAspectFit
-        
-        collectionView.collectionViewLayout.invalidateLayout()
-        
         collectionView.backgroundView?.isHidden = true
         collectionView.backgroundColor = UIColor.rgb(red: 230, green: 230, blue: 230, alpha: 1)
         collectionView.delegate = self
@@ -54,6 +48,7 @@ final class FeedViewController: UIViewController, View {
     
     
     // Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -93,7 +88,6 @@ final class FeedViewController: UIViewController, View {
         navi.titleLabel.textColor = .black
         
         guard let currentRoom = App.userDefault.object(forKey: CURRENT_ROOM) as? String else { return }
-        print("currentRoom",currentRoom)
         navi.titleLabel.text = currentRoom
     }
 }
@@ -116,70 +110,79 @@ extension FeedViewController {
             .map { Reactor.Action.fetchPosts }
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
+
         
         
         
         
         // State
+        
+        let datasource = RxCollectionViewSectionedReloadDataSource<FeedDatas>(configureCell: { (_, collectionView, indexPath, item) -> UICollectionViewCell in
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FeedCell", for: indexPath) as? FeedCell else { return UICollectionViewCell() }
+            cell.tag = indexPath.item
+            cell.photoCollectionView.dataSource = nil
+            cell.configureCell(post: item)
+
+            cell.commentButton.rx.tap.asDriver()
+                .drive(onNext: { [weak self] _ in
+                    self?.navigationController?.pushViewController(ProvideObject.comment(item).viewController, animated: true)
+                })
+                .disposed(by: self.disposeBag)
+            
+            return cell
+        })
+        
+        
         reactor.state
-            .map({ (state) -> [Post] in
-                guard let post = state.fetchPostsResult else { return [Post(user: User(), dictionary: [:])] }
-                return post
-            })
-            .filter({ post -> Bool in
-                guard post.count > 0 && post.first?.caption.count ?? 0  > 0 else {
-                    self.collectionView.backgroundView?.isHidden = false
-                    return false
-                }
-                self.collectionView.backgroundView?.isHidden = true
-                return true
-            })
-            .bind(to: collectionView.rx.items(cellIdentifier: "FeedCell", cellType: FeedCell.self)) { (indexPath, item, cell) in
-                
-                cell.photoCollectionView.dataSource = nil
-                cell.pagesControl.numberOfPages = item.imageUrl.count
-                cell.configureCell(post: item)
-
-
-                //Option Button
-                cell.optionsButton.rx.tap.asObservable()
-                    .subscribe(onNext: { _ in
-                        print(789)
-                    })
-                    .disposed(by: self.disposeBag)
-                
-                //Comment Button
-                cell.commentButton.rx.tap.asObservable()
-                    .subscribe(onNext: { [weak self] _ in
-                        self?.navigationController?.pushViewController(ProvideObject.comment(item).viewController, animated: true)
-                    })
-                    .disposed(by: self.disposeBag)
-                
-            }
+            .map{$0.fetchPostsResult}
+            .bind(to: collectionView.rx.items(dataSource: datasource))
             .disposed(by: self.disposeBag)
+        
+        
+//        reactor.state
+//            .map({ state -> [Post] in
+//                guard let post = state.fetchPostsResult else { return [Post(user: User(), dictionary: [:])] }
+//                return post
+//            })
+//            .filter({ post -> Bool in
+//                guard post.count > 0 && post.first?.caption.count ?? 0  > 0 else {
+//                    self.collectionView.backgroundView?.isHidden = false
+//                    return false
+//                }
+//                self.collectionView.backgroundView?.isHidden = true
+//                return true
+//            })
+//            .bind(to: collectionView.rx.items(cellIdentifier: "FeedCell", cellType: FeedCell.self)) { (indexPath, item, cell) in
+//
+//                cell.photoCollectionView.dataSource = nil
+//                cell.pagesControl.numberOfPages = item.imageUrl.count
+//                cell.configureCell(post: item)
+//
+//
+//                //Option Button
+//                cell.optionsButton.rx.tap.asObservable()
+//                    .subscribe(onNext: { _ in
+//                        print(789)
+//                    })
+//                    .disposed(by: self.disposeBag)
+//
+//                //Comment Button
+//                cell.commentButton.rx.tap.asObservable()
+//                    .throttle(1.0, scheduler: MainScheduler.instance)
+//                    .subscribe(onNext: { [weak self] _ in
+//                        print(123123123)
+//                        self?.navigationController?.pushViewController(ProvideObject.comment(item).viewController, animated: true)
+//                    })
+//                    .disposed(by: self.disposeBag)
+//
+//            }
+//            .disposed(by: self.disposeBag)
     }
     
     
 }
 
 extension FeedViewController: UICollectionViewDelegateFlowLayout {
-    
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-////        return CGSize(width: 50, height: 50)
-////        guard let height = dicdic[indexPath] else { return UICollectionViewFlowLayout.automaticSize }
-//
-//
-//        NSString(string: <#T##String#>)
-//
-//
-//        return CGSize(width: 50, height: 50)
-//
-//    }
-    
-//    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-//        print("index: \(indexPath.item)",cell.frame.height)
-//        self.dicdic[indexPath] = cell.frame.size
-//    }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 10

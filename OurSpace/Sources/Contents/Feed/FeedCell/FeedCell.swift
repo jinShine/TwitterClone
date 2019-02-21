@@ -27,8 +27,8 @@ class FeedCell: UICollectionViewCell {
     @IBOutlet weak var pagesControl: UIPageControl!
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var commentButton: UIButton!
-    
     @IBOutlet weak var layoutPhotoCollectionHeight: NSLayoutConstraint!
+    
     var disposeBag: DisposeBag = DisposeBag()
     
     
@@ -37,9 +37,13 @@ class FeedCell: UICollectionViewCell {
         // Initialization code
         
         setupUI()
+
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
         
-        
-        
+        disposeBag = DisposeBag()
     }
     
     private func setupUI() {
@@ -54,15 +58,13 @@ class FeedCell: UICollectionViewCell {
             ])
         
         self.pagesControl.currentPageIndicatorTintColor = UIColor.mainColor()
-        
         photoCollectionView.delegate = self
         photoCollectionView.register(FeedPhotosCell.self, forCellWithReuseIdentifier: "FeedPhotosCell")
     }
     
     func configureCell(post: Post) {
-
+        
         if post.imageUrl.count > 0 {
-
             Observable.of(post.imageUrl)
                 .bind(to: photoCollectionView.rx.items(cellIdentifier: "FeedPhotosCell", cellType: FeedPhotosCell.self)) { (index, imageURL, cell) in
                     cell.imagesCell.kf.setImage(with: URL(string: imageURL))
@@ -80,32 +82,21 @@ class FeedCell: UICollectionViewCell {
         userNameLabel.text = post.user.id
         postDateLabel.text = post.creationDate.timeAgoDisplay()
         captionLabel.attributedText = self.setupAttributedCaption(post: post)
+        pagesControl.numberOfPages = post.imageUrl.count
+        
+        
+        
     }
+    
+    //MARK:- Action
     
     private func setupAttributedCaption(post: Post) -> NSMutableAttributedString {
-        
         let attributedText = NSMutableAttributedString(string: post.user.id, attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 14)])
         attributedText.append(NSAttributedString(string: " \(post.caption)", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14)]))
-        
         attributedText.append(NSAttributedString(string: "\n\n", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 4)]))
-        
         attributedText.append(NSAttributedString(string: "", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14), NSAttributedString.Key.foregroundColor : UIColor.gray]))
-        
         return attributedText
     }
-    
-//    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-//        setNeedsLayout()
-//        layoutIfNeeded()
-//        
-//        let size = contentView.systemLayoutSizeFitting(layoutAttributes.size)
-//        
-//        var frame = layoutAttributes.frame
-//        frame.size.height = ceil(size.height)
-//        layoutAttributes.frame = frame
-//        
-//        return layoutAttributes
-//    }
 }
 
 extension FeedCell: UICollectionViewDelegateFlowLayout {
@@ -128,7 +119,6 @@ extension FeedCell: UICollectionViewDelegateFlowLayout {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let currentIndex = scrollView.contentOffset.x / photoCollectionView.frame.width
-        print(currentIndex)
         pagesControl.currentPage = Int(currentIndex)
     }
 }
