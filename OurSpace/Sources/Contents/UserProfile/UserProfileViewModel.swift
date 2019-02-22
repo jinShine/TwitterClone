@@ -6,47 +6,41 @@
 //  Copyright © 2019 승진김. All rights reserved.
 //
 
-import ReactorKit
-import Firebase
 import RxSwift
+import RxCocoa
+import RxDataSources
 
-final class UserProfileViewModel: Reactor {
-    // Action is an user interaction
-    enum Action {
-        
-    }
+protocol UserProfileViewModelType: ViewModelType {
     
-    // Mutate is a state manipulator which is not exposed to a view
-    enum Mutation {
-        
-    }
+    // Event
+    var viewWillAppear: PublishSubject<Void> { get }
+    var didTapSetting: PublishSubject<Void> { get }
     
-    // State is a current view state
-    struct State {
-        
-    }
+    // UI
+    var showSheetAlert: Driver<Bool> { get }
     
-    let initialState: State = State()
-    
-    init() { }
-    
-    // Action -> Mutation
-    func mutate(action: Action) -> Observable<Mutation> {
-        switch action {
-            
-        }
-    }
-    
-    // Mutation -> State
-    func reduce(state: State, mutation: Mutation) -> State {
-        var state = state
-        switch mutation {
-            
-        }
-        return state
-    }
 }
 
-extension UserProfileViewModel {
+final class UserProfileViewModel: UserProfileViewModelType {
+    
+    //MARK:- Properties
+    //MARK: -> Event
+    let viewWillAppear = PublishSubject<Void>()
+    let didTapSetting = PublishSubject<Void>()
+    
+    
+    //MARK: <- UI
+    var showSheetAlert: Driver<Bool>
+    
+    
+    
+    //MARK:- Initialize
+    init() {
+        
+        var settingDataSource: BehaviorRelay<[String]> = BehaviorRelay(value: ["로그아웃"])
+        
+        
+        
+    }
     
 }

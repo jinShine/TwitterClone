@@ -74,8 +74,8 @@ extension ProvideObject {
             return viewController
             
         case .userProfile:
-            let viewController: UserProfileViewController = UserProfileViewController()
-            viewController.reactor = UserProfileViewModel()
+            let viewModel = UserProfileViewModel()
+            let viewController = UserProfileViewController.create(with: viewModel)
             viewController.tabBarItem.image = UIImage(named: "Profile")?.withRenderingMode(.alwaysOriginal)
             viewController.tabBarItem.selectedImage = UIImage(named: "Profile_Selected")?.withRenderingMode(UIImage.RenderingMode.alwaysOriginal)
             return viewController

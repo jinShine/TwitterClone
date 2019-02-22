@@ -29,6 +29,10 @@
 		5C6E5A6921FCFB340045C88D /* SJNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6E5A6821FCFB340045C88D /* SJNavigationView.swift */; };
 		5C6E5A6D21FD69860045C88D /* CreateRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6E5A6C21FD69860045C88D /* CreateRoomViewModel.swift */; };
 		5C6E5A6F21FD6A920045C88D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5C6E5A6E21FD6A920045C88D /* GoogleService-Info.plist */; };
+		5CAA0A58221F9B2200BDE83B /* UserProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAA0A57221F9B2200BDE83B /* UserProfileHeader.swift */; };
+		5CAA0A5A221FDCF700BDE83B /* UserProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAA0A59221FDCF700BDE83B /* UserProfileCell.swift */; };
+		5CAA0A5C221FDE7000BDE83B /* UserProfileCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAA0A5B221FDE7000BDE83B /* UserProfileCollectionView.swift */; };
+		5CAA0A5E221FE2B900BDE83B /* UserProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAA0A5D221FE2B900BDE83B /* UserProfileService.swift */; };
 		5CC72D4B21FB0B3E0077E723 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC72D4A21FB0B3E0077E723 /* AppDelegate.swift */; };
 		5CC72D5021FB0B3E0077E723 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CC72D4E21FB0B3E0077E723 /* Main.storyboard */; };
 		5CC72D5221FB0B3E0077E723 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5CC72D5121FB0B3E0077E723 /* Assets.xcassets */; };
@@ -76,6 +80,10 @@
 		5C6E5A6821FCFB340045C88D /* SJNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SJNavigationView.swift; sourceTree = "<group>"; };
 		5C6E5A6C21FD69860045C88D /* CreateRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomViewModel.swift; sourceTree = "<group>"; };
 		5C6E5A6E21FD6A920045C88D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		5CAA0A57221F9B2200BDE83B /* UserProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileHeader.swift; sourceTree = "<group>"; };
+		5CAA0A59221FDCF700BDE83B /* UserProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileCell.swift; sourceTree = "<group>"; };
+		5CAA0A5B221FDE7000BDE83B /* UserProfileCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileCollectionView.swift; sourceTree = "<group>"; };
+		5CAA0A5D221FE2B900BDE83B /* UserProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileService.swift; sourceTree = "<group>"; };
 		5CC72D4721FB0B3E0077E723 /* OurSpace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OurSpace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CC72D4A21FB0B3E0077E723 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5CC72D4F21FB0B3E0077E723 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -149,6 +157,7 @@
 			isa = PBXGroup;
 			children = (
 				5C51A2EF221A3F6F0029EB1C /* CommentService.swift */,
+				5CAA0A5D221FE2B900BDE83B /* UserProfileService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -316,6 +325,9 @@
 			isa = PBXGroup;
 			children = (
 				5CC72D862203EDF70077E723 /* UserProfileViewController.swift */,
+				5CAA0A57221F9B2200BDE83B /* UserProfileHeader.swift */,
+				5CAA0A5B221FDE7000BDE83B /* UserProfileCollectionView.swift */,
+				5CAA0A59221FDCF700BDE83B /* UserProfileCell.swift */,
 				5CC72D882203EE1C0077E723 /* UserProfileViewModel.swift */,
 			);
 			path = UserProfile;
@@ -488,9 +500,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5CAA0A58221F9B2200BDE83B /* UserProfileHeader.swift in Sources */,
 				5CC72D6C2201816A0077E723 /* User.swift in Sources */,
 				5C4AB9012208864500EED06E /* FeedCell.swift in Sources */,
 				5CC72D6721FFF04E0077E723 /* CreateRoomInfoViewModel.swift in Sources */,
+				5CAA0A5C221FDE7000BDE83B /* UserProfileCollectionView.swift in Sources */,
 				5C0D1F282205986B0034E68B /* PhotoSelectorViewController.swift in Sources */,
 				5CC72D7D2203E25F0077E723 /* MainTabBarController.swift in Sources */,
 				5CC72D90221132020077E723 /* Comment.swift in Sources */,
@@ -503,6 +517,7 @@
 				5C6E5A6721FCEABD0045C88D /* CreateRoomViewController.swift in Sources */,
 				5CC72D4B21FB0B3E0077E723 /* AppDelegate.swift in Sources */,
 				5CC72D5D21FEDCE90077E723 /* CommonReactive.swift in Sources */,
+				5CAA0A5A221FDCF700BDE83B /* UserProfileCell.swift in Sources */,
 				5C4AB90422088FFD00EED06E /* UIViewController+Rx.swift in Sources */,
 				5CC72D8E221130340077E723 /* CommentCell.swift in Sources */,
 				5C51A2F0221A3F6F0029EB1C /* CommentService.swift in Sources */,
@@ -517,6 +532,7 @@
 				5C4AB906220A12A400EED06E /* Post.swift in Sources */,
 				5C6E5A5821FCBB4B0045C88D /* StartViewController.swift in Sources */,
 				5C4AB90B2210036D00EED06E /* CommentViewController.swift in Sources */,
+				5CAA0A5E221FE2B900BDE83B /* UserProfileService.swift in Sources */,
 				5CC72D872203EDF70077E723 /* UserProfileViewController.swift in Sources */,
 				5C0D1F2C2205A2A70034E68B /* PhotoSelectorCell.swift in Sources */,
 				5CC72D832203EC610077E723 /* AddPostViewModel.swift in Sources */,
