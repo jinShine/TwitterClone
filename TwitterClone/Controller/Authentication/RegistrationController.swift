@@ -6,13 +6,16 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseFirestore
 
 class RegistrationController: UIViewController {
   
   //MARK: - Properties
   
   private let imagePicker = UIImagePickerController()
-  
+  private var profileImage: UIImage?
+
   private let plusPhotoButton: UIButton = {
     let button = UIButton()
     button.setImage(UIImage(named: "plus_photo"), for: .normal)
@@ -69,7 +72,6 @@ class RegistrationController: UIViewController {
   
   private let usernameTextField: UITextField = {
     let tf = Utilities().textField(withPlaceholder: "Username")
-    tf.isSecureTextEntry = true
     return tf
   }()
   
@@ -111,7 +113,33 @@ class RegistrationController: UIViewController {
   }
   
   @objc func handleRegistration() {
-    print(123)
+
+    guard let profileImage = profileImage else {
+      print("DEBUG: Please select a profile image..")
+      self.showAlert(withMessage: "프로필 사진을 선택해 주세요")
+      return
+    }
+    guard let email = emailTextField.text,
+          let password = passwordTextField.text,
+          let fullName = fullNameTextField.text,
+          let username = usernameTextField.text else { return }
+    
+    guard let imageData = profileImage.jpegData(compressionQuality: 0.3) else { return }
+    let fileName = UUID().uuidString
+    let storage = profileStorage.child(fileName)
+    
+    storage.putData(imageData, metadata: nil) { (metadata, error) in
+      if let error = error {
+        print("DEBUG: Error is \(error.localizedDescription)")
+        self.showAlert(withMessage: error.localizedDescription)
+        return
+      }
+      
+      storage.downloadURL { (url, error) in
+        guard let profileImageURL = url?.absoluteString else { return }
+        self.createUser(withEmail: email, password: password, fullname: fullName, username: username, profileImageURL: profileImageURL)
+      }
+    }
   }
   
   //MARK: - Helpers
@@ -141,6 +169,48 @@ class RegistrationController: UIViewController {
                                  paddingLeft: 40, paddingRight: 40)
   }
   
+  func showAlert(withMessage message: String) {
+    let alertController = UIAlertController(title: "알림", message: message, preferredStyle: .alert)
+    let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+    alertController.addAction(okAction)
+    
+    present(alertController, animated: true, completion: nil)
+  }
+  
+  func createUser(withEmail email: String, password: String, fullname: String, username: String, profileImageURL: String) {
+    
+    Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+      if let error = error {
+        print("DEBUG: Error is \(error.localizedDescription)")
+        
+        self.showAlert(withMessage: error.localizedDescription)
+        return
+      }
+      
+      guard let uid = result?.user.uid else { return }
+      
+      usersDB.document(uid)
+        .setData([
+          "email": email,
+          "fullname": fullname,
+          "username": username,
+          "profileImageURL": profileImageURL
+        ], completion: { error in
+          if let error = error {
+            print("DEBUG: Error is \(error.localizedDescription)")
+            self.showAlert(withMessage: error.localizedDescription)
+            return
+          }
+          
+          print("DEBUG: Successfully updated user infomation..")
+          
+          self.navigationController?.popToRootViewController(animated: true)
+        })
+      
+      print("DEBUG: Successfully registered user")
+    }
+  }
+  
 }
 
 //MARK: - UIImagePickerControllerDelegate
@@ -149,6 +219,7 @@ extension RegistrationController: UIImagePickerControllerDelegate, UINavigationC
   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
     
     guard let profileImage = info[.editedImage] as? UIImage else { return }
+    self.profileImage = profileImage
     plusPhotoButton.setImage(profileImage, for: .normal)
     plusPhotoButton.layer.borderWidth = 3
     
