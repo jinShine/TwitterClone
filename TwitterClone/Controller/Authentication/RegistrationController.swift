@@ -124,22 +124,19 @@ class RegistrationController: UIViewController {
           let fullName = fullNameTextField.text,
           let username = usernameTextField.text else { return }
     
-    guard let imageData = profileImage.jpegData(compressionQuality: 0.3) else { return }
-    let fileName = UUID().uuidString
-    let storage = profileStorage.child(fileName)
+    let credentials = AuthCredentials(email: email, password: password, fullname: fullName, username: username, profileImage: profileImage)
     
-    storage.putData(imageData, metadata: nil) { (metadata, error) in
+    AuthService.shared.registerUser(credentials: credentials) { error in
       if let error = error {
-        print("DEBUG: Error is \(error.localizedDescription)")
-        self.showAlert(withMessage: error.localizedDescription)
+        print("Error is \(error.localizedDescription)")
         return
       }
       
-      storage.downloadURL { (url, error) in
-        guard let profileImageURL = url?.absoluteString else { return }
-        self.createUser(withEmail: email, password: password, fullname: fullName, username: username, profileImageURL: profileImageURL)
-      }
+      self.navigationController?.popToRootViewController(animated: true)
+      print("DEBUG: Sign up successful")
     }
+    
+    
   }
   
   //MARK: - Helpers
@@ -175,40 +172,6 @@ class RegistrationController: UIViewController {
     alertController.addAction(okAction)
     
     present(alertController, animated: true, completion: nil)
-  }
-  
-  func createUser(withEmail email: String, password: String, fullname: String, username: String, profileImageURL: String) {
-    
-    Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
-      if let error = error {
-        print("DEBUG: Error is \(error.localizedDescription)")
-        
-        self.showAlert(withMessage: error.localizedDescription)
-        return
-      }
-      
-      guard let uid = result?.user.uid else { return }
-      
-      usersDB.document(uid)
-        .setData([
-          "email": email,
-          "fullname": fullname,
-          "username": username,
-          "profileImageURL": profileImageURL
-        ], completion: { error in
-          if let error = error {
-            print("DEBUG: Error is \(error.localizedDescription)")
-            self.showAlert(withMessage: error.localizedDescription)
-            return
-          }
-          
-          print("DEBUG: Successfully updated user infomation..")
-          
-          self.navigationController?.popToRootViewController(animated: true)
-        })
-      
-      print("DEBUG: Successfully registered user")
-    }
   }
   
 }

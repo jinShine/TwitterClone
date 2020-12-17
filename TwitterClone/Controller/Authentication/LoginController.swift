@@ -73,7 +73,18 @@ class LoginController: UIViewController {
   //MARK: - Selectors
   
   @objc func handleLogin() {
-    print(123)
+    guard let email = emailTextField.text,
+          let password = passwordTextField.text else { return }
+    
+    AuthService.shared.logUserIn(withEmail: email, password: password) { (result, error) in
+      if let error = error {
+        print("DEBUG: Error is logging in \(error.localizedDescription)")
+        self.showAlert(withMessage: error.localizedDescription)
+        return
+      }
+      
+      print("DEBUG: Successful log in..")
+    }
   }
   
   @objc func handleShowSignUp() {
@@ -102,6 +113,14 @@ class LoginController: UIViewController {
     view.addSubview(dontHaveAccountButton)
     dontHaveAccountButton.anchor(left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor,
                                  paddingLeft: 40, paddingRight: 40)
+  }
+  
+  func showAlert(withMessage message: String) {
+    let alertController = UIAlertController(title: "알림", message: message, preferredStyle: .alert)
+    let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+    alertController.addAction(okAction)
+    
+    present(alertController, animated: true, completion: nil)
   }
   
 }
