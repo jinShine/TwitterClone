@@ -48,6 +48,7 @@ class MainTabController: UITabBarController {
       print("DEBUG: User is logged in..")
       configureViewController()
       configureUI()
+      fetchUser()
     }
   }
   
@@ -58,6 +59,12 @@ class MainTabController: UITabBarController {
       print("DEBUg: Faild to sign out with error \(error.localizedDescription)")
     }
     
+  }
+  
+  func fetchUser() {
+    UserService.shared.fetchUser { user in
+      
+    }
   }
   
   // MARK: - Selectors
