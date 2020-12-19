@@ -20,12 +20,45 @@ struct TweetService {
     
     let value = [
       "uid": uid,
-      "timestamp": Int(NSDate().timeIntervalSince1970),
+      "timestamp": Date().timeIntervalSince1970,
       "likes": 0,
       "retweets": 0,
       "caption": caption
     ] as [String: Any]
 
     tweetsDB.document().setData(value, completion: completion)
+  }
+  
+  func fetchTweets(completion: @escaping ([Tweet]) -> Void) {
+
+    // 추가될때마다 데이터를 가져온다
+    tweetsDB.addSnapshotListener { (snapshot, erorr) in
+      guard let documents = snapshot?.documents else { return }
+      
+      let tweets = documents.map { document -> Tweet in
+        let tweetID = document.documentID
+        return Tweet(tweetID: tweetID, dictionary: document.data())
+      }
+      
+      completion(tweets)
+      
+    }
+//    tweetsDB.getDocuments(source: .cache) { (snapshot, error) in
+//      snapshot.docue
+//    }
+//    Firestore.firestore().collection("tweets").getDocuments(source: .cache) { (snapshot, error) in
+//      print(snapshot)
+//    }
+//    tweetsDB.getDocuments(source: .cache) { (documentSnapshot, error) in
+//      guard let documents = documentSnapshot?.documents else { return }
+//
+//      documents.filter { $0.}
+//    }
+//    tweetsDB.getDocuments(source: .cache) { (document, error) in
+//      print(document?.documents.map { $0.data() })
+//    }
+//    tweetsDB.document().addSnapshotListener { (snapshot, error) in
+//      print("", snapshot?.data())
+//    }
   }
 }
