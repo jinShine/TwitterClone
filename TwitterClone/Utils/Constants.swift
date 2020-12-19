@@ -11,6 +11,7 @@ import FirebaseStorage
 
 let firestore = Firestore.firestore()
 let usersDB = firestore.collection("users")
+let tweetsDB = firestore.collection("tweets")
 
 let storage = Storage.storage().reference()
 let profileStorage = storage.child("profile_images")
