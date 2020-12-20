@@ -43,22 +43,5 @@ struct TweetService {
       completion(tweets)
       
     }
-//    tweetsDB.getDocuments(source: .cache) { (snapshot, error) in
-//      snapshot.docue
-//    }
-//    Firestore.firestore().collection("tweets").getDocuments(source: .cache) { (snapshot, error) in
-//      print(snapshot)
-//    }
-//    tweetsDB.getDocuments(source: .cache) { (documentSnapshot, error) in
-//      guard let documents = documentSnapshot?.documents else { return }
-//
-//      documents.filter { $0.}
-//    }
-//    tweetsDB.getDocuments(source: .cache) { (document, error) in
-//      print(document?.documents.map { $0.data() })
-//    }
-//    tweetsDB.document().addSnapshotListener { (snapshot, error) in
-//      print("", snapshot?.data())
-//    }
   }
 }

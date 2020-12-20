@@ -39,7 +39,6 @@ struct AuthService {
     storage.putData(imageData, metadata: nil) { (metadata, error) in
       if let error = error {
         print("DEBUG: Error is \(error.localizedDescription)")
-//        self.showAlert(withMessage: error.localizedDescription)
         return
       }
       
@@ -49,8 +48,6 @@ struct AuthService {
         Auth.auth().createUser(withEmail: credentials.email, password: credentials.password) { (result, error) in
           if let error = error {
             print("DEBUG: Error is \(error.localizedDescription)")
-            
-//            self.showAlert(withMessage: error.localizedDescription)
             return
           }
           
