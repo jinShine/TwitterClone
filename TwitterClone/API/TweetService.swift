@@ -37,6 +37,7 @@ struct TweetService {
       
       let tweets = documents.map { document -> Tweet in
         let tweetID = document.documentID
+        let uid = document.data()["uid"]
         return Tweet(tweetID: tweetID, dictionary: document.data())
       }
       
