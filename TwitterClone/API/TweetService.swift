@@ -30,19 +30,37 @@ struct TweetService {
   }
   
   func fetchTweets(completion: @escaping ([Tweet]) -> Void) {
-
+    
     // 추가될때마다 데이터를 가져온다
     tweetsDB.addSnapshotListener { (snapshot, erorr) in
       guard let documents = snapshot?.documents else { return }
+
+      // 1
+//      documents.forEach { document in
+//        let tweetID = document.documentID
+//        let tweet = Tweet(tweetID: tweetID, dictionary: document.data())
+//        tweets.append(tweet)
+//      }
+//
+//      completion(tweets)
       
-      let tweets = documents.map { document -> Tweet in
+      
+      // 2
+      var tweets: [Tweet] = []
+
+      documents.enumerated().forEach { (index, document) in
+        let uid = document.data()["uid"] as? String ?? ""
         let tweetID = document.documentID
-        let uid = document.data()["uid"]
-        return Tweet(tweetID: tweetID, dictionary: document.data())
+
+        UserService.shared.fetchUser(uid: uid) { user in
+          let tweet = Tweet(user: user, tweetID: tweetID, dictionary: document.data())
+          tweets.append(tweet)
+          
+          if index == documents.count - 1 {
+            completion(tweets)
+          }
+        }
       }
-      
-      completion(tweets)
-      
     }
   }
 }

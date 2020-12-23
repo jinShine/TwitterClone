@@ -16,16 +16,13 @@ struct UserService {
     
   }
   
-  func fetchUser(completion: @escaping (User) -> Void) {
-    guard let uid = Auth.auth().currentUser?.uid else { return }
-    print("Debug: \(uid)")
-    
+  func fetchUser(uid: String, completion: @escaping (User) -> Void) {
     usersDB.document(uid).getDocument(source: .cache) { (snapshot, error) in
       if let error = error {
         print("Error is \(error.localizedDescription)")
         return
       }
-      
+
       guard let results = snapshot?.data() else { return }
       
       let user = User(uid: uid, dictionary: results)

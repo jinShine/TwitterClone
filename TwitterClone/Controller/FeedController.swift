@@ -8,10 +8,12 @@
 import UIKit
 import SDWebImage
 
-private let reuseIdentifier = "TweetCell"
-
 final class FeedController: UICollectionViewController {
   
+  // MARK: - Constant
+  
+  private let reuseIdentifier = "TweetCell"
+
   // MARK: - Properties
   
   var user: User? {
@@ -40,6 +42,7 @@ final class FeedController: UICollectionViewController {
   
   func fetchTweets() {
     TweetService.shared.fetchTweets { tweets in
+      self.tweets.removeAll()
       self.tweets.append(contentsOf: tweets)
     }
   }
@@ -90,6 +93,7 @@ extension FeedController {
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
+
 extension FeedController: UICollectionViewDelegateFlowLayout {
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
