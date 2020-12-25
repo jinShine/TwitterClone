@@ -49,6 +49,7 @@ final class FeedController: UICollectionViewController {
   // MARK: - Helpers
   
   func configureUI() {
+
     view.backgroundColor = .white
     
     collectionView.register(TweetCell.self, forCellWithReuseIdentifier: reuseIdentifier)
@@ -86,8 +87,13 @@ extension FeedController {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TweetCell
     
     cell.tweet = tweets[indexPath.item]
+    cell.delegate = self
     
     return cell
+  }
+  
+  override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
   }
 }
 
@@ -99,4 +105,15 @@ extension FeedController: UICollectionViewDelegateFlowLayout {
     return CGSize(width: view.frame.width, height: 120)
   }
   
+}
+
+// MARK: - TweetCell delegate
+
+extension FeedController: TweetCellDelegate {
+  
+  // delegate 방법과 closure방법 2가지 방법 설명 후 closure방식으로 실행한다.
+  func handleProfileImagedTapped(_ cell: TweetCell) {
+    let controller = ProfileController(collectionViewLayout: UICollectionViewFlowLayout())
+    navigationController?.pushViewController(controller, animated: true)
+  }
 }
