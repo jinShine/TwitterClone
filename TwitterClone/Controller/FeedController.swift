@@ -42,8 +42,7 @@ final class FeedController: UICollectionViewController {
   
   func fetchTweets() {
     TweetService.shared.fetchTweets { tweets in
-      self.tweets.removeAll()
-      self.tweets.append(contentsOf: tweets)
+      self.tweets = tweets
     }
   }
   
@@ -56,7 +55,7 @@ final class FeedController: UICollectionViewController {
     collectionView.backgroundColor = .white
     
     let imageView = UIImageView(image: UIImage(named: "twitter_logo_blue"))
-    imageView.contentMode = .scaleAspectFit
+    imageView.contentMode = .scaleAspectFill
     imageView.setDimensions(width: 44, height: 44)
     navigationItem.titleView = imageView
     

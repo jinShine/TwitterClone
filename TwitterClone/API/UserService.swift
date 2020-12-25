@@ -17,7 +17,7 @@ struct UserService {
   }
   
   func fetchUser(uid: String, completion: @escaping (User) -> Void) {
-    usersDB.document(uid).getDocument(source: .cache) { (snapshot, error) in
+    usersDB.document(uid).getDocument { (snapshot, error) in
       if let error = error {
         print("Error is \(error.localizedDescription)")
         return
@@ -28,7 +28,6 @@ struct UserService {
       let user = User(uid: uid, dictionary: results)
       print("DEBUG: Username is \(user)")
       completion(user)
-      
     }
   }
 }

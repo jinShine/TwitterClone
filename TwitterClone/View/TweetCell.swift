@@ -17,13 +17,18 @@ class TweetCell: UICollectionViewCell {
     }
   }
   
-  private let profileImageView: UIImageView = {
+  private lazy var profileImageView: UIImageView = {
     let iv = UIImageView()
     iv.contentMode = .scaleAspectFit
     iv.clipsToBounds = true
     iv.setDimensions(width: 48, height: 48)
     iv.layer.cornerRadius = 48 / 2
     iv.backgroundColor = .gray
+    
+    let tap = UITapGestureRecognizer(target: self, action: #selector(handleProfileImageTapped))
+    iv.isUserInteractionEnabled = true
+    iv.addGestureRecognizer(tap)
+    
     return iv
   }()
   
@@ -82,16 +87,18 @@ class TweetCell: UICollectionViewCell {
   override init(frame: CGRect) {
     super.init(frame: frame)
     
-    addSubview(profileImageView)
-    profileImageView.anchor(top: contentView.topAnchor, left: contentView.leftAnchor, paddingTop: 12, paddingLeft: 8)
+    contentView.addSubview(profileImageView)
+    profileImageView.anchor(top: topAnchor, left: leftAnchor,
+                            paddingTop: 12, paddingLeft: 8)
     
     let stackView = UIStackView(arrangedSubviews: [infoLabel, captionLabel])
     stackView.axis = .vertical
     stackView.spacing = 4
     stackView.distribution = .fillProportionally
     
-    addSubview(stackView)
-    stackView.anchor(top: profileImageView.topAnchor, left: profileImageView.rightAnchor, right: rightAnchor, paddingLeft: 12, paddingRight: 12)
+    contentView.addSubview(stackView)
+    stackView.anchor(top: profileImageView.topAnchor, left: profileImageView.rightAnchor,
+                     right: rightAnchor, paddingLeft: 12, paddingRight: 12)
     
     infoLabel.text = "Eddie Brock @venom"
     infoLabel.font = UIFont.systemFont(ofSize: 14)
@@ -100,15 +107,14 @@ class TweetCell: UICollectionViewCell {
     actionStack.axis = .horizontal
     actionStack.spacing = 72
     
-    addSubview(actionStack)
+    contentView.addSubview(actionStack)
     actionStack.anchor(bottom: bottomAnchor, paddingBottom: 8)
-    actionStack.centerX(inView: self.contentView)
+    actionStack.centerX(inView: self)
 
     let underLineView = UIView()
     underLineView.backgroundColor = .systemGroupedBackground
-    addSubview(underLineView)
+    contentView.addSubview(underLineView)
     underLineView.anchor(left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, height: 1)
-    
   }
   
   required init?(coder: NSCoder) {
@@ -117,6 +123,10 @@ class TweetCell: UICollectionViewCell {
   }
   
   // MARK: - Selectors
+  
+  @objc func handleProfileImageTapped() {
+    print("handleProfileImageTapped")
+  }
   
   @objc func handleCommentTapped() {
     print("handleCommentTapped")
