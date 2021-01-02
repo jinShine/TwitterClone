@@ -11,6 +11,12 @@ class ProfileFilterCell: UICollectionViewCell {
   
   // MARK: - Properties
   
+  var option: ProfileFilterOptions = .tweets {
+    didSet {
+      titleLabel.text = option.description
+    }
+  }
+  
   let titleLabel: UILabel = {
     let label = UILabel()
     label.textColor = .lightGray
@@ -30,7 +36,7 @@ class ProfileFilterCell: UICollectionViewCell {
   
   override init(frame: CGRect) {
     super.init(frame: frame)
-
+    
     addSubview(titleLabel)
     titleLabel.center(inView: self)
   }

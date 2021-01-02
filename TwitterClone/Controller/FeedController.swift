@@ -113,7 +113,9 @@ extension FeedController: TweetCellDelegate {
   
   // delegate 방법과 closure방법 2가지 방법 설명 후 closure방식으로 실행한다.
   func handleProfileImagedTapped(_ cell: TweetCell) {
-    let controller = ProfileController(collectionViewLayout: UICollectionViewFlowLayout())
+    guard let user = cell.tweet?.user else { return }
+    
+    let controller = ProfileController(user: user)
     navigationController?.pushViewController(controller, animated: true)
   }
 }
